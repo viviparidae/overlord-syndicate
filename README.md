@@ -47,9 +47,9 @@
 
 ## ── Tech Stack (予定)
 
-* **Engine:** Unity / Godot / Unreal Engine (要検討)
-* **Language:** C# / C++
-* **UI Framework:** React / Vue (ゲーム内Web/SNSインターフェース用)
+* **Engine:** 
+* **Language:** 
+* **UI Framework:** 
 
 ---
 
