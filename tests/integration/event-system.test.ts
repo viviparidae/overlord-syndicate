@@ -2,7 +2,7 @@ import { EventSystem } from "@core/EventSystem";
 import { describe, expect, it } from "vitest";
 
 describe("EventSystem", () => {
-  it("emits events to listeners", () => {
+  it("リスナーにイベントが配信される", () => {
     const system = new EventSystem();
     let called = false;
     system.on("testEvent", () => {
@@ -12,7 +12,7 @@ describe("EventSystem", () => {
     expect(called).toBe(true);
   });
 
-  it("off removes listener", () => {
+  it("リスナーを解除できる", () => {
     const system = new EventSystem();
     const cb = () => {};
     system.on("testEvent", cb);
@@ -21,7 +21,7 @@ describe("EventSystem", () => {
     expect(system.listenerCount("testEvent")).toBe(0);
   });
 
-  it("listenerCount returns correct count", () => {
+  it("リスナー数を正しく返せる", () => {
     const system = new EventSystem();
     const cb1 = () => {};
     const cb2 = () => {};
@@ -30,7 +30,7 @@ describe("EventSystem", () => {
     expect(system.listenerCount("testEvent")).toBe(2);
   });
 
-  it("clear removes all listeners", () => {
+  it("全リスナーを解除できる", () => {
     const system = new EventSystem();
     system.on("a", () => {});
     system.on("b", () => {});

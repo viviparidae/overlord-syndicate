@@ -12,7 +12,7 @@ function makeContext(funds = 10000) {
 }
 
 describe("runShop", () => {
-  it("increases funds and faith", () => {
+  it("資金と狂信度が増加する", () => {
     const ctx = makeContext();
     const result = runShop(ctx);
     expect(result.success).toBe(true);
@@ -20,7 +20,7 @@ describe("runShop", () => {
     expect(ctx.resources.faith).toBe(1);
   });
 
-  it("returns resource changes", () => {
+  it("リソース変化を返す", () => {
     const ctx = makeContext();
     const result = runShop(ctx);
     expect(result.resources).toContainEqual({ name: "funds", delta: 2000 });
@@ -29,7 +29,7 @@ describe("runShop", () => {
 });
 
 describe("spreadRumor", () => {
-  it("costs funds and increases fear/faith/suspect", () => {
+  it("資金を消費し恐怖・狂信度・警戒度が増加する", () => {
     const ctx = makeContext();
     const result = spreadRumor(ctx);
     expect(result.success).toBe(true);
@@ -39,7 +39,7 @@ describe("spreadRumor", () => {
     expect(ctx.resources.suspect).toBe(2);
   });
 
-  it("fails when insufficient funds", () => {
+  it("資金不足では失敗する", () => {
     const ctx = makeContext(100);
     const result = spreadRumor(ctx);
     expect(result.success).toBe(false);
@@ -48,7 +48,7 @@ describe("spreadRumor", () => {
 });
 
 describe("intimidate", () => {
-  it("costs funds and increases fear/suspect, decreases faith", () => {
+  it("資金を消費し恐怖と警戒度が増加し狂信度が減少する", () => {
     const ctx = makeContext();
     const result = intimidate(ctx);
     expect(result.success).toBe(true);
@@ -58,7 +58,7 @@ describe("intimidate", () => {
     expect(ctx.resources.suspect).toBe(5);
   });
 
-  it("fails when insufficient funds", () => {
+  it("資金不足では失敗する", () => {
     const ctx = makeContext(100);
     const result = intimidate(ctx);
     expect(result.success).toBe(false);

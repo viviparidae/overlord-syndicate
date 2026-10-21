@@ -3,7 +3,7 @@ import { GameEngine } from "@core/GameEngine";
 import { describe, expect, it } from "vitest";
 
 describe("GameEngine", () => {
-  it("executes actions and returns result", () => {
+  it("アクションを実行して結果を返す", () => {
     const engine = new GameEngine();
     engine.registerAction("runShop", runShop);
     const result = engine.execute("runShop");
@@ -12,7 +12,7 @@ describe("GameEngine", () => {
     expect(result.phaseChanged).toBe(false);
   });
 
-  it("save/load preserves state", () => {
+  it("セーブとロードで状態が保たれる", () => {
     const engine = new GameEngine();
     engine.registerAction("runShop", runShop);
     engine.execute("runShop");
@@ -22,7 +22,7 @@ describe("GameEngine", () => {
     expect(engine2.getResources().funds).toBe(12000);
   });
 
-  it("gameStateSnapshot reflects current state", () => {
+  it("スナップショットが現在の状態を反映する", () => {
     const engine = new GameEngine();
     engine.registerAction("runShop", runShop);
     const result = engine.execute("runShop");

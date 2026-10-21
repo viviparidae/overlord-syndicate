@@ -4,7 +4,7 @@ title: テスト計画とカバレッジ目標
 description: QA 観点・テストカバレッジ目標・検証基準。src/core/ 80% 以上。
 
 status: draft
-version: "0.1"
+version: "0.2"
 category: qa
 tags:
   - qa
@@ -103,4 +103,4 @@ verified_by:
 - Phase 4: `src/balance/` の動的コスト調整の統合テスト
 - カバレッジ自動アラート用の CI チェック (`pnpm test:run` でカバレッジ <80% は失敗)
 
-> **ルール:** 新しいテストケースを追加時は、`tests/` 内の `*/.test.ts` 名を対応するソースファイル（`src/core/` 内の場合は `src/core/` ファイル名）に合わせる。
+> **ルール:** 新しいテストケースを追加時は、`tests/` 内の `*/.test.ts` 名を対応するソースファイル（`src/core/` 内の場合は `src/core/` ファイル名）に合わせる。テストケース名 (`it()` / `test()`) は日本語で記述し、テスト対象のメソッド名を埋め込まない。詳細は `.kilo/rules/coding-conventions.md` の "## Testing" を参照。

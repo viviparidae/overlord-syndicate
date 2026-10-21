@@ -2,12 +2,12 @@ import { GameState } from "@core/GameState";
 import { describe, expect, it } from "vitest";
 
 describe("GameState", () => {
-  it("starts at phase 1", () => {
+  it("フェーズ1から開始する", () => {
     const state = new GameState();
     expect(state.phase).toBe(1);
   });
 
-  it("advances phase correctly", () => {
+  it("フェーズを正しく進める", () => {
     const state = new GameState();
     state.advance();
     expect(state.phase).toBe(2);
@@ -17,14 +17,14 @@ describe("GameState", () => {
     expect(state.phase).toBe(4);
   });
 
-  it("does not advance beyond phase 4", () => {
+  it("フェーズ4より先には進まない", () => {
     const state = new GameState();
     state.setPhase(4);
     state.advance();
     expect(state.phase).toBe(4);
   });
 
-  it("snapshot/restore preserves state", () => {
+  it("スナップショットから復元しても状態が保たれる", () => {
     const state = new GameState(999);
     state.setPhase(3);
     state.setFlag("shopEstablished", true);
@@ -36,7 +36,7 @@ describe("GameState", () => {
     expect(state2.getFlag("shopEstablished")).toBe(true);
   });
 
-  it("canAdvanceTo returns correct values", () => {
+  it("昇格可否の判定が正しい", () => {
     const state = new GameState();
     expect(state.canAdvanceTo(2)).toBe(true);
     expect(state.canAdvanceTo(1)).toBe(false);
