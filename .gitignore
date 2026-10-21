@@ -4,3 +4,4 @@ coverage/
 *.local
 .kilo/worktrees/
 .env*
+plans/
