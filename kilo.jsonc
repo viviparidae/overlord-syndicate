@@ -1,0 +1,38 @@
+{
+  "$schema": "https://app.kilo.ai/config.json",
+  "permission": {
+    "bash": {
+      "which *": "allow",
+      "pnpm *": "allow",
+      "tsc *": "allow",
+      "vitest *": "allow",
+      "biome *": "allow",
+      "node *": "allow",
+      "git log *": "allow",
+      "git status *": "allow",
+      "git diff *": "allow",
+      "ls *": "allow",
+      "cat *": "allow",
+      "head *": "allow",
+      "tail *": "allow",
+      "find *": "allow",
+      "grep *": "allow",
+      "mkdir *": "allow",
+      "cp *": "allow",
+      "mv *": "allow",
+      "touch *": "allow",
+      "echo *": "allow",
+      "date *": "allow",
+      "pwd *": "allow"
+    }
+  },
+  "model": "openrouter/openrouter/free",
+  "skills": {
+    "paths": ["./.kilo/skill"]
+  },
+  "instructions": [
+    "./AGENTS.md",
+    ".kilo/rules/coding-conventions.md",
+    ".kilo/rules/restricted-files.md"
+  ]
+}

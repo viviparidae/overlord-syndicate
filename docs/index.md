@@ -65,8 +65,6 @@ verified_by:
 
 [[docs/foam-smart-folders]] — スマートフォルダによるドキュメント整理ガイド
 
----
-
 ## トレーサビリティ
 
 各ドキュメントの frontmatter に以下を持たせ、双方向のトレースを成立させる。

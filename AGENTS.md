@@ -7,27 +7,13 @@
 
 ## 1. 作業規約 (General)
 
-- **TypeScript のみ。** `src/` 以下に plain JavaScript を書かない。
-- **コメントはユーザーが明示的に要求しない限り追加しない。** コードは名前で自己説明させる。
-- **完了条件:** 変更を加えるたびに `pnpm lint` と `pnpm typecheck` が PASS すること。失敗した状態で「完了」と報告しない。
-- **秘密鍵・認証情報をログ出力しない。** コミットしない。
 - **既存規約に合わせる。** 周囲のコードの書き方・命名・ファイル配置を先に読む。
-- **URL を推測しない。** ユーザー提供の URL とローカルファイル内の URL のみ使用。
-- **コミットはユーザーが明示的に指示した場合のみ。** 自発的に git 操作（commit/push/branch 作成）しない。
-- **コミットメッセージは日本語で記述する。** 詳細は §1.1「ドキュメント・プラン・コミットメッセージの言語」を参照。
 
-### 1.1 ドキュメント・プラン・コミットメッセージの言語
+詳細なコーディング規約・ガードレール・禁止事項は `.kilo/rules/coding-conventions.md` と `.kilo/rules/restricted-files.md` を参照すること。
 
-- **プランファイル (`.kilo/plans/*.md`) は必ず日本語で記述する。** 見出し・本文・表・チェックリストすべて日本語。
-- **コミットメッセージは日本語で記述する。** 件名・本文ともに日本語とし、Conventional Commits のプレフィックス（`feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:` 等）は **英語のまま** 維持する。
-  - 許可例: `feat: 恐怖→警戒度の変換をThresholdsへ集約`
-  - 許可例: `docs: エージェント定義の末尾に不要な引用符を削除`
-  - 禁止例: `feat: add fear to suspect conversion`
-- ファイル名・識別子・コード・API名・パスは英語のまま維持する。
-- ソースコード内のコメントは日本語を既定とする（上記「コメントは追加しない」ルールが優先されるが、既存コメントを追記する場合は日本語で揃える）。
-- README.md・AGENTS.md・エージェント定義・スキル定義も日本語で記述する。
+> **Note:** コーディング規約（TypeScriptのみ、コメント禁止等）、品質ゲート、制限ファイル、秘密情報扱い、コミット規約、URL制限などはルールファイルに集約している。AGENTS.md はプロジェクト固有のアーキテクチャ・ドメイン知識・コマンド一覧に特化する。
 
-### 1.2 ドキュメント管理 (FOAM)
+### 1.1 ドキュメント管理 (FOAM)
 
 - **プロジェクト内のすべてのドキュメント (`.md` ファイル) は FOAM 拡張機能で管理する。**
 - `[[wiki-link]]` 構文で相互参照を行う。
@@ -37,9 +23,9 @@
 - **スマートフォルダ（FOAM Smart Folders）**: `.foam/queries/*.yaml` に保存済みクエリを配置し、VS Code エクスプローラーのサイドバーにスマートフォルダとして表示する。ステータス（draft/review/approved/deprecated）・カテゴリ（design/architecture/balance/qa/localization）・孤立ドキュメント・検証未設定ドキュメントごとにフォルダを分割する。
 - `docs/foam-smart-folders.md` で運用手順を記述し、`docs/index.md` から `[[wiki-link]]` を参照する。
 
-### 1.3 トレーサビリティ（MD Editor Plus + FOAM）
+### 1.2 トレーサビリティ（MD Editor Plus + FOAM）
 
-- `docs/` のすべての `.md` ファイルに frontmatter を付与し、`status`, `version`, `traces_to`, `implemented_by`, `verified_by` を設定する。
+- `docs/` のすべての `.md` ファイルに frontmatter を付与し、`title`, `description`, `status`, `version`, `category`, `tags`, `traces_to`, `implemented_by`, `verified_by` の 9 フィールドを設定する。
 - `[[wiki-link]]` でドキュメント間・ドキュメント↔コード間のトレースを表現する。
 - MD Editor Plus の Outline / 定義ジャンプ / 検索 / ボードビュー（Kanban）/ テーブルビューを活用し、ドキュメント構造とトレースを確認する。
 - 実装変更時は対応する `.md` の `implemented_by` / `version` を同時に更新し、doc drift を防ぐ。
@@ -134,15 +120,7 @@ src/localization/ ─┘   (Phaser非依存)   (描画層)    (DOMオーバレ�
 
 ## 6. 品質ゲート
 
-完了と報告する前に以下を **全部** 確認する。
-
-| ゲート | コマンド | 基準 |
-|---|---|---|
-| Lint | `pnpm lint` | エラー 0 |
-| 型検査 | `pnpm typecheck` | エラー 0 |
-| テスト | `pnpm test:run` | 全 PASS。`src/core/` カバレッジ 80% 以上 |
-| ビルド | `pnpm build` | エラー 0、`dist/` 生成 |
-| ドキュメント | `pnpm docs:validate` | エラー 0 |
+詳細なコマンドと基準は `.kilo/rules/coding-conventions.md` の "Quality Gates" を参照。
 
 - `src/core/` を変更したら必ずユニットテストを追加・更新する。
 - テスト名は対象ファイルに対応させる (`Resources.ts` → `Resources.test.ts`)。
