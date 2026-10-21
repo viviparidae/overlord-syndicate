@@ -1,3 +1,7 @@
+---
+name: game-mechanic-system
+description: Overlord Syndicate の純粋ゲームロジックレイヤーを実装・テストする。リソース追跡、フェーズステートマシン、アクション処理、イベントシステム、RNG など。
+---
 # Skill: game-mechanic-system
 
 ## 説明
@@ -7,14 +11,14 @@ Overlord Syndicate の純粋ゲームロジックレイヤーを実装・テス�
 - リソース追跡、フェーズステートマシン、アクション処理、イベントシステム、RNG など。
 
 ## 主要ファイル
-- `src/core/Resources.ts` — 資金/恐怖/狂信/警戒度 トラッカークラス
+- `src/core/Resources.ts` — 資金/恐怖/狂信/警戒度トラッカークラス
 - `src/core/GameState.ts` — フェーズFSM (1→2→3→4)、勝敗条件
 - `src/core/EventSystem.ts` — 型付きエミッタ (on/off/emit)
 - `src/core/RNG.ts` — シード付きの mulberry32
 - `src/core/actions/*.ts` — 純粋アクション処理 (runShop, spreadRumor, intimidate)
 
 ## データフロー
-1. プレイヤークリック → `src/ui/CommandPanel.ts`
+1. プレイヤークリック → `src/ui/index.ts` の `setupCommandListeners()`
 2. アクション → `GameEngine.execute(action, context)`
 3. `GameEngine` が純粋 `actions/*.ts` を呼び出し
 4. アクションが `Resources` + `GameState` を変更

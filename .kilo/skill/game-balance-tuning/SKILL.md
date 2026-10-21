@@ -1,3 +1,7 @@
+---
+name: game-balance-tuning
+description: データファイルを介してリソースコスト、獲得率、フェーズ閾値を調整する。プレイテストデータに基づくバランス調整に使用。
+---
 # Skill: game-balance-tuning
 
 ## 説明

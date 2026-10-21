@@ -1,3 +1,7 @@
+---
+name: retro-ui-panel
+description: 1990年代日本のレトロスタイル HTML/CSS オーバーレイパネルを構築する。ステータスバー、コマンドボタン、ログコンソール、ダイアログボックスなど。
+---
 # Skill: retro-ui-panel
 
 ## 説明
@@ -9,8 +13,7 @@
 ## 主要ファイル
 - `src/ui/index.html` — パネルテンプレート
 - `src/ui/StatusBar.ts` — 資金/恐怖/狂信度/警戒度表示を更新
-- `src/ui/CommandPanel.ts` — ボタンクリック → core アクション ディスパッチ
-- `src/ui/LogConsole.ts` — タイムスタンプ付きイベントログを追加
+- `src/ui/index.ts` — コマンドボタン → core アクションディスパッチ、`initUI()` エントリポイント
 - `src/localization/ja.json` — すべてのUI文字列
 
 ## デザイン仕様

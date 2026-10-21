@@ -1,3 +1,7 @@
+---
+name: japanese-localization
+description: 日本語テキスト、フォント、CJK テキストラッピング、ロケールフォーマット処理を行う。t() 関数、formatCurrency()、formatDate()、ja.json / en.json キー管理に使用。
+---
 # Skill: japanese-localization
 
 ## 説明
@@ -7,7 +11,6 @@
 - `src/localization/index.ts` — `t()` 関数、`formatCurrency()`、`formatDate()`
 - `src/localization/ja.json` — デフォルト (すべてのキー)
 - `src/localization/en.json` — フォールバック
-- `public/fonts/` — Noto Sans CJK サブセット (woff2)
 
 ## 関数
 - `t('status.funds', { amount: 10000 })` → `資金: ¥10,000`

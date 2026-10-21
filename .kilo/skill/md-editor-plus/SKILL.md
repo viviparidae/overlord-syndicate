@@ -1,3 +1,7 @@
+---
+name: md-editor-plus
+description: 本プロジェクトの docs/ ディレクトリ配下の Markdown ページを frontmatter と [[wiki-link]] で管理し、ボードビュー（Kanban）とテーブルビューでトレーサビリティを可視化する。ドキュメント検索・一覧・検証に使用。
+---
 # Skill: MD Editor Plus 活用
 
 ## 説明
@@ -7,7 +11,7 @@
 - `docs/` 内のすべての `.md` ファイル（YAML frontmatter および `[[wiki-link]]` を含む）
 - `.vscode/settings.json` — ボード／テーブルビュー設定
 - `scripts/validate-docs.mjs` — frontmatter 必須フィールド・リンク切れの検証
-- `docs/md-editor-plus-guide.md` — 運用手順
+- `docs/foam-smart-folders.md` — 運用手順
 
 ## 設計方針
 - 各ドキュメントの frontmatter をトレース情報（元設計 → 実装 → 検証）の唯一の情報源とする。
