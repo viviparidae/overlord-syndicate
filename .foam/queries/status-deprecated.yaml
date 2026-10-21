@@ -1,0 +1,7 @@
+name: ステータス: 非推奨 (Deprecated)
+description: 廃止予定ドキュメント（status: deprecated）。MD Editor Plus ボードの「deprecated」列と一致。
+filter:
+  jexl: "resource.properties.status == 'deprecated'"
+select: [title, properties.status, properties.category, path]
+sort: title ASC
+format: table

@@ -1,0 +1,7 @@
+name: ステータス: レビュー中 (Review)
+description: レビュー待ちドキュメント（status: review）。MD Editor Plus ボードの「review」列と一致。
+filter:
+  jexl: "resource.properties.status == 'review'"
+select: [title, properties.status, properties.category, path]
+sort: title ASC
+format: table

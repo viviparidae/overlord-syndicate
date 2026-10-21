@@ -1,0 +1,7 @@
+name: カテゴリ: QA (QA)
+description: 品質保証・テスト関連ドキュメント（category: qa）。docs/qa/* に相当。
+filter:
+  jexl: "resource.properties.category == 'qa'"
+select: [title, properties.status, properties.category, path]
+sort: title ASC
+format: table

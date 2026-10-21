@@ -1,0 +1,16 @@
+{
+  "md-editor-plus.board.enabled": true,
+  "md-editor-plus.board.groupBy": "status",
+  "md-editor-plus.board.columns": ["draft", "review", "approved", "deprecated"],
+  "md-editor-plus.table.enabled": true,
+  "md-editor-plus.table.columns": [
+    "title",
+    "category",
+    "status",
+    "version",
+    "implemented_by",
+    "verified_by",
+    "tags"
+  ],
+  "md-editor-plus.table.defaultSort": "status-asc"
+}

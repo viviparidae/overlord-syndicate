@@ -1,0 +1,7 @@
+name: 検証未設定 (Missing Verification)
+description: verified_by フィールドが欠落または空のドキュメント。テスト/検証元を追加する。
+filter:
+  jexl: "resource.properties.verified_by == null || resource.properties.verified_by|length == 0"
+select: [title, properties.status, properties.category, path]
+sort: title ASC
+format: table

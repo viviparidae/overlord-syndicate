@@ -1,0 +1,7 @@
+name: ステータス: ドラフト (Draft)
+description: 作成中ドキュメント（status: draft）。MD Editor Plus ボードの「draft」列と一致。
+filter:
+  jexl: "resource.properties.status == 'draft'"
+select: [title, properties.status, properties.category, path]
+sort: title ASC
+format: table

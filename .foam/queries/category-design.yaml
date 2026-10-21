@@ -1,0 +1,7 @@
+name: カテゴリ: ゲームデザイン (Design)
+description: ゲームデザイン関連ドキュメント（category: design）。docs/design/* に相当。
+filter:
+  jexl: "resource.properties.category == 'design'"
+select: [title, properties.status, properties.category, path]
+sort: title ASC
+format: table

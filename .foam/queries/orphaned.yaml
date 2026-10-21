@@ -1,0 +1,7 @@
+name: 孤立ドキュメント (Orphaned)
+description: バックリンク（リンク元）のないドキュメント。関連付けが必要。
+filter:
+  jexl: "resource.backlinks|length == 0"
+select: [title, properties.status, properties.category, path]
+sort: title ASC
+format: table

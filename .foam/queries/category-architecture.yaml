@@ -1,0 +1,7 @@
+name: カテゴリ: アーキテクチャ (Architecture)
+description: アーキテクチャ関連ドキュメント（category: architecture）。docs/architecture/* に相当。
+filter:
+  jexl: "resource.properties.category == 'architecture'"
+select: [title, properties.status, properties.category, path]
+sort: title ASC
+format: table
