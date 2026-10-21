@@ -1,20 +1,19 @@
+import type { GameEngine } from "@core/GameEngine";
+import type { Resources } from "@core/Resources";
 import Phaser from "phaser";
-import { MainScene } from "./MainScene.js";
+import { GAME_CONFIG } from "./config";
+import { setGameContext } from "./GameContext";
+import { BootScene } from "./scenes/BootScene";
+import { ShopScene } from "./scenes/ShopScene";
+import { StreetScene } from "./scenes/StreetScene";
+import { TerminalScene } from "./scenes/TerminalScene";
 
 export class Game extends Phaser.Game {
-  constructor() {
+  constructor(engine: GameEngine, resources: Resources) {
+    setGameContext({ engine, resources });
     super({
-      type: Phaser.AUTO,
-      width: 960,
-      height: 540,
-      pixelArt: true,
-      roundPixels: true,
-      backgroundColor: "#000000",
-      scale: {
-        mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_BOTH,
-      },
-      scene: [MainScene],
+      ...GAME_CONFIG,
+      scene: [BootScene, StreetScene, ShopScene, TerminalScene],
       antialias: false,
     });
   }

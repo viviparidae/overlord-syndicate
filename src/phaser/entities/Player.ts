@@ -7,7 +7,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.existing(this);
   }
 
-  move(direction: "left" | "right") {
+  move(direction: "left" | "right"): void {
     const speed = 100;
     this.setVelocityX(direction === "left" ? -speed : speed);
   }

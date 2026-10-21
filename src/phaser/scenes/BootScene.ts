@@ -1,4 +1,5 @@
 import { SCENE_KEYS } from "@phaser/config";
+import { AssetManager } from "@phaser/managers/AssetManager";
 import Phaser from "phaser";
 
 export class BootScene extends Phaser.Scene {
@@ -7,11 +8,12 @@ export class BootScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.once("complete", () => {
-      this.scene.start(SCENE_KEYS.STREET);
-    });
-    this.load.start();
+    const assetManager = new AssetManager(this);
+    assetManager.loadAssets();
+    this.scene.start(SCENE_KEYS.STREET);
   }
 
   create() {}
+
+  update() {}
 }
