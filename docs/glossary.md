@@ -1,7 +1,6 @@
 ---
 title: 用語集
 description: ゲーム内主要用語と1990年代用語。二面性パラメーター・リソース・フェーズなど。
-
 status: draft
 version: "0.1"
 category: rules

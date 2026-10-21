@@ -1,92 +1,85 @@
 ---
-title: FOAM スマートフォルダ
-description: docs/ 配下の設計ドキュメントを frontmatter プロパティで動的に整理する仮想フォルダ（Smart Folders）の設定と運用ガイド。
-status: approved
+title: Smart Folders (FOAD スマートフォルダ)
+description: .foam/queries/ の YAML クエリによるスマートフォルダ運用手順。ステータス/カテゴリ/孤立/検証未設定をサイドバーで整理する。
+status: draft
 version: "0.1"
-category: project-management
+category: qa
 tags:
   - foam
-  - smart-folder
+  - smart-folders
+  - queries
   - documentation
-  - navigation
 traces_to:
   - docs/index.md
-  - docs/architecture/overview.md
-  - docs/design/resources.md
+  - .foam/queries/status-draft.yaml
 implemented_by:
-  - .foam/queries/
-  - docs/foam-smart-folders.md
+  - .foam/queries/*.yaml
 verified_by:
   - scripts/validate-docs.mjs
 ---
-
-# FOAM スマートフォルダ
+# Smart Folders (フォールドフォルダ)
 
 ## 概要
 
-`docs/` 配下の設計ドキュメントを、frontmatter プロパティ（`status`・`category`・`verified_by`）に基づいて VS Code エクスプローラーのサイドバーに表示する仮想フォルダ（Smart Folders）の設定と運用ガイド。
+`.foam/queries/*.yaml` に保存されたクエリ定義に基づき、VS Code エクスプローラーのサイドバーにスマートフォルダとして表示する。
 
-FOAM の `[[wiki-link]]` と組み合わせて使用し、プロジェクト全体のトレーサビリティ（設計 → 実装 → 検証）を視覚的にサポートします。
+## ディレクトリ構成
 
----
+```text
+.foam/queries/
+├─ category-architecture.yaml
+├─ category-balance.yaml
+├─ category-design.yaml
+├─ category-localization.yaml
+├─ category-qa.yaml
+├─ missing-verification.yaml
+├─ orphaned.yaml
+├─ status-approved.yaml
+├─ status-deprecated.yaml
+├─ status-draft.yaml
+└─ status-review.yaml
+```
 
-## インストール
+## スマートフォルダ一覧
 
-1. VS Code マーケットプレイスから **Foam** (`foam.foam-vscode`) をインストール
-2. `pnpm install` で依存パッケージをインストール
-3. `.foam/queries/*.yaml` ファイルが配置されていることを確認
+| フォルダ | 対象 | クエリ例 |
+|---|---|---|
+| `status-draft` | `status: draft` | `status: draft` |
+| `status-review` | `status: review` | `status: review` |
+| `status-approved` | `status: approved` | `status: approved` |
+| `status-deprecated` | `status: deprecated` | `status: deprecated` |
+| `category-architecture` | `category: architecture` | `category: architecture` |
+| `category-balance` | `category: balance` | `category: balance` |
+| `category-design` | `category: design` | `category: design` |
+| `category-localization` | `category: localization` | `category: localization` |
+| `category-qa` | `category: qa` | `category: qa` |
+| `missing-verification` | 未検証 | frontmatter に `verified_by` 未設定 |
+| `orphaned` | 孤立ドキュメント | 他のドキュメントから `[[wiki-link]]` で参照されていない |
 
----
+## 設定手順
 
-## 使い方
+1. **`.foam/queries/*.yaml` ファイルの配置**
+   - `.foam/queries/` ディレクトリに YAML クエリファイルを配置する
+   - 各ファイルの `status` と `category` フィールドで分類する
 
-### スマートフォルダの表示
+2. **`docs/index.md` からのリンク**
+   - `[[smart-folders]]` または個別のフォルダリンク (`[[status-draft]]`) を `docs/index.md` に記述
+   - MD Editor Plus のサイドバーに自動的にスマートフォルダセットが表示される
 
-VS Code のエクスプローラーの **Smart Folders** パネル（サイドバー下部）で、以下の 11 のスマートフォルダが利用できます。
+3. **運用フロー**
+   - 新規 `.md` ドキュメント作成時に `status` と `category` frontmatter を設定
+   - ステータスが変化するたびに `status: draft → review → approved → deprecated` と遷移
+   - `missing-verification` フォルダの文書はレビュー担当者が `verified_by` を埋める
+   - `orphaned` フォルダの文書は `docs/index.md` から `[[wiki-link]]` を追加して解除
 
-| スマートフォルダ名 | フィルタ条件 | 用途 |
-|-------------------|-------------|------|
-| `status-draft` | `status == 'draft'` | 作成中ドキュメントの確認 |
-| `status-review` | `status == 'review'` | レビュー待ちドキュメントの確認 |
-| `status-approved` | `status == 'approved'` | 承認済みドキュメントの確認 |
-| `status-deprecated` | `status == 'deprecated'` | 廃止予定ドキュメントの確認 |
-| `category-design` | `category == 'design'` | ゲームデザイン関連の横断的参照 |
-| `category-architecture` | `category == 'architecture'` | アーキテクチャ関連の横断的参照 |
-| `category-balance` | `category == 'balance'` | バランス調整関連の横断的参照 |
-| `category-qa` | `category == 'qa'` | 品質保証・テスト関連の横断的参照 |
-| `category-localization` | `category == 'localization'` | ローカライゼーション関連の横断的参照 |
-| `orphaned` | `backlinks|length == 0` | 孤立ドキュメントの特定 |
-| `missing-verification` | `verified_by == null` または空 | 検証元未設定のドキュメント |
+## トリガー語
 
-### フィルタ構文
+- `smart-folders`, `status-draft`, `status-review`, `status-approved`, `status-deprecated`
+- `category-architecture`, `category-balance`, `category-design`, `category-localization`, `category-qa`
+- `missing-verification`, `orphaned`
 
-各スマートフォルダの YAML で使用する Jexl 述語:
+## 関連ファイル
 
-- `resource.properties.status == 'draft'`: ステータスでフィルタ
-- `resource.properties.category == 'design'`: カテゴリでフィルタ
-- `resource.backlinks|length == 0`: バックリンクがないドキュメント
-
-### 表示形式
-
-各スマートフォルダはテーブル形式で以下の列を表示:
-
-| 列 | 内容 |
-|---|------|
-| タイトル | ドキュメントのファースト H1 または frontmatter `title` |
-| ステータス | `status` プロパティの値 |
-| カテゴリ | `category` プロパティの値 |
-| パス | ドキュメントのフルパス |
-
-列ヘッダーは `properties.` プレフィックスが自動的に除去されて表示されます。
-
-### ドキュメントへのリンク
-
-テーブル内のタイトルはクリックで対応するドキュメントにジャンプします。`[[wiki-link]]` で参照先ドキュメントへの相互リンクが可能です。
-
----
-
-## 関連リンク
-
-- `[[docs/architecture/overview]]` — 技術アーキテクチャ全体像
-- `[[docs/design/resources]]` — リソース定義
-- `AGENTS.md §1.2` — ドキュメント管理 FOAM ルール
+- `.foam/queries/*.yaml` — クエリ定義 (10ファイル)
+- `docs/index.md` — スマートフォルダへのリンク設定
+- `docs/foam-smart-folders.md` — 本ファイル (本ガイド)

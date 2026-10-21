@@ -20,7 +20,6 @@ traces_to:
   - docs/localization/ja-vs-en.md
   - docs/glossary.md
   - docs/qa/test-plan.md
-  - docs/md-editor-plus-guide.md
   - docs/foam-smart-folders.md
   - docs/adr/0001-use-phaser-and-vite.md
 implemented_by:
