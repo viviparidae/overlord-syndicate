@@ -14,10 +14,15 @@
 - **既存規約に合わせる。** 周囲のコードの書き方・命名・ファイル配置を先に読む。
 - **URL を推測しない。** ユーザー提供の URL とローカルファイル内の URL のみ使用。
 - **コミットはユーザーが明示的に指示した場合のみ。** 自発的に git 操作（commit/push/branch 作成）しない。
+- **コミットメッセージは日本語で記述する。** 詳細は §1.1「ドキュメント・プラン・コミットメッセージの言語」を参照。
 
-### 1.1 ドキュメント・プランの言語
+### 1.1 ドキュメント・プラン・コミットメッセージの言語
 
 - **プランファイル (`.kilo/plans/*.md`) は必ず日本語で記述する。** 見出し・本文・表・チェックリストすべて日本語。
+- **コミットメッセージは日本語で記述する。** 件名・本文ともに日本語とし、Conventional Commits のプレフィックス（`feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:` 等）は **英語のまま** 維持する。
+  - 許可例: `feat: 恐怖→警戒度の変換をThresholdsへ集約`
+  - 許可例: `docs: エージェント定義の末尾に不要な引用符を削除`
+  - 禁止例: `feat: add fear to suspect conversion`
 - ファイル名・識別子・コード・API名・パスは英語のまま維持する。
 - ソースコード内のコメントは日本語を既定とする（上記「コメントは追加しない」ルールが優先されるが、既存コメントを追記する場合は日本語で揃える）。
 - README.md・AGENTS.md・エージェント定義・スキル定義も日本語で記述する。
@@ -93,7 +98,7 @@ src/localization/ ─┘   (Phaser非依存)   (描画層)    (DOMオーバレ�
 
 ### 3.3 二面性 (Two-Face)
 
-- **表の顔 (Public):** 実家の文房具店を切り盛り。礼儀正しく優秀な息子を_closed扮演。警察/行政の警戒度を下げる。
+- **表の顔 (Public):** 実家の文房具店を切り盛り。礼儀正しく優秀な息子を演じる。警察/行政の警戒度を下げる。
 - **裏の顔 (Private):** 日常会話や噂話から得たスキャンダルを武器に、裏社会の権力構造を書き換える。
 
 この二面性は **演出とリソースの両方** に影響する。表の行動は警戒度を下げ、裏の行動は狂信/恐怖を稼いで警戒度を上げる。この緊張関係がゲームの中核。
@@ -137,6 +142,7 @@ src/localization/ ─┘   (Phaser非依存)   (描画層)    (DOMオーバレ�
 | 型検査 | `pnpm typecheck` | エラー 0 |
 | テスト | `pnpm test:run` | 全 PASS。`src/core/` カバレッジ 80% 以上 |
 | ビルド | `pnpm build` | エラー 0、`dist/` 生成 |
+| ドキュメント | `pnpm docs:validate` | エラー 0 |
 
 - `src/core/` を変更したら必ずユニットテストを追加・更新する。
 - テスト名は対象ファイルに対応させる (`Resources.ts` → `Resources.test.ts`)。
@@ -165,6 +171,7 @@ src/localization/ ─┘   (Phaser非依存)   (描画層)    (DOMオーバレ�
 | `pnpm typecheck` | `tsc --noEmit` |
 | `pnpm test` | Vitest (watch) |
 | `pnpm test:run` | Vitest (1回実行) |
+| `pnpm docs:validate` | ドキュメント frontmatter・リンク切れ検証 |
 
 Kilo 側のコマンド: `/dev` `/test` `/build` `/balance`
 
@@ -176,6 +183,7 @@ Kilo 側のコマンド: `/dev` `/test` `/build` `/balance`
 
 - 新しいエージェントを追加するときは `mode` (primary / subagent / all) を明示する。
 - スキルは `SKILL.md` の frontmatter に `name` と `description` を必ず書く。`description` が発動条件になるので **トリガ关键词**（ファイル名・API名・タスク語）を含める。
+- エージェント定義・スキル定義に記す参照パスは **実在するファイル** のみ。存在しないファイルを名指ししない（作成予定の場合は「planned」と明記する）。
 - 定義はすべて日本語で書く。
 
 ### MD Editor Plus 活用ガイドライン
@@ -187,4 +195,4 @@ Kilo 側のコマンド: `/dev` `/test` `/build` `/balance`
   - テーブルビューで `title`, `category`, `status`, `version`, `implemented_by`, `verified_by` を列ヘッダーとして一覧表示
   - Outline / 定義ジャンプ (`[[wiki-link]]` 先へジャンプ) / ファジーファインダー
 - エージェント実行時のトリガー語（例: "md-editor-plus", "frontmatter", "board", "table-view", "wiki-link"）が検知された場合、MD Editor Plus 機能を補助的に活用する。
-- 詳細な運用方法は [[docs/md-editor-plus-guide]] を参照。
+- 詳細な運用方法は [[docs/foam-smart-folders]] を参照。
