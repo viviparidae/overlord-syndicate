@@ -126,6 +126,7 @@ src/localization/ ─┘   (Phaser非依存)   (描画層)    (DOMオーバレ�
 - テスト名は対象ファイルに対応させる (`Resources.ts` → `Resources.test.ts`)。
 - UI・入力・永続化を含む振る舞いは E2E (`tests/e2e/*.spec.ts`) で検証する。E2E は `pnpm build` 後の `vite preview` を対象とする。
 - ゲーム破壊的バグ（セーブ破損・フェーズスキップ・負のリソース）は **ブロッカー**。軽微な表示崩れはこの限りではない。
+- バグ報告は `templates/bug-report.md` テンプレートに従って、課題トラッカー（GitHub Issues）に登録する。記録なしは完了とみなさない。詳細なルールは参照する。
 
 ---
 

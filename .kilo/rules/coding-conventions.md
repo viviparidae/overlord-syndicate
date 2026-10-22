@@ -73,6 +73,21 @@
 - **`src/core/save/`:** `try/catch` で例外を捕捉し、`console.error` して再スロー（ログ残し）。
 - **`src/ui/`:** DOM 操作前に null チェック。
 
+## Bug Reporting
+
+- **開発中に発見したバグは必ず課題トラッカー（GitHub Issues）に記録する。** 記録なしなら完了とみなさない。
+- **必須フィールド:** タイトル、説明、重大度、再現手順、環境コンテキスト、優先度
+- **重大度分類:**
+  - `Critical` — ゲーム破壊的バグ（セーブ破損・フェーズスキップ・負のリソース）
+  - `High` — 重大な機能不全、主要パスのブロック
+  - `Medium` — 軽微な機能不全、表示崩れ
+  - `Low` — 軽微な不一致、仕様の曖昧さ
+  - `Info` — メモ、提案、調査事項
+- **タグ:** 関連モジュール（`core` / `phaser` / `ui` / `data` / `balance` / `localization`）で分類する
+- **ステータス遷移:** `New` → `In Progress` → `Fixed` → `Resolved`
+- **バグ報告形式は `templates/bug-report.md` テンプレートに従う。**
+- **修正後は対応するテストを追加・更新し、`verified_by` にテストファイルを指定する。**
+
 ## Quality Gates
 
 完了と報告する前に以下を全部確認する。
