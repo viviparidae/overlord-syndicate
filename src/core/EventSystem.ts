@@ -1,30 +1,32 @@
-type EventCallback = () => void;
+export type EventMap = Record<string, unknown>;
 
-export class EventSystem {
-  private listeners: Map<string, Set<EventCallback>> = new Map();
+type StoredListener = (payload: unknown) => void;
 
-  on(event: string, callback: EventCallback): void {
+export class EventSystem<T extends EventMap = EventMap> {
+  private listeners: Map<string, Set<StoredListener>> = new Map();
+
+  on<K extends keyof T & string>(event: K, callback: (payload: T[K]) => void): void {
     if (!this.listeners.has(event)) {
       this.listeners.set(event, new Set());
     }
-    this.listeners.get(event)?.add(callback);
+    this.listeners.get(event)?.add(callback as StoredListener);
   }
 
-  off(event: string, callback: EventCallback): void {
+  off<K extends keyof T & string>(event: K, callback: (payload: T[K]) => void): void {
     const set = this.listeners.get(event);
     if (set) {
-      set.delete(callback);
+      set.delete(callback as StoredListener);
       if (set.size === 0) {
         this.listeners.delete(event);
       }
     }
   }
 
-  emit(event: string): void {
+  emit<K extends keyof T & string>(event: K, payload?: T[K]): void {
     const set = this.listeners.get(event);
     if (set) {
       for (const callback of set) {
-        callback();
+        (callback as (payload: T[K]) => void)(payload as T[K]);
       }
     }
   }

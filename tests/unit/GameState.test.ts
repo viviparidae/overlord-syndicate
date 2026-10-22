@@ -42,4 +42,24 @@ describe("GameState", () => {
     expect(state.canAdvanceTo(1)).toBe(false);
     expect(state.canAdvanceTo(4)).toBe(true);
   });
+
+  it("gameOver フラグがスナップショットから復元される", () => {
+    const state = new GameState();
+    state.markGameOver();
+    expect(state.isGameOver()).toBe(true);
+    const snap = state.snapshot();
+    expect(snap.gameOver).toBe(true);
+
+    const state2 = new GameState();
+    state2.restore(snap);
+    expect(state2.isGameOver()).toBe(true);
+  });
+
+  it("ゲームオーバーを解除できる", () => {
+    const state = new GameState();
+    expect(state.isGameOver()).toBe(false);
+    state.markGameOver();
+    expect(state.isGameOver()).toBe(true);
+    expect(state.snapshot().gameOver).toBe(true);
+  });
 });

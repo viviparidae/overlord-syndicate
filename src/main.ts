@@ -4,7 +4,10 @@ import { spreadRumor } from "@core/actions/spreadRumor";
 import { GameEngine } from "@core/GameEngine";
 import { GameState } from "@core/GameState";
 import { Resources } from "@core/Resources";
+import { installDebugBridge } from "@phaser/DebugBridge";
 import { Game } from "@phaser/Game";
+import { initUI } from "@ui/index";
+import { persist, restore } from "@ui/persistence";
 
 const START_SEED = 12345;
 
@@ -17,5 +20,14 @@ window.addEventListener("DOMContentLoaded", () => {
   engine.registerAction("spreadRumor", spreadRumor);
   engine.registerAction("intimidate", intimidate);
 
-  new Game(engine, resources);
+  restore(engine);
+
+  initUI(resources, gameState, engine);
+
+  engine.on("actionExecuted", () => {
+    persist(engine);
+  });
+
+  const game = new Game(engine, resources);
+  installDebugBridge(game, engine);
 });

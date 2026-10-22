@@ -40,6 +40,24 @@ describe("Resources", () => {
     expect(res.hasGameOvered()).toBe(true);
   });
 
+  it("資金の減算が反映される", () => {
+    const res = new Resources();
+    res.reduceFunds(3000);
+    expect(res.funds).toBe(7000);
+  });
+
+  it("資金の減算は0を下回らない", () => {
+    const res = new Resources();
+    res.reduceFunds(99999);
+    expect(res.funds).toBe(0);
+  });
+
+  it("警戒度が100未満ならゲームオーバーではない", () => {
+    const res = new Resources({ suspect: 99 });
+    expect(res.isGameOver()).toBe(false);
+    expect(res.hasGameOvered()).toBe(false);
+  });
+
   it("スナップショットから復元できる", () => {
     const res = new Resources();
     res.addFunds(1000);

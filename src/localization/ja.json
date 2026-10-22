@@ -1,8 +1,9 @@
 {
-  "status.funds": "資金: ¥{amount}",
+  "status.funds": "資金: {amount}",
   "status.fear": "恐怖: {level}",
   "status.faith": "狂信: {level}%",
   "status.suspect": "警戒度: {level}%",
+  "status.phase": "フェーズ{phase} — {name}",
 
   "action.notFound": "未知の行動: {actionId}",
   "action.shopRun.success": "店番を行いました。売上 {income} 円。",
@@ -10,7 +11,9 @@
   "action.spreadRumor.insufficientFunds": "噂を流す資金が足りない。{cost} 円必要。",
   "action.intimidate.success": "脅迫した。資金 {cost} 円。相手の顔から血の気が引いた。",
   "action.intimidate.insufficientFunds": "用地代が足りない。{cost} 円必要。",
+  "action.gameOver": "警戒度が限界だ。もう動けない。",
 
+  "gameover.title": "ゲームオーバー",
   "gameover.suspect": "警戒度が100に達した。警察が来ている。悪魔の顔が露見した。",
 
   "phase.1.name": "シャッター商店街",

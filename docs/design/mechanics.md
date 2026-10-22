@@ -177,10 +177,10 @@ class EventSystem {
 
 | イベント | 発行元 | 購読側（主なもの） |
 |----------|--------|-------------------|
-| `resourcesChanged` | `GameEngine.execute()` 後 | `UI/StatusBar`, `UI/CommandPanel` |
-| `phaseChanged` | `GameState.setPhase()` | `UI/PhaseTransition`, `Phaser/SceneManager` |
-| `actionExecuted` | `GameEngine.execute()` | `UI/LogConsole`, `Phaser/AnimationQueue` |
-| `gameOver` / `victory` | `GameState.checkGameOver/Victory()` | `UI/GameOverScreen`, `Phaser/EndingScene` |
+| `resourcesChanged` | `GameEngine.execute()` 後 | `UI/index.ts`（ステータスバー更新） |
+| `phaseChanged` | `GameState.setPhase()` | `UI/index.ts`（フェーズ表示・ログ）, `Phaser/SceneManager` |
+| `actionExecuted` | `GameEngine.execute()` | `UI/index.ts`（ログコンソール）, `UI/persistence.ts`（自動保存） |
+| `gameOver` / `victory` | `GameState.checkGameOver/Victory()` | `UI/index.ts`（GameOver オーバーレイ）, `Phaser/EndingScene` |
 
 ---
 

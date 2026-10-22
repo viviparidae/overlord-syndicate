@@ -2,7 +2,7 @@
 title: セーブ形式とバージョン管理
 description: セーブキー、Snapshotスキーマ、バージョン管理とマイグレーション方針。
 status: draft
-version: "0.1"
+version: "0.2"
 category: architecture
 tags:
   - save
@@ -14,8 +14,10 @@ traces_to:
 implemented_by:
   - src/core/save/Serializer.ts
   - src/core/GameState.ts
+  - src/ui/persistence.ts
 verified_by:
   - tests/unit/save.Serializer.test.ts
+  - tests/e2e/save-load.spec.ts
 ---
 
 # セーブ形式とバージョン管理
@@ -105,12 +107,27 @@ export function v1Migrate(data: unknown): GameStateSnapshot {
 
 ## 4. 自動保存ルール
 
-- `GameEngine.execute(action, context)` 完了後に即座に保存
-- `GameState.setPhase()` 呼び出し時（フェーズ遷移イベント後）にも保存
+- `GameEngine.execute(action, context)` 完了ごとに保存する
+- 保存の実行者は **`actionExecuted` イベントを購読する UI 層アダプタ**（`src/ui/persistence.ts` の `persist(engine)`）である。`src/core/` はブラウザ API（`localStorage`）に依存しないため、core 側では保存しない
+- 保存先はローカルストレージキー `overlord_syndicate_v1`
+- 起動時は `restore(engine)` が保存データを読み込み、復元できない場合はキーを削除して新規ゲームとして開始する
 - ネットワークステータスの下では `autosave: false` で手動保存のみ可能にする
+
+### 4.1 実装済みの保存形式 (version 1)
+
+```typescript
+{
+  version: 1,
+  state: GameStateSnapshot,   // phase / funds / fear / faith / suspect / seed / flags / gameOver
+  resources: ResourcesSnapshot // funds / fear / faith / suspect
+}
+```
+
+> 上記 2. の概念スキーマ（`rngSeed` / `unlockedActions` / `rumorStock` / `playtimeMs`）との乖離は未解消であり、E2E テストは本節の version 1 形式を正として扱う。
 
 ## 5. テストカバレッジ
 
 - `save.Serializer.test.ts` はシリアライズ/デシリアライズをカバー
 - `GameState.test.ts` はスナップショット生成とセーブ統合をカバー
+- `tests/e2e/save-load.spec.ts` は保存・復元・破損セーブからの復帰を実ブラウザでカバー
 - `pnpm test:run` で全 PASS → セーブ形式の検証完了

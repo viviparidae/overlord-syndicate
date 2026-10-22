@@ -39,12 +39,24 @@ export const PhaseConfigs: Record<number, PhaseConfig> = {
   },
 };
 
+export interface GameStateSnapshot {
+  phase: number;
+  funds: number;
+  fear: number;
+  faith: number;
+  suspect: number;
+  seed: number;
+  flags: Record<string, boolean>;
+  gameOver: boolean;
+}
+
 export class GameState {
   phase: number;
   seed: number;
   flags: Record<string, boolean>;
   resources: { funds: number; fear: number; faith: number; suspect: number };
   turnCount: number;
+  gameOver: boolean;
 
   constructor(seed?: number) {
     this.seed = seed ?? 12345;
@@ -52,10 +64,19 @@ export class GameState {
     this.flags = {};
     this.resources = { funds: 10000, fear: 0, faith: 0, suspect: 0 };
     this.turnCount = 0;
+    this.gameOver = false;
   }
 
   incrementTurn(): void {
     this.turnCount += 1;
+  }
+
+  markGameOver(): void {
+    this.gameOver = true;
+  }
+
+  isGameOver(): boolean {
+    return this.gameOver;
   }
 
   canAdvanceTo(n: number): boolean {
@@ -82,15 +103,7 @@ export class GameState {
     return this.flags[key];
   }
 
-  snapshot(): {
-    phase: number;
-    funds: number;
-    fear: number;
-    faith: number;
-    suspect: number;
-    seed: number;
-    flags: Record<string, boolean>;
-  } {
+  snapshot(): GameStateSnapshot {
     return {
       phase: this.phase,
       funds: this.resources.funds,
@@ -99,6 +112,7 @@ export class GameState {
       suspect: this.resources.suspect,
       seed: this.seed,
       flags: { ...this.flags },
+      gameOver: this.gameOver,
     };
   }
 
@@ -110,6 +124,7 @@ export class GameState {
     suspect: number;
     seed: number;
     flags: Record<string, boolean>;
+    gameOver?: boolean;
   }): void {
     this.phase = snap.phase;
     this.resources = {
@@ -120,5 +135,6 @@ export class GameState {
     };
     this.seed = snap.seed;
     this.flags = { ...snap.flags };
+    this.gameOver = snap.gameOver ?? false;
   }
 }

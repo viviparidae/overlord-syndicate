@@ -21,6 +21,26 @@ export const ResourceCaps = {
 
 export type PhaseThresholdKey = keyof typeof PhaseThresholds;
 
+export interface PhaseThresholdTransition {
+  from: number;
+  to: number;
+  key: PhaseThresholdKey;
+}
+
+export const PhaseThresholdSequence: readonly PhaseThresholdTransition[] = [
+  { from: 1, to: 2, key: "phase1To2" },
+  { from: 2, to: 3, key: "phase2To3" },
+  { from: 3, to: 4, key: "phase3To4" },
+];
+
+export function thresholdKeyForPhase(phase: number): PhaseThresholdKey | undefined {
+  return PhaseThresholdSequence.find((transition) => transition.from === phase)?.key;
+}
+
+export function thresholdTransitionForPhase(phase: number): PhaseThresholdTransition | undefined {
+  return PhaseThresholdSequence.find((transition) => transition.from === phase);
+}
+
 export function meetsThreshold(
   key: PhaseThresholdKey,
   current: { faith: number; funds: number },

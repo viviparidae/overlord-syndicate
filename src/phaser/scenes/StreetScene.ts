@@ -143,6 +143,10 @@ export class StreetScene extends Phaser.Scene {
     }
   }
 
+  getPlayerX(): number {
+    return this.player.x;
+  }
+
   private updateTarget() {
     const px = this.player.x;
     if (px >= 20 && px <= 300) {

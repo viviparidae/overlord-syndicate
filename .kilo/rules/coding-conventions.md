@@ -47,6 +47,16 @@
 - `describe()` はテスト対象のクラス名・関数名をそのまま英語で使用する (`describe("Resources")`)。日本語化しない。
 - `pnpm test:run` で全テストが PASS すること。
 
+### E2E テスト (Playwright)
+
+- E2E テストは `tests/e2e/**/*.spec.ts` に配置する。**Vitest の include (`tests/**/*.test.ts`) の対象外**であり、`pnpm test:run` では実行されない。
+- E2E テストは Biome の対象外（`biome.json` の `files.includes` で `!tests/e2e` を除外）。
+- 実行は `pnpm test:e2e`（`pnpm build` 後に `vite preview` を自動起動）。`pnpm test:e2e:ui` はデバッグ用 UI モード。
+- テストの観測対象は **DOM（製品サーフェス）** を基本とする。`?e2e=1` のときだけ公開される `window.__OVERLORD__`（`src/phaser/DebugBridge.ts`）はシーンキー・プレイヤー座標など DOM に出ない値の観測にのみ使う。
+- キーに依存する操作は `keyboard.down()` → 待機 → `keyboard.up()` で行う。`keyboard.press()` は keyup がゲームループより先に処理され `JustDown` を取りこぼすため使用しない。
+- 外部フォントなどの外部リソースは `page.route` で遮断し、描画・文言の決定性を確保する。
+- 画面上の数値は `Intl` の通貨表記（`￥` / `¥`）に依存せず、数字を抽出して数値比較する。
+
 ## Logging
 
 - **本番コードパスでの `console.log` / `console.debug` は禁止。**
@@ -70,7 +80,8 @@
 | ゲート | コマンド | 基準 |
 |--------|----------|------|
 | Lint | `pnpm lint` | エラー 0 |
-| 型検査 | `pnpm typecheck` | エラー 0 |
+| 型検査 | `pnpm typecheck` | エラー 0（`tests/e2e` と `playwright.config.ts` を含む） |
 | テスト | `pnpm test:run` | 全 PASS。`src/core/` カバレッジ 80% 以上 |
+| E2E | `pnpm test:e2e` | 全 PASS |
 | ビルド | `pnpm build` | エラー 0、`dist/` 生成 |
 | ドキュメント | `pnpm docs:validate` | エラー 0 |
