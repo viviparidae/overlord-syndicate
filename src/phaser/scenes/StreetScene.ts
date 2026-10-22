@@ -15,8 +15,8 @@ export class StreetScene extends Phaser.Scene {
     e: Phaser.Input.Keyboard.Key;
     t: Phaser.Input.Keyboard.Key;
   };
-  private shopArea!: Phaser.GameObjects.Rectangle;
-  private alleyArea!: Phaser.GameObjects.Rectangle;
+  private shopArea!: Phaser.GameObjects.Image;
+  private alleyArea!: Phaser.GameObjects.Image;
   private currentTarget: "shop" | "npc" | "terminal" = "npc";
   private promptText!: Phaser.GameObjects.Text;
 
@@ -28,14 +28,13 @@ export class StreetScene extends Phaser.Scene {
     const { width, height } = this.scale;
 
     this.physics.world.setBounds(0, 0, width, height);
-    const ground = this.physics.add
-      .staticImage(width / 2, height - 30, "ground")
-      .setOrigin(0.5)
-      .setDisplayOrigin(0, 0);
-    ground.body!.immovable = true;
+    const ground = this.add.tileSprite(width / 2, height - 30, width, 60, "ground_tile");
+    ground.setOrigin(0.5);
+    this.physics.add.existing(ground, true);
+    (ground.body as Phaser.Physics.Arcade.StaticBody).immovable = true;
 
-    const shopArea = this.add.rectangle(160, height - 120, 280, 240, 0x2a2a4a);
-    shopArea.setStrokeStyle(2, 0x4ade80);
+    const shopArea = this.add.image(160, height - 120, "shop_front");
+    shopArea.setDepth(100);
     this.shopArea = shopArea;
     this.add
       .text(160, height - 220, "日の出文房具店", {
@@ -45,8 +44,8 @@ export class StreetScene extends Phaser.Scene {
       })
       .setOrigin(0.5);
 
-    const alleyArea = this.add.rectangle(width - 160, height - 120, 280, 240, 0x2a1a1a);
-    alleyArea.setStrokeStyle(2, 0xf87171);
+    const alleyArea = this.add.image(width - 160, height - 120, "alley_front");
+    alleyArea.setDepth(100);
     this.alleyArea = alleyArea;
     this.add
       .text(width - 160, height - 220, "怪しい路地裏", {
@@ -61,16 +60,17 @@ export class StreetScene extends Phaser.Scene {
     this.player.setDepth(200);
 
     const npcPositions = [
-      { x: 320, y: height - 100, label: "子供" },
-      { x: 480, y: height - 100, label: "主婦" },
-      { x: 640, y: height - 100, label: "サラリーマン" },
-      { x: 800, y: height - 100, label: "悪徳地主" },
+      { x: 320, y: height - 100, label: "子供", key: "npc_child" },
+      { x: 480, y: height - 100, label: "主婦", key: "npc_housewife" },
+      { x: 640, y: height - 100, label: "サラリーマン", key: "npc_child" },
+      { x: 800, y: height - 100, label: "悪徳地主", key: "npc_housewife" },
     ];
 
     for (const npcData of npcPositions) {
-      const npc = new NPC(this, npcData.x, npcData.y);
+      const npc = new NPC(this, npcData.x, npcData.y, npcData.key);
       npc.setOrigin(0.5, 1);
       npc.setDepth(150);
+      npc.setDisplaySize(48, 64);
       this.add
         .text(npcData.x, npcData.y + 6, npcData.label, {
           fontSize: "10px",
@@ -121,11 +121,16 @@ export class StreetScene extends Phaser.Scene {
 
     if (this.cursors.left?.isDown || this.wasd.left?.isDown) {
       this.player.x = Math.max(32, Math.min(this.scale.width - 32, this.player.x - speed * delta));
+      this.player.walk("left");
       moved = true;
     }
     if (this.cursors.right?.isDown || this.wasd.right?.isDown) {
       this.player.x = Math.max(32, Math.min(this.scale.width - 32, this.player.x + speed * delta));
+      this.player.walk("right");
       moved = true;
+    }
+    if (!moved) {
+      this.player.idle();
     }
 
     if (moved) {
@@ -151,20 +156,20 @@ export class StreetScene extends Phaser.Scene {
     const px = this.player.x;
     if (px >= 20 && px <= 300) {
       this.currentTarget = "shop";
-      this.shopArea.setStrokeStyle(3, 0x4ade80);
-      this.alleyArea.setStrokeStyle(2, 0xf87171);
+      this.shopArea.setTint(0x4ade80);
+      this.alleyArea.setTint(0xf87171);
       this.promptText.setText("E: 文房具店に入る  /  ← → 移動");
       this.promptText.setColor("#4ade80");
     } else if (px >= this.scale.width - 300 && px <= this.scale.width - 20) {
       this.currentTarget = "terminal";
-      this.shopArea.setStrokeStyle(2, 0x4ade80);
-      this.alleyArea.setStrokeStyle(3, 0xf87171);
+      this.shopArea.setTint(0xf87171);
+      this.alleyArea.setTint(0x4ade80);
       this.promptText.setText("T: 裏工作パネルを開く  /  ← → 移動");
       this.promptText.setColor("#f87171");
     } else {
       this.currentTarget = "npc";
-      this.shopArea.setStrokeStyle(2, 0x4ade80);
-      this.alleyArea.setStrokeStyle(2, 0xf87171);
+      this.shopArea.setTint(0x4ade80);
+      this.alleyArea.setTint(0xf87171);
       this.promptText.setText("SPACE: 噂を聞く  /  ← → 移動  /  E: 店 /  T: 裏工作");
       this.promptText.setColor("#888888");
     }

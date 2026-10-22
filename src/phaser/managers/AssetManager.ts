@@ -1,3 +1,4 @@
+import type { AssetsManifest } from "@data/assets";
 import type Phaser from "phaser";
 
 export class AssetManager {
@@ -7,34 +8,13 @@ export class AssetManager {
     this.scene = scene;
   }
 
-  generatePlaceholderTexture(
-    key: string,
-    color: number,
-    width: number = 32,
-    height: number = 32,
-  ): void {
-    const graphics = this.scene.add.graphics();
-    graphics.fillStyle(color);
-    graphics.fillRect(0, 0, width, height);
-    graphics.generateTexture(key, width, height);
-    graphics.destroy();
-  }
-
-  generatePlayerTexture(): void {
-    this.generatePlaceholderTexture("player", 0x00d1ff, 24, 36);
-  }
-
-  generateNPCTexture(): void {
-    this.generatePlaceholderTexture("npc", 0xffce00, 20, 32);
-  }
-
-  generateGroundTexture(): void {
-    this.generatePlaceholderTexture("ground", 0x1a1a2e, 960, 60);
-  }
-
-  loadAssets(): void {
-    this.generatePlayerTexture();
-    this.generateNPCTexture();
-    this.generateGroundTexture();
+  loadAssets(manifest: AssetsManifest): void {
+    for (const asset of manifest.assets) {
+      if (asset.type === "atlas") {
+        this.scene.load.atlas(asset.key, asset.path, asset.atlas!);
+      } else {
+        this.scene.load.image(asset.key, asset.path);
+      }
+    }
   }
 }

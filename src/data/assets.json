@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "assets": [
+    {
+      "key": "player",
+      "type": "atlas",
+      "path": "assets/characters/charWorkshopIDemo/20250303demoChar00.png",
+      "atlas": "assets/characters/charWorkshopIDemo/20250303demoChar00.json",
+      "license": "CC0-1.0",
+      "author": "tiopalada",
+      "sourceUrl": "https://opengameart.org/content/tiny-rpg-cc0-characters-and-portraits",
+      "attribution": null
+    },
+    {
+      "key": "npc_child",
+      "type": "atlas",
+      "path": "assets/characters/charWorkshopIDemo/20250303demoChar01.png",
+      "atlas": "assets/characters/charWorkshopIDemo/20250303demoChar01.json",
+      "license": "CC0-1.0",
+      "author": "tiopalada",
+      "sourceUrl": "https://opengameart.org/content/tiny-rpg-cc0-characters-and-portraits",
+      "attribution": null
+    },
+    {
+      "key": "npc_housewife",
+      "type": "atlas",
+      "path": "assets/characters/charWorkshopIDemo/20250303demoChar02.png",
+      "atlas": "assets/characters/charWorkshopIDemo/20250303demoChar02.json",
+      "license": "CC0-1.0",
+      "author": "tiopalda",
+      "sourceUrl": "https://opengameart.org/content/tiny-rpg-cc0-characters-and-portraits",
+      "attribution": null
+    },
+    {
+      "key": "ground_tile",
+      "type": "image",
+      "path": "assets/tiles/Tiles/tile_0000.png",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sourceUrl": "https://kenney.nl/assets/tiny-city",
+      "attribution": null
+    },
+    {
+      "key": "shop_front",
+      "type": "image",
+      "path": "assets/tiles/Tiles/tile_0109.png",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sourceUrl": "https://kenney.nl/assets/tiny-city",
+      "attribution": null
+    },
+    {
+      "key": "alley_front",
+      "type": "image",
+      "path": "assets/tiles/Tiles/tile_0130.png",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sourceUrl": "https://kenney.nl/assets/tiny-city",
+      "attribution": null
+    },
+    {
+      "key": "neon_sign",
+      "type": "image",
+      "path": "assets/tiles/Tiles/tile_0041.png",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sourceUrl": "https://kenney.nl/assets/tiny-city",
+      "attribution": null
+    }
+  ]
+}
