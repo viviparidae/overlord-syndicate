@@ -7,3 +7,10 @@ test-results/
 .kilo/worktrees/
 .env*
 plans/
+# agent persona/memory (OpenClaw)
+SOUL.md
+USER.md
+IDENTITY.md
+MEMORY.md
+memory/
+BOOTSTRAP.md
