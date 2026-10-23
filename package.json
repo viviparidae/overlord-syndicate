@@ -5,6 +5,7 @@
   "packageManager": "pnpm@9.15.0",
   "scripts": {
     "dev": "vite",
+    "dev:host": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "biome check .",
