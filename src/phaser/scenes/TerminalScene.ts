@@ -8,6 +8,9 @@ export class TerminalScene extends Phaser.Scene {
   private key2!: Phaser.Input.Keyboard.Key;
   private escKey!: Phaser.Input.Keyboard.Key;
   private messageText!: Phaser.GameObjects.Text;
+  private btnRumor!: Phaser.GameObjects.Graphics;
+  private btnIntimidate!: Phaser.GameObjects.Graphics;
+  private btnExit!: Phaser.GameObjects.Graphics;
 
   constructor() {
     super({ key: SCENE_KEYS.TERMINAL });
@@ -45,6 +48,8 @@ export class TerminalScene extends Phaser.Scene {
       })
       .setOrigin(0.5);
 
+    this.createTouchButtons();
+
     this.add
       .text(width / 2, height - 70, "1: 噂を流す  /  2: 脅迫する  /  ESC: 外へ出る", {
         fontSize: "12px",
@@ -68,6 +73,92 @@ export class TerminalScene extends Phaser.Scene {
     if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
       this.returnToStreet();
     }
+  }
+
+private createTouchButtons(): void {
+    const gameWidth = 960;
+    const gameHeight = 540;
+    const btnWidth = gameWidth / 3 - 20;
+    const btnY = gameHeight - 90;
+
+    this.btnRumor = this.add.graphics();
+    this.btnRumor.fillStyle(0x000000, 0.6);
+    this.btnRumor.fillRoundedRect(10, btnY, btnWidth, 60, 8);
+    this.btnRumor.lineStyle(3, 0xfbbf24, 0.9);
+    this.btnRumor.strokeRoundedRect(10, btnY, btnWidth, 60, 8);
+    this.btnRumor.setDepth(999);
+    this.btnRumor.setScrollFactor(0);
+
+    this.add
+      .text(10 + btnWidth / 2, btnY + 30, "噂を流す", {
+        fontSize: "16px",
+        color: "#fbbf24",
+        fontFamily: "DotGothic16, monospace",
+      })
+      .setOrigin(0.5)
+      .setDepth(1000)
+      .setScrollFactor(0);
+
+    this.btnIntimidate = this.add.graphics();
+    this.btnIntimidate.fillStyle(0x000000, 0.6);
+    this.btnIntimidate.fillRoundedRect(gameWidth / 3 + 10, btnY, btnWidth, 60, 8);
+    this.btnIntimidate.lineStyle(3, 0xf87171, 0.9);
+    this.btnIntimidate.strokeRoundedRect(gameWidth / 3 + 10, btnY, btnWidth, 60, 8);
+    this.btnIntimidate.setDepth(999);
+    this.btnIntimidate.setScrollFactor(0);
+
+    this.add
+      .text(gameWidth / 3 + 10 + btnWidth / 2, btnY + 30, "脅迫する", {
+        fontSize: "16px",
+        color: "#f87171",
+        fontFamily: "DotGothic16, monospace",
+      })
+      .setOrigin(0.5)
+      .setDepth(1000)
+      .setScrollFactor(0);
+
+    this.btnExit = this.add.graphics();
+    this.btnExit.fillStyle(0x000000, 0.6);
+    this.btnExit.fillRoundedRect((gameWidth * 2) / 3 + 10, btnY, btnWidth, 60, 8);
+    this.btnExit.lineStyle(3, 0x888888, 0.9);
+    this.btnExit.strokeRoundedRect((gameWidth * 2) / 3 + 10, btnY, btnWidth, 60, 8);
+    this.btnExit.setDepth(999);
+    this.btnExit.setScrollFactor(0);
+
+    this.add
+      .text((gameWidth * 2) / 3 + 10 + btnWidth / 2, btnY + 30, "外へ出る", {
+        fontSize: "16px",
+        color: "#888888",
+        fontFamily: "DotGothic16, monospace",
+      })
+      .setOrigin(0.5)
+      .setDepth(1000)
+      .setScrollFactor(0);
+
+    this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+      if (
+        pointer.x >= 10 &&
+        pointer.x <= 10 + btnWidth &&
+        pointer.y >= btnY &&
+        pointer.y <= btnY + 60
+      ) {
+        this.spreadRumor();
+      } else if (
+        pointer.x >= gameWidth / 3 + 10 &&
+        pointer.x <= gameWidth / 3 + 10 + btnWidth &&
+        pointer.y >= btnY &&
+        pointer.y <= btnY + 60
+      ) {
+        this.intimidate();
+      } else if (
+        pointer.x >= (gameWidth * 2) / 3 + 10 &&
+        pointer.x <= (gameWidth * 2) / 3 + 10 + btnWidth &&
+        pointer.y >= btnY &&
+        pointer.y <= btnY + 60
+      ) {
+        this.returnToStreet();
+      }
+    });
   }
 
   private spreadRumor() {

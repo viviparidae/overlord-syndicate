@@ -19,6 +19,11 @@ export class StreetScene extends Phaser.Scene {
   private alleyArea!: Phaser.GameObjects.Image;
   private currentTarget: "shop" | "npc" | "terminal" = "npc";
   private promptText!: Phaser.GameObjects.Text;
+  private touchDirection: "none" | "left" | "right" = "none";
+  private touchTap: boolean = false;
+  private dpadBg!: Phaser.GameObjects.Graphics;
+  private btnShop!: Phaser.GameObjects.Graphics;
+  private btnTerminal!: Phaser.GameObjects.Graphics;
 
   constructor() {
     super({ key: SCENE_KEYS.STREET });
@@ -111,6 +116,8 @@ export class StreetScene extends Phaser.Scene {
       t: this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.T),
     };
 
+    this.createTouchControls();
+
     this.updateTarget();
   }
 
@@ -119,12 +126,17 @@ export class StreetScene extends Phaser.Scene {
     const delta = this.game.loop.delta / 1000;
     let moved = false;
 
-    if (this.cursors.left?.isDown || this.wasd.left?.isDown) {
+    const leftKey =
+      this.cursors.left?.isDown || this.wasd.left?.isDown || this.touchDirection === "left";
+    const rightKey =
+      this.cursors.right?.isDown || this.wasd.right?.isDown || this.touchDirection === "right";
+
+    if (leftKey) {
       this.player.x = Math.max(32, Math.min(this.scale.width - 32, this.player.x - speed * delta));
       this.player.walk("left");
       moved = true;
     }
-    if (this.cursors.right?.isDown || this.wasd.right?.isDown) {
+    if (rightKey) {
       this.player.x = Math.max(32, Math.min(this.scale.width - 32, this.player.x + speed * delta));
       this.player.walk("right");
       moved = true;
@@ -137,8 +149,9 @@ export class StreetScene extends Phaser.Scene {
       this.updateTarget();
     }
 
-    if (Phaser.Input.Keyboard.JustDown(this.wasd.space)) {
+    if (Phaser.Input.Keyboard.JustDown(this.wasd.space) || this.touchTap) {
       this.handleInteraction();
+      this.touchTap = false;
     }
     if (Phaser.Input.Keyboard.JustDown(this.wasd.e)) {
       this.enterShop();
@@ -146,6 +159,105 @@ export class StreetScene extends Phaser.Scene {
     if (Phaser.Input.Keyboard.JustDown(this.wasd.t)) {
       this.openTerminal();
     }
+  }
+
+  private createTouchControls(): void {
+    const gameWidth = 960;
+    const gameHeight = 540;
+
+    this.dpadBg = this.add.graphics();
+    this.dpadBg.fillStyle(0x000000, 0.6);
+    this.dpadBg.beginPath();
+    this.dpadBg.arc(60, gameHeight - 60, 70, 0, Math.PI * 2);
+    this.dpadBg.fillPath();
+    this.dpadBg.lineStyle(3, 0xe94560, 0.9);
+    this.dpadBg.beginPath();
+    this.dpadBg.arc(60, gameHeight - 60, 70, 0, Math.PI * 2);
+    this.dpadBg.strokePath();
+    this.dpadBg.setDepth(999);
+    this.dpadBg.setScrollFactor(0);
+
+    this.btnShop = this.add.graphics();
+    this.btnShop.fillStyle(0x000000, 0.6);
+    this.btnShop.beginPath();
+    this.btnShop.arc(gameWidth - 80, gameHeight - 80, 56, 0, Math.PI * 2);
+    this.btnShop.fillPath();
+    this.btnShop.lineStyle(3, 0xe94560, 0.9);
+    this.btnShop.beginPath();
+    this.btnShop.arc(gameWidth - 80, gameHeight - 80, 56, 0, Math.PI * 2);
+    this.btnShop.strokePath();
+    this.btnShop.setDepth(999);
+    this.btnShop.setScrollFactor(0);
+
+    this.add
+      .text(gameWidth - 80, gameHeight - 80, "E", {
+        fontSize: "24px",
+        color: "#e94560",
+        fontFamily: "DotGothic16, monospace",
+      })
+      .setOrigin(0.5)
+      .setDepth(1000)
+      .setScrollFactor(0);
+
+    this.btnTerminal = this.add.graphics();
+    this.btnTerminal.fillStyle(0x000000, 0.6);
+    this.btnTerminal.beginPath();
+    this.btnTerminal.arc(gameWidth - 80, 80, 44, 0, Math.PI * 2);
+    this.btnTerminal.fillPath();
+    this.btnTerminal.lineStyle(3, 0xf87171, 0.9);
+    this.btnTerminal.beginPath();
+    this.btnTerminal.arc(gameWidth - 80, 80, 44, 0, Math.PI * 2);
+    this.btnTerminal.strokePath();
+    this.btnTerminal.setDepth(999);
+    this.btnTerminal.setScrollFactor(0);
+
+    this.add
+      .text(gameWidth - 80, 80, "T", {
+        fontSize: "18px",
+        color: "#f87171",
+        fontFamily: "DotGothic16, monospace",
+      })
+      .setOrigin(0.5)
+      .setDepth(1000)
+      .setScrollFactor(0);
+
+    this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+      const dpadDist = Phaser.Math.Distance.Between(pointer.x, pointer.y, 60, gameHeight - 60);
+      const shopDist = Phaser.Math.Distance.Between(pointer.x, pointer.y, gameWidth - 80, gameHeight - 80);
+      const terminalDist = Phaser.Math.Distance.Between(pointer.x, pointer.y, gameWidth - 80, 80);
+
+      if (shopDist <= 56) {
+        this.enterShop();
+      } else if (terminalDist <= 44) {
+        this.openTerminal();
+      } else if (dpadDist <= 70) {
+        if (pointer.x < 50) {
+          this.touchDirection = "left";
+        } else if (pointer.x > 70) {
+          this.touchDirection = "right";
+        } else {
+          this.touchTap = true;
+        }
+      }
+    });
+
+    this.input.on("pointermove", (pointer: Phaser.Input.Pointer) => {
+      const dpadDist = Phaser.Math.Distance.Between(pointer.x, pointer.y, 60, gameHeight - 60);
+      if (dpadDist <= 70) {
+        if (pointer.x < 50) {
+          this.touchDirection = "left";
+        } else if (pointer.x > 70) {
+          this.touchDirection = "right";
+        } else {
+          this.touchDirection = "none";
+        }
+      }
+    });
+
+    this.input.on("pointerup", () => {
+      this.touchDirection = "none";
+      this.touchTap = false;
+    });
   }
 
   getPlayerX(): number {

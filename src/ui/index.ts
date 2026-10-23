@@ -47,6 +47,7 @@ function addLogEntry(message: string): void {
   if (!consoleEl) return;
 
   const entry = document.createElement("div");
+  entry.className = "log-entry";
   entry.textContent = message;
   entry.style.color = "#e9e9e9";
   entry.style.padding = "2px 0";

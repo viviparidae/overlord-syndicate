@@ -30,4 +30,13 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const game = new Game(engine, resources);
   installDebugBridge(game, engine);
+
+  // 再フィット: レイアウト確定・変化時にPhaserのScale.FITを更新する
+  const gameWrap = document.querySelector(".game-container-wrapper");
+  if (gameWrap && "ResizeObserver" in window) {
+    const ro = new ResizeObserver(() => game.scale.refresh());
+    ro.observe(gameWrap);
+  }
+  window.addEventListener("resize", () => game.scale.refresh());
+  requestAnimationFrame(() => game.scale.refresh());
 });
