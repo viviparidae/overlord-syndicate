@@ -1,0 +1,11 @@
+{
+  "name": "mentor",
+  "description": "セッションの会話ログやコードの修正履歴を分析し、得られた教訓や手順を自律的にSKILL.mdへ保存・更新するエージェント",
+  "avatar": "🎓",
+  "mode": "subagent",
+  "permissions": {
+    "read": "allow",
+    "edit": "allow",
+    "bash": "allow"
+  }
+}
