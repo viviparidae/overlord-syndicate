@@ -39,6 +39,7 @@ export class StreetScene extends Phaser.Scene {
     (ground.body as Phaser.Physics.Arcade.StaticBody).immovable = true;
 
     const shopArea = this.add.image(160, height - 120, "shop_front");
+    shopArea.setDisplaySize(48, 48);
     shopArea.setDepth(100);
     this.shopArea = shopArea;
     this.add
@@ -50,6 +51,7 @@ export class StreetScene extends Phaser.Scene {
       .setOrigin(0.5);
 
     const alleyArea = this.add.image(width - 160, height - 120, "alley_front");
+    alleyArea.setDisplaySize(48, 48);
     alleyArea.setDepth(100);
     this.alleyArea = alleyArea;
     this.add
@@ -60,24 +62,25 @@ export class StreetScene extends Phaser.Scene {
       })
       .setOrigin(0.5);
 
-    this.player = new Player(this, 160, height - 100);
+    this.player = new Player(this, 160, height - 60);
+    this.player.setDisplaySize(72, 72);
     this.player.setOrigin(0.5, 1);
     this.player.setDepth(200);
 
     const npcPositions = [
-      { x: 320, y: height - 100, label: "子供", key: "npc_child" },
-      { x: 480, y: height - 100, label: "主婦", key: "npc_housewife" },
-      { x: 640, y: height - 100, label: "サラリーマン", key: "npc_child" },
-      { x: 800, y: height - 100, label: "悪徳地主", key: "npc_housewife" },
+      { x: 320, y: height - 60, label: "子供", key: "npc_child" },
+      { x: 480, y: height - 60, label: "主婦", key: "npc_housewife" },
+      { x: 640, y: height - 60, label: "サラリーマン", key: "npc_child" },
+      { x: 800, y: height - 60, label: "悪徳地主", key: "npc_housewife" },
     ];
 
     for (const npcData of npcPositions) {
       const npc = new NPC(this, npcData.x, npcData.y, npcData.key);
       npc.setOrigin(0.5, 1);
       npc.setDepth(150);
-      npc.setDisplaySize(48, 64);
+      npc.setDisplaySize(72, 72);
       this.add
-        .text(npcData.x, npcData.y + 6, npcData.label, {
+        .text(npcData.x, npcData.y - 78, npcData.label, {
           fontSize: "10px",
           color: "#cccccc",
           fontFamily: "monospace",
@@ -223,7 +226,12 @@ export class StreetScene extends Phaser.Scene {
 
     this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
       const dpadDist = Phaser.Math.Distance.Between(pointer.x, pointer.y, 60, gameHeight - 60);
-      const shopDist = Phaser.Math.Distance.Between(pointer.x, pointer.y, gameWidth - 80, gameHeight - 80);
+      const shopDist = Phaser.Math.Distance.Between(
+        pointer.x,
+        pointer.y,
+        gameWidth - 80,
+        gameHeight - 80,
+      );
       const terminalDist = Phaser.Math.Distance.Between(pointer.x, pointer.y, gameWidth - 80, 80);
 
       if (shopDist <= 56) {

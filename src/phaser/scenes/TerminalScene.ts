@@ -75,7 +75,7 @@ export class TerminalScene extends Phaser.Scene {
     }
   }
 
-private createTouchButtons(): void {
+  private createTouchButtons(): void {
     const gameWidth = 960;
     const gameHeight = 540;
     const btnWidth = gameWidth / 3 - 20;
