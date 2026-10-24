@@ -1,22 +1,24 @@
 ---
+
 title: データスキーマ（対話・イベント・アイテム）
 description: ゲーム内で使用する構造化JSONデータの定義と相互参照。
 status: draft
 version: "0.1"
 category: architecture
 tags:
-  - data
-  - json
-  - schema
-traces_to:
-  - docs/design/mechanics.md
-implemented_by:
-  - src/data/dialogue/phase1.json
-  - src/data/events/phase1.json
-  - src/data/items/
-verified_by:
-  - tests/integration/game-loop.test.ts
-  - tests/integration/event-system.test.ts
+- data
+- json
+- schema
+  traces_to:
+- docs/design/mechanics.md
+  implemented_by:
+- src/data/dialogue/phase1.json
+- src/data/events/phase1.json
+- src/data/items/
+  verified_by:
+- tests/integration/game-loop.test.ts
+- tests/integration/event-system.test.ts
+
 ---
 
 # データスキーマ
@@ -68,6 +70,6 @@ verified_by:
 
 ## 3. `src/data/items/`
 
-*現在空です。* 導入フェーズでのみ使用。Phase 3 で `src/balance/Costs.ts` から参照される予定。
+_現在空です。_ 導入フェーズでのみ使用。Phase 3 で `src/balance/Costs.ts` から参照される予定。
 
 > **実装ルール:** このディレクトリを追加した際は、`.gitignore` に `!items/*.json` を追加して Git に追跡されるようにする。

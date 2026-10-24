@@ -1,22 +1,25 @@
 ---
+
 title: コアゲームループ（コアループ)
 description: プレイヤーが繰り返す行動のサイクル。日常パート、裏工作、フィードバックからフェーズ進行まで。
 status: draft
 version: "0.1"
 category: design
 tags:
-  - game-loop
-  - core-loop
-  - design
-traces_to:
-  - docs/design/resources.md
-  - docs/design/mechanics.md
-implemented_by:
-  - src/core/GameEngine.ts
-  - src/core/actions/*.ts
-verified_by:
-  - tests/integration/game-loop.test.ts
+- game-loop
+- core-loop
+- design
+  traces_to:
+- docs/design/resources.md
+- docs/design/mechanics.md
+  implemented_by:
+- src/core/GameEngine.ts
+- src/core/actions/*.ts
+  verified_by:
+- tests/integration/game-loop.test.ts
+
 ---
+
 ---
 
 # コアゲームループ
@@ -43,12 +46,14 @@ flowchart LR
 
 ## ── コアループのコンポーネント
 
-| セグメント | 責任 | 主要ファイル | 主要クラス/関数 |
-| --- | --- | --- | --- |
-| 日常パート | 文房具店で接客、噂収集、警戒度低下 | `src/ui/CommandPanel.ts` | `日常パート` コマンド、`UI` レンダリング、`日常パート` イベントを発行 |
-| 裏工作 | 恐怖/狂信/資金操作、ポリシー・裏工作 | `src/core/actions/*.ts` | `intimidate`, `runShop`, `spreadRumor` など、純粋関数 `ActionResult` を返す |
-| リソース変動 | `Resources` + `GameState` を変更、`EventSystem` を発行 | `src/core/GameEngine.ts` | `GameEngine.execute(action, context)`, `Resources`, `GameState` を変更、イベントを発行 |
-| 警戒度評価 | `suspect` をチェックし、100 なら Game Overにする | `src/core/GameState.ts` | `if (suspect >= 100) setGameOver()` |
-| フェーズ昇格 | `フェーズ昇格` 閾値を確認し、次の Phase に遷移 | `src/balance/Thresholds.ts` | `if (条件) GameState.setPhase(next)` |
+| セグメント   | 責任                                                   | 主要ファイル                                | 主要クラス/関数                                                                        |
+| ------------ | ------------------------------------------------------ | ------------------------------------------- | -------------------------------------------------------------------------------------- |
+| 日常パート   | 文房具店で接客、噂収集、警戒度低下                     | `src/phaser/scenes/StreetScene.ts` (UI統合) | `日常パート` コマンド、`Phaser` Canvas内のUIレンダリング、`日常パート` イベントを発行  |
+| 裏工作       | 恐怖/狂信/資金操作、ポリシー・裏工作                   | `src/core/actions/*.ts`                     | `intimidate`, `runShop`, `spreadRumor` など、純粋関数 `ActionResult` を返す            |
+| リソース変動 | `Resources` + `GameState` を変更、`EventSystem` を発行 | `src/core/GameEngine.ts`                    | `GameEngine.execute(action, context)`, `Resources`, `GameState` を変更、イベントを発行 |
+| 警戒度評価   | `suspect` をチェックし、100 なら Game Overにする       | `src/core/GameState.ts`                     | `if (suspect >= 100) setGameOver()`                                                    |
+| フェーズ昇格 | `フェーズ昇格` 閾値を確認し、次の Phase に遷移         | `src/balance/Thresholds.ts`                 | `if (条件) GameState.setPhase(next)`                                                   |
 
 > **注：** このループ図はゲーム全体の設計を簡潔に表現。実際のコードは `src/core/ -> actions/ -> GameEngine.ts` で実装されます。
+
+> **UI統合:** ステータスバー・コマンドパネル・ログコンソールは `src/phaser/scenes/` 内のPhaser Canvas UIで管理される（詳細は [[docs/design/ui-integration]]）。イベント発行からCanvas内UI更新への経路が確立された。

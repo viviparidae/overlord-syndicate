@@ -1,31 +1,33 @@
 ---
+
 title: Overlord Syndicate ドキュメント索引
 description: ゲームデザイン、技術設計、Balance、リソースなどのドキュメント一覧。
 status: draft
 version: "0.1"
 category: project-management
 tags:
-  - index
-  - documentation
-traces_to:
-  - docs/design/vision.md
-  - docs/design/game-loop.md
-  - docs/design/resources.md
-  - docs/design/mechanics.md
-  - docs/architecture/overview.md
-  - docs/architecture/data-format.md
-  - docs/architecture/save-format.md
-  - docs/balance/costs.md
-  - docs/balance/thresholds.md
-  - docs/localization/ja-vs-en.md
-  - docs/glossary.md
-  - docs/qa/test-plan.md
-  - docs/foam-smart-folders.md
-  - docs/adr/0001-use-phaser-and-vite.md
-implemented_by:
-  - .vscode/settings.json
-verified_by:
-  - scripts/validate-docs.mjs
+- index
+- documentation
+  traces_to:
+- docs/design/vision.md
+- docs/design/game-loop.md
+- docs/design/resources.md
+- docs/design/mechanics.md
+- docs/architecture/overview.md
+- docs/architecture/data-format.md
+- docs/architecture/save-format.md
+- docs/balance/costs.md
+- docs/balance/thresholds.md
+- docs/localization/ja-vs-en.md
+- docs/glossary.md
+- docs/qa/test-plan.md
+- docs/foam-smart-folders.md
+- docs/adr/0001-use-phaser-and-vite.md
+  implemented_by:
+- .vscode/settings.json
+  verified_by:
+- scripts/validate-docs.mjs
+
 ---
 
 # ドキュメント索引
@@ -61,18 +63,8 @@ verified_by:
 
 [[docs/adr/0001-use-phaser-and-vite]] — アーキテクチャ意思決定記録
 
-## 7. FOAM スマートフォルダ
+## 8. UI統合
 
-[[docs/foam-smart-folders]] — スマートフォルダによるドキュメント整理ガイド
-
-## トレーサビリティ
-
-各ドキュメントの frontmatter に以下を持たせ、双方向のトレースを成立させる。
-
-| フィールド | 役割 | 値の形式 |
-|-----------|------|---------|
-| `traces_to` | 前提となる／関連する設計ドキュメント | `docs/...` 相対パス |
-| `implemented_by` | この仕様を実装するソースファイル | `src/...` 相対パス |
-| `verified_by` | この仕様を検証するテスト・検証手段 | `tests/...` 相対パス |
-
-> このドキュメントは FOAM 拡張機能をサポートしています。`[[wiki-link]]` 構文で相互参照を記述します。
+[[docs/architecture/ui-layer]] — UIレイヤー設計（Phaser Canvas内UI）
+[[docs/architecture/input-system]] — 入力システム設計（Phaser Canvas統合）
+[[docs/design/ui-integration]] — UI統合設計（Phaser Canvas統一）

@@ -1,22 +1,25 @@
 ---
+
 title: Smart Folders (FOAD スマートフォルダ)
 description: .foam/queries/ の YAML クエリによるスマートフォルダ運用手順。ステータス/カテゴリ/孤立/検証未設定をサイドバーで整理する。
 status: draft
 version: "0.1"
 category: qa
 tags:
-  - foam
-  - smart-folders
-  - queries
-  - documentation
-traces_to:
-  - docs/index.md
-  - .foam/queries/status-draft.yaml
-implemented_by:
-  - .foam/queries/*.yaml
-verified_by:
-  - scripts/validate-docs.mjs
+- foam
+- smart-folders
+- queries
+- documentation
+  traces_to:
+- docs/index.md
+- .foam/queries/status-draft.yaml
+  implemented_by:
+- .foam/queries/*.yaml
+  verified_by:
+- scripts/validate-docs.mjs
+
 ---
+
 # Smart Folders (フォールドフォルダ)
 
 ## 概要
@@ -42,19 +45,19 @@ verified_by:
 
 ## スマートフォルダ一覧
 
-| フォルダ | 対象 | クエリ例 |
-|---|---|---|
-| `status-draft` | `status: draft` | `status: draft` |
-| `status-review` | `status: review` | `status: review` |
-| `status-approved` | `status: approved` | `status: approved` |
-| `status-deprecated` | `status: deprecated` | `status: deprecated` |
-| `category-architecture` | `category: architecture` | `category: architecture` |
-| `category-balance` | `category: balance` | `category: balance` |
-| `category-design` | `category: design` | `category: design` |
-| `category-localization` | `category: localization` | `category: localization` |
-| `category-qa` | `category: qa` | `category: qa` |
-| `missing-verification` | 未検証 | frontmatter に `verified_by` 未設定 |
-| `orphaned` | 孤立ドキュメント | 他のドキュメントから `[[wiki-link]]` で参照されていない |
+| フォルダ                | 対象                     | クエリ例                                                |
+| ----------------------- | ------------------------ | ------------------------------------------------------- |
+| `status-draft`          | `status: draft`          | `status: draft`                                         |
+| `status-review`         | `status: review`         | `status: review`                                        |
+| `status-approved`       | `status: approved`       | `status: approved`                                      |
+| `status-deprecated`     | `status: deprecated`     | `status: deprecated`                                    |
+| `category-architecture` | `category: architecture` | `category: architecture`                                |
+| `category-balance`      | `category: balance`      | `category: balance`                                     |
+| `category-design`       | `category: design`       | `category: design`                                      |
+| `category-localization` | `category: localization` | `category: localization`                                |
+| `category-qa`           | `category: qa`           | `category: qa`                                          |
+| `missing-verification`  | 未検証                   | frontmatter に `verified_by` 未設定                     |
+| `orphaned`              | 孤立ドキュメント         | 他のドキュメントから `[[wiki-link]]` で参照されていない |
 
 ## 設定手順
 

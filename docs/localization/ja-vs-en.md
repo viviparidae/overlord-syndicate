@@ -1,4 +1,5 @@
 ---
+
 title: ローカライゼーション規約とキー運用
 description: 多言語リソース管理。ja.json がデフォルト、en.json がフォールバック。キー運用ルールと1990年代用語の統一。
 
@@ -6,21 +7,22 @@ status: draft
 version: "0.1"
 category: localization
 tags:
-  - localization
-  - i18n
-  - japanese
-  - 1990年代用語
+- localization
+- i18n
+- japanese
+- 1990年代用語
 
 traces_to:
-  - docs/design/resources.md
-  - docs/glossary.md
-implemented_by:
-  - src/localization/ja.json
-  - src/localization/en.json
-  - src/localization/index.ts
+- docs/design/resources.md
+- docs/glossary.md
+  implemented_by:
+- src/localization/ja.json
+- src/localization/en.json
+- src/localization/index.ts
 
 verified_by:
-  - tests/unit/localization.test.ts (任意) (将来のテストファイル)
+- tests/unit/localization.test.ts (任意) (将来のテストファイル)
+
 ---
 
 # ローカライゼーション規約とキー運用
@@ -34,13 +36,13 @@ verified_by:
 
 ## 2. キー命名規則
 
-| キーパターン | 用途 | 例 |
-|-------------|------|-----|
-| `status.<resource>` | ステータスバー表示 | `status.funds` |
-| `action.<id>.<outcome>` | アクション結果メッセージ | `action.shopRun.success` |
-| `gameover.<reason>` | ゲームオーバー理由 | `gameover.police` |
-| `phase.<num>.name` | Phase 表示名 | `phase.1.name` |
-| `menu.<section>.<action>` | UI メニュー | `menu.main.start` |
+| キーパターン              | 用途                     | 例                       |
+| ------------------------- | ------------------------ | ------------------------ |
+| `status.<resource>`       | ステータスバー表示       | `status.funds`           |
+| `action.<id>.<outcome>`   | アクション結果メッセージ | `action.shopRun.success` |
+| `gameover.<reason>`       | ゲームオーバー理由       | `gameover.police`        |
+| `phase.<num>.name`        | Phase 表示名             | `phase.1.name`           |
+| `menu.<section>.<action>` | UI メニュー              | `menu.main.start`        |
 
 > **ルール:** すべて小文字、スペースなし。命名は `src/localization/` 内で一元管理。`src/localization/` 内の他リソースから相互参照する。
 

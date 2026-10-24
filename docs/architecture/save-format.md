@@ -1,23 +1,25 @@
 ---
+
 title: セーブ形式とバージョン管理
 description: セーブキー、Snapshotスキーマ、バージョン管理とマイグレーション方針。
 status: draft
 version: "0.2"
 category: architecture
 tags:
-  - save
-  - version
-  - migration
-  - snapshot
-traces_to:
-  - docs/design/mechanics.md
-implemented_by:
-  - src/core/save/Serializer.ts
-  - src/core/GameState.ts
-  - src/ui/persistence.ts
-verified_by:
-  - tests/unit/save.Serializer.test.ts
-  - tests/e2e/save-load.spec.ts
+- save
+- version
+- migration
+- snapshot
+  traces_to:
+- docs/design/mechanics.md
+  implemented_by:
+- src/core/save/Serializer.ts
+- src/core/GameState.ts
+- src/ui/persistence.ts
+  verified_by:
+- tests/unit/save.Serializer.test.ts
+- tests/e2e/save-load.spec.ts
+
 ---
 
 # セーブ形式とバージョン管理
@@ -32,15 +34,15 @@ verified_by:
 
 ```typescript
 export interface GameStateSnapshot {
-  version: number;                    // セーブ形式のバージョン（`Serializer.VERSION` から）
-  rngSeed: number;                    // シード固定の乱数生成用
-  phase: PhaseNumber;                 // 現在のフェーズ (1-4)
-  resources: ResourcesSnapshot;       // 4コアリソースのスナップショット
-  flags: Record<string, boolean>;    // フラグ（ターゲット屈服等）
-  unlockedActions: string[];          // アンロック済みアクションIDのリスト
-  rumorStock: string[];               // 所持噂ID
-  timestamp: number;                  // ゲーム内ターン数
-  playtimeMs: number;                 // 実プレイ時間
+  version: number; // セーブ形式のバージョン（`Serializer.VERSION` から）
+  rngSeed: number; // シード固定の乱数生成用
+  phase: PhaseNumber; // 現在のフェーズ (1-4)
+  resources: ResourcesSnapshot; // 4コアリソースのスナップショット
+  flags: Record<string, boolean>; // フラグ（ターゲット屈服等）
+  unlockedActions: string[]; // アンロック済みアクションIDのリスト
+  rumorStock: string[]; // 所持噂ID
+  timestamp: number; // ゲーム内ターン数
+  playtimeMs: number; // 実プレイ時間
 }
 ```
 
@@ -67,10 +69,10 @@ export interface ResourcesSnapshot {
 
 `src/core/save/migrations/` にバージョンごとに置いておく:
 
-| バージョン | 対象ファイル | 目的 |
-|----------|--------------|----|
-| v1 | `src/core/save/migrations/v1-migrate.ts` | 新規ゲーム時の初期化 |
-| v2 | `src/core/save/migrations/v2-migrate.ts` | 将来のフィールド追加・互換性変更 |
+| バージョン | 対象ファイル                             | 目的                             |
+| ---------- | ---------------------------------------- | -------------------------------- |
+| v1         | `src/core/save/migrations/v1-migrate.ts` | 新規ゲーム時の初期化             |
+| v2         | `src/core/save/migrations/v2-migrate.ts` | 将来のフィールド追加・互換性変更 |
 
 `src/core/save/Serializer.ts` に `VERSION` 定数を保持。`loadGame()` は `GameEngine.load()` を呼ぶが、その前に `Serializer.MIGRATIONS[VERSION]` を経由してマイグレーションを適用する。
 
@@ -92,13 +94,13 @@ export function v1Migrate(data: unknown): GameStateSnapshot {
       funds: 10000,
       fear: 0,
       faith: 0,
-      suspect: 0
+      suspect: 0,
     },
     flags: {},
     unlockedActions: [],
     rumorStock: [],
     timestamp: 0,
-    playtimeMs: 0
+    playtimeMs: 0,
   };
 }
 ```
