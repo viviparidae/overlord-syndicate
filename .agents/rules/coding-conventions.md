@@ -92,11 +92,11 @@
 
 完了と報告する前に以下を全部確認する。
 
-| ゲート | コマンド | 基準 |
-|--------|----------|------|
-| Lint | `pnpm lint` | エラー 0 |
-| 型検査 | `pnpm typecheck` | エラー 0（`tests/e2e` と `playwright.config.ts` を含む） |
-| テスト | `pnpm test:run` | 全 PASS。`src/core/` カバレッジ 80% 以上 |
-| E2E | `pnpm test:e2e` | 全 PASS |
-| ビルド | `pnpm build` | エラー 0、`dist/` 生成 |
-| ドキュメント | `pnpm docs:validate` | エラー 0 |
+| ゲート       | コマンド             | 基準                                                     |
+| ------------ | -------------------- | -------------------------------------------------------- |
+| Lint         | `pnpm lint`          | エラー 0                                                 |
+| 型検査       | `pnpm typecheck`     | エラー 0（`tests/e2e` と `playwright.config.ts` を含む） |
+| テスト       | `pnpm test:run`      | 全 PASS。`src/core/` カバレッジ 80% 以上                 |
+| E2E          | `pnpm test:e2e`      | 全 PASS                                                  |
+| ビルド       | `pnpm build`         | エラー 0、`dist/` 生成                                   |
+| ドキュメント | `pnpm docs:validate` | エラー 0                                                 |

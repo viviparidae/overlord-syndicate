@@ -1,16 +1,21 @@
 ---
+
 name: game-mechanic-system
 description: Overlord Syndicate の純粋ゲームロジックレイヤーを実装・テストする。リソース追跡、フェーズステートマシン、アクション処理、イベントシステム、RNG など。
 ---
+
 # Skill: game-mechanic-system
 
 ## 説明
+
 Overlord Syndicate の純粋ゲームロジックレイヤーを実装・テストする。
 
 ## 使用時
+
 - リソース追跡、フェーズステートマシン、アクション処理、イベントシステム、RNG など。
 
 ## 主要ファイル
+
 - `src/core/Resources.ts` — 資金/恐怖/狂信/警戒度トラッカークラス
 - `src/core/GameState.ts` — フェーズFSM (1→2→3→4)、勝敗条件
 - `src/core/EventSystem.ts` — 型付きエミッタ (on/off/emit)
@@ -21,6 +26,7 @@ Overlord Syndicate の純粋ゲームロジックレイヤーを実装・テス�
 - `src/core/actions/*.ts` — 純粋アクション処理 (runShop, spreadRumor, intimidate)
 
 ## データフロー
+
 1. プレイヤークリック → `src/ui/index.ts` の `setupCommandListeners()`
 2. アクション → `GameEngine.execute(action, context)`
 3. `GameEngine` が純粋 `actions/*.ts` を呼び出し
@@ -29,6 +35,7 @@ Overlord Syndicate の純粋ゲームロジックレイヤーを実装・テス�
 6. `GameState.snapshot()` を localStorage に自動保存
 
 ## ActionResult 契約
+
 `src/core/actions/types.ts` で定義。アクションは例外ではなくこの型で結果を返す。
 
 ```ts
@@ -50,6 +57,7 @@ type ActionResult = {
 - `messageVars` — `messageKey` のプレースホルダー値
 
 ## 制約
+
 - `src/core/` 内で Phaser 禁止（DOM / Canvas / ブラウザ API も禁止）
 - すべてのアクションは純粋関数、`ActionResult` のみ返す（例外を投げない）
 - モジュール境界をまたぐインポートはパスエイリアス (`@core/...`) を使用。同一モジュール内は相対パス可

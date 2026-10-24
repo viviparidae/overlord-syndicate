@@ -1,18 +1,23 @@
 ---
+
 name: japanese-localization
 description: 日本語テキスト、フォント、CJK テキストラッピング、ロケールフォーマット処理を行う。t() 関数、formatCurrency()、formatDate()、ja.json / en.json キー管理に使用。
 ---
+
 # Skill: japanese-localization
 
 ## 説明
+
 日本語テキスト、フォント、CJK テキストラッピング、ロケールフォーマット処理を行う。
 
 ## 主要ファイル
+
 - `src/localization/index.ts` — `t()` 関数、`formatCurrency()`、`formatDate()`
 - `src/localization/ja.json` — デフォルト (すべてのキー)
 - `src/localization/en.json` — フォールバック
 
 ## 関数
+
 - `t('status.funds', { amount: 10000 })` → `資金: ¥10,000`
 - `t('status.fear', { level: 5 })` → `恐怖: 5`
 - `t('status.faith', { level: 2 })` → `狂信度: 2`
@@ -22,6 +27,7 @@ description: 日本語テキスト、フォント、CJK テキストラッピン
 - CJK テキストラッピング: オーバーフローなし、文字境界で改行
 
 ## 制約
+
 - すべてのUIテキストキーは `ja.json` に存在する
 - `en.json` はフォールバック: キーが `en.json` にない場合、`ja.json` の値にフォールバック
 - TypeScript/JS コード内に日本語文字列を埋め込まない: `t()` を使用

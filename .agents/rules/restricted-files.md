@@ -3,7 +3,6 @@
 ## Touch Restrictions
 
 以下のファイル・ディレクトリには **読み書き禁止**。
-
 - `package-lock.json` — ロックファイル（pnpm が自動管理）
 - `pnpm-lock.yaml` — 同上
 - `node_modules/` — 依存パッケージ（自動インストール）
@@ -14,7 +13,6 @@
 ## Secret Restrictions
 
 以下のファイルには **秘密鍵・認証情報を絶対に書き込み禁止**。
-
 - `.env` — 環境変数
 - `.env.*` — 環境変数（別環境）
 - `credentials.json` — 認証情報
