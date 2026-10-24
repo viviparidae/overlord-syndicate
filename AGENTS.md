@@ -43,14 +43,14 @@ src/balance/ ─┤
 src/localization/ ─┘   (Phaser非依存)   (描画層)    (DOMオーバレイ)
 ```
 
-| ディレクトリ | 責務 | 禁止事項 |
-|---|---|---|
-| `src/core/` | 純粋ゲームロジック | **Phaser / DOM / Canvas の import 禁止。** ブラウザ API に依存しない。 |
-| `src/phaser/` | 描画・アニメーション・入力 | core を import してよい。core のロジックを書かない。 |
-| `src/ui/` | DOM オーバレイ (ステータスバー等) | core 状態を **読み取り専用** で反映する。直接書き換えない。 |
-| `src/localization/` | 多言語リソース | ここにロジックを持ち越さない。 |
-| `src/balance/` | コスト/リワード/閾値テーブル | 条件分岐ロジックを持ち越さない。 |
-| `src/data/` | JSON ゲームデータ | TS ロジックを embed しない。 |
+| ディレクトリ        | 責務                              | 禁止事項                                                               |
+| ------------------- | --------------------------------- | ---------------------------------------------------------------------- |
+| `src/core/`         | 純粋ゲームロジック                | **Phaser / DOM / Canvas の import 禁止。** ブラウザ API に依存しない。 |
+| `src/phaser/`       | 描画・アニメーション・入力        | core を import してよい。core のロジックを書かない。                   |
+| `src/ui/`           | DOM オーバレイ (ステータスバー等) | core 状態を **読み取り専用** で反映する。直接書き換えない。            |
+| `src/localization/` | 多言語リソース                    | ここにロジックを持ち越さない。                                         |
+| `src/balance/`      | コスト/リワード/閾値テーブル      | 条件分岐ロジックを持ち越さない。                                       |
+| `src/data/`         | JSON ゲームデータ                 | TS ロジックを embed しない。                                           |
 
 **core/ を headless で完全テスト可能に保つ。** `vitest` は `happy-dom` で走るが、`src/core/` のテストは DOM に触れない。
 
@@ -60,25 +60,23 @@ src/localization/ ─┘   (Phaser非依存)   (描画層)    (DOMオーバレ�
 
 ### 3.1 3つの核心リソース + リスクカウンター
 
-| リソース | 内部名 | 役割 | 上昇したときの副作用 |
-|---|---|---|---|
-| 資金 | `funds` (JPY) | 店運営・賄賂・不動産買収・工作資金 | — |
-| 恐怖 | `fear` | NPC を脅迫・屈服させる力 | 上昇しすぎると **警戒度** が悪化する |
-| 狂信 | `faith` | 民衆の熱狂。無償の手駒・支持率に変換 | — |
-| 警戒度 | `suspect` | 警察/行政の注目度 | **100 でゲームオーバー** |
-
+| リソース | 内部名        | 役割                                 | 上昇したときの副作用                 |
+| -------- | ------------- | ------------------------------------ | ------------------------------------ |
+| 資金     | `funds` (JPY) | 店運営・賄賂・不動産買収・工作資金   | —                                    |
+| 恐怖     | `fear`        | NPC を脅迫・屈服させる力             | 上昇しすぎると **警戒度** が悪化する |
+| 狂信     | `faith`       | 民衆の熱狂。無償の手駒・支持率に変換 | —                                    |
+| 警戒度   | `suspect`     | 警察/行政の注目度                    | **100 でゲームオーバー**             |
 - 警戒度は「恐怖を濫用しすぎたペナルティ」であり、恐怖自体が悪ではない。プレイヤーが **効率とリスクのバランス** を設計する。
 - **すべてのリソース変更は `Resources` クラス経由で行う。** 直接代入 (`state.funds = 100`) 禁止。
 
 ### 3.2 フェーズ進行 (4 Phase)
 
-| Phase | 舞台 | 主たる手段 | 警戒度上限 |
-|---|---|---|---|
-| 1 | シャッター商店街 | 実家の文房具店、噂収集、悪徳地主の追放 | 30 |
-| 2 | 地方都市 | 深夜ラジオ・地方局の電波ジャック、演説 | 60 |
-| 3 | 首都・国家 | 全国ネットメディア支配、大企業買収、デモ統制 | 85 |
-| 4 | グローバル | 世界金融・情報網の掌握 | 100 (勝利条件) |
-
+| Phase | 舞台             | 主たる手段                                   | 警戒度上限     |
+| ----- | ---------------- | -------------------------------------------- | -------------- |
+| 1     | シャッター商店街 | 実家の文房具店、噂収集、悪徳地主の追放       | 30             |
+| 2     | 地方都市         | 深夜ラジオ・地方局の電波ジャック、演説       | 60             |
+| 3     | 首都・国家       | 全国ネットメディア支配、大企業買収、デモ統制 | 85             |
+| 4     | グローバル       | 世界金融・情報網の掌握                       | 100 (勝利条件) |
 - フェーズ昇格は `GameState` のステートマシンで管理する。`if (phase === 3)` のような直接比較を書かない。
 - 昇格条件は `src/balance/Thresholds.ts` に集約する。
 
@@ -121,7 +119,6 @@ src/localization/ ─┘   (Phaser非依存)   (描画層)    (DOMオーバレ�
 ## 6. 品質ゲート
 
 詳細なコマンドと基準は `.kilo/rules/coding-conventions.md` の "Quality Gates" を参照。
-
 - `src/core/` を変更したら必ずユニットテストを追加・更新する。
 - テスト名は対象ファイルに対応させる (`Resources.ts` → `Resources.test.ts`)。
 - UI・入力・永続化を含む振る舞いは E2E (`tests/e2e/*.spec.ts`) で検証する。E2E は `pnpm build` 後の `vite preview` を対象とする。
@@ -141,19 +138,19 @@ src/localization/ ─┘   (Phaser非依存)   (描画層)    (DOMオーバレ�
 
 ## 8. コマンド
 
-| コマンド | 用途 |
-|---|---|
-| `pnpm dev` | Vite デベルタサーバー (localhost:5173) |
-| `pnpm build` | プロダクションビルド → `dist/` |
-| `pnpm preview` | ビルド結果のプレビュー |
-| `pnpm lint` | Biome チェック |
-| `pnpm lint:fix` | Biome 自動修正 |
-| `pnpm typecheck` | `tsc --noEmit` |
-| `pnpm test` | Vitest (watch) |
-| `pnpm test:run` | Vitest (1回実行) |
-| `pnpm test:e2e` | Playwright E2E (1回実行。build + preview を自動起動) |
-| `pnpm test:e2e:ui` | Playwright E2E (UI モード) |
-| `pnpm docs:validate` | ドキュメント frontmatter・リンク切れ検証 |
+| コマンド             | 用途                                                 |
+| -------------------- | ---------------------------------------------------- |
+| `pnpm dev`           | Vite デベルタサーバー (localhost:5173)               |
+| `pnpm build`         | プロダクションビルド → `dist/`                       |
+| `pnpm preview`       | ビルド結果のプレビュー                               |
+| `pnpm lint`          | Biome チェック                                       |
+| `pnpm lint:fix`      | Biome 自動修正                                       |
+| `pnpm typecheck`     | `tsc --noEmit`                                       |
+| `pnpm test`          | Vitest (watch)                                       |
+| `pnpm test:run`      | Vitest (1回実行)                                     |
+| `pnpm test:e2e`      | Playwright E2E (1回実行。build + preview を自動起動) |
+| `pnpm test:e2e:ui`   | Playwright E2E (UI モード)                           |
+| `pnpm docs:validate` | ドキュメント frontmatter・リンク切れ検証             |
 
 Kilo 側のコマンド: `/dev` `/test` `/build` `/balance`
 
@@ -162,7 +159,6 @@ Kilo 側のコマンド: `/dev` `/test` `/build` `/balance`
 ## 9. エージェントとスキル
 
 `.kilo/agent/` に専門エージェント、`.kilo/skill/` に再利用スキル、`.kilo/command/` にスラッシュコマンドを配置する。
-
 - 新しいエージェントを追加するときは `mode` (primary / subagent / all) を明示する。
 - スキルは `SKILL.md` の frontmatter に `name` と `description` を必ず書く。`description` が発動条件になるので **トリガ关键词**（ファイル名・API名・タスク語）を含める。
 - エージェント定義・スキル定義に記す参照パスは **実在するファイル** のみ。存在しないファイルを名指ししない（作成予定の場合は「planned」と明記する）。
