@@ -1,5 +1,5 @@
-name: カテゴリ: ローカライゼーション (Localization)
-description: ローカライゼーション関連ドキュメント（category: localization）。docs/localization/* に相当。
+name: "カテゴリ: ローカライゼーション (Localization)"
+description: "ローカライゼーション関連ドキュメント（category: localization）。docs/localization/* に相当。"
 filter:
   jexl: "resource.properties.category == 'localization'"
 select: [title, properties.status, properties.category, path]

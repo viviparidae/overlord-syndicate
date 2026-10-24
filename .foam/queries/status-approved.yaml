@@ -1,5 +1,5 @@
-name: ステータス: 承認済み (Approved)
-description: 承認済みドキュメント（status: approved）。MD Editor Plus ボードの「approved」列と一致。
+name: "ステータス: 承認済み (Approved)"
+description: "承認済みドキュメント（status: approved）。MD Editor Plus ボードの「approved」列と一致。"
 filter:
   jexl: "resource.properties.status == 'approved'"
 select: [title, properties.status, properties.category, path]

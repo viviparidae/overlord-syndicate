@@ -1,5 +1,5 @@
-name: カテゴリ: バランス (Balance)
-description: バランス調整関連ドキュメント（category: balance）。docs/balance/* に相当。
+name: "カテゴリ: バランス (Balance)"
+description: "バランス調整関連ドキュメント（category: balance）。docs/balance/* に相当。"
 filter:
   jexl: "resource.properties.category == 'balance'"
 select: [title, properties.status, properties.category, path]
