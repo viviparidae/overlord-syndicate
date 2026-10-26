@@ -129,9 +129,49 @@ export class GameEngine {
 
   load(json: string): void {
     const data = JSON.parse(json);
-    if (data.version !== 1) throw new Error("Unsupported save version");
-    this.gameState.restore(data.state);
-    this.resources.restore(data.resources);
+    // Determine stored version; default to 0 if absent or malformed
+    let storedVersion: number;
+    if (data && typeof data === 'object' && 'version' in data) {
+      const version = data.version;
+      storedVersion = Number.isFinite(version) ? Number(version) : 0;
+    } else {
+      storedVersion = 0;
+    }
+    // Run migrations from stored version to current version (1)
+    if (storedVersion < 1) {
+      // Version 0 (or absent): add defaults and set version to 1
+      const typed = data as Record<string, unknown>;
+      if (typed.state === undefined) {
+        typed.state = {
+          phase: 1,
+          funds: 10000,
+          fear: 0,
+          faith: 0,
+          suspect: 0,
+          seed: 12345,
+          flags: {},
+          gameOver: false,
+        };
+      }
+      if (typed.resources === undefined) {
+        typed.resources = {
+          funds: 10000,
+          fear: 0,
+          faith: 0,
+          suspect: 0,
+        };
+      }
+      typed.version = 1;
+      this.gameState.restore(typed.state as any);
+      this.resources.restore(typed.resources as any);
+    } else if (storedVersion === 1) {
+      // Current version — no migration needed
+      this.gameState.restore(data.state);
+      this.resources.restore(data.resources);
+    } else {
+      // Unknown future version
+      throw new Error(`Unsupported save version: ${storedVersion}`);
+    }
   }
 
   getResources(): Resources {

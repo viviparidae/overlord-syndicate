@@ -25,4 +25,5 @@ export const SCENE_KEYS = {
   STREET: "StreetScene",
   SHOP: "ShopScene",
   TERMINAL: "TerminalScene",
+  HUD: "HudScene",
 } as const;

@@ -1,20 +1,22 @@
 ---
 
-title: UIレイヤー設計（Phaser Canvas内UI）
-description: Phaser.jsのCanvas内に統合するステータスバー・コマンドパネル・ログコンソール・ゲームオーバーのレイアウトとスタイリング仕様。DOM/Phaserハイブリッドから完全統一されたCanvas UIへの移行戦略。
-status: draft
-version: "0.2"
+title: UIレイヤー設計（Canvas内UI＋DOMボタンハイブリッド）
+description: Phaser.js Canvas内（ステータスバー・ログコンソール）とCanvas外DOM（コマンドボタン）のハイブリッドUIレイヤー設計。DOMボタンとPhaserエンジンの責務分界とイベント結線を定義。
+status: approved
+version: "0.3"
 category: architecture
 tags:
 - architecture
 - ui
 - phaser
-- integration
+- hybrid
   traces_to:
 - docs/design/ui-integration.md
 - docs/architecture/overview.md
   implemented_by:
-- src/phaser/scenes/*
+- src/main.ts
+- src/phaser/scenes/HudScene.ts
+- src/phaser/scenes/StreetScene.ts
 - src/phaser/config.ts
   verified_by:
 - scripts/validate-docs.mjs
@@ -23,12 +25,24 @@ tags:
 
 # UIレイヤー設計
 
-> **目的:** DOM/PhaserハイブリッドなUIをPhaser Canvas内に統一するためのレイヤー構成とスタイリング仕様を定義する。
-> **最新:** v0.2（v0.1は前身の「統合設計策定」）
+> **目的:** Canvas内（ステータスバー・ログコンソール）＋ Canvas外DOM（コマンドボタン）のハイブリッドUI設計。DOMボタンをPhaserエンジンに結線し、Phaser Canvas内UIと責務分界を定義する。
+> **最新:** v0.3（ハイブリッドUIレイヤー：Canvas内UI＋DOMボタン外部配置）
 
 ## ── 概要
 
-`src/ui/` で管理されてきたステータスバー・コマンドパネル・ログコンソール・GameOverオーバーレイをPhaser.js Canvas内に再配置する。DOMによる残存を最小化し、PhaserのComposite構造に従う一方向のUI設計とする。
+| 目標                   | 達成指標                                              |
+| ---------------------- | ----------------------------------------------------- |
+| ステータスバー完全統合 | Canvas内ステータスバーを `updateStatusBar` で維持     |
+| コマンドパネル構成     | `index.html` の `#command-panel` と3ボタンを配置      |
+| ログコンソール完全統合 | Canvas内ログを `addLogEntry` で維持                   |
+| ゲームオーバー統合     | DOMオーバーレイを維持せずPhaserで処理                 |
+| DOM残存最小化          | `game-container` wrapper divのみを残す                |
+| 入力統一               | キーボード + タッチ + マウスを Phaserイベントで統一   |
+| パフォーマンス最適化   | UI更新はイベント駆動（毎フレーム再描画なし）          |
+| テスト                 | E2Eでボタン動作・ステータス更新を検証                 |
+| 品質                   | タップターゲット最小44px、モバイル/デスクトップ両対応 |
+
+`src/ui/` の管理コードは段階的に Phaser Canvas UI に移行する方針であり、DOM要素はコマンドパネルのみ残り、ステータスバー・ログは Canvas 内で統合管理する。DOM残存は最小化し、イベント結線は `src/main.ts` で `engine.execute()` へ橋渡しする。
 
 ## ── Canvas内UIレイヤー構成
 
@@ -36,7 +50,7 @@ tags:
 ┌─────────────────────────────────────────────────┐
 │ Layer 4: Game Over Overlay                       │  z-depth 最高
 ├─────────────────────────────────────────────────┤
-│ Layer 3: Command Panel (Action Buttons)          │ z=999
+│ Layer 3: Command Panel (DOM Buttons)             │ z=999 (Canvas外DOM)
 ├─────────────────────────────────────────────────┤
 │ Layer 2: Log Console                             │ z=900
 ├─────────────────────────────────────────────────┤
@@ -214,12 +228,23 @@ const reasonText = this.add.text(width/2, height/2 + 20, "警戒度が100に達�
 
 DOM要素を最小限にする。以下のDOM IDが残る：
 
-| DOM ID           | 残存理由                                      |
-| ---------------- | --------------------------------------------- |
-| `game-container` | Phaser Canvas wrapper div（Layout安定のため） |
+| DOM ID           | 残存理由                                       |
+| ---------------- | ---------------------------------------------- |
+| `game-container` | Phaser Canvasラッパーdiv（Layout安定のため）   |
+| `command-panel`  | 3つのコマンドボタンのDOM容器（Canvas外に配置） |
 
 残HTML CSS: `@media (max-width: ...)` モバイル用 font-size 調整のみ
 残JS: `main.ts` 内でPhaser UIの初期化のみ
+
+**コマンドパネル構成:**
+
+```html
+<div id="command-panel">
+  <button id="btn-shop">店番をする</button>
+  <button id="btn-rumor">噂を流す</button>
+  <button id="btn-intimidate">地主を脅迫する</button>
+</div>
+```
 
 ## ── トレーサビリティ
 
@@ -229,3 +254,4 @@ DOM要素を最小限にする。以下のDOM IDが残る：
 - [[src/phaser/scenes/ShopScene.ts]] — ShopScene UI実装
 - [[src/phaser/scenes/TerminalScene.ts]] — TerminalScene UI実装
 - [[src/phaser/config.ts]] — Phaser設定・レイヤー基準
+- [[src/phaser/scenes/HudScene.ts]] — HUD統合UI実装

@@ -8,7 +8,7 @@ const page = await browser.newPage({ viewport: { width: 960, height: 720 } });
 const errors = [];
 page.on("pageerror", (e) => errors.push(String(e)));
 page.on("console", (m) => {
-  if (m.type() === "error") errors.push("console: " + m.text());
+  if (m.type() === "error") errors.push(`console: ${m.text()}`);
 });
 
 await page.goto("http://localhost:4173/?e2e=1", { waitUntil: "domcontentloaded" });

@@ -35,3 +35,12 @@ export function spreadRumor(context: ActionContext): ActionResult {
     messageVars: { cost },
   };
 }
+
+export function spreadRumorWithWork(context: ActionContext): ActionResult {
+  const { resources } = context;
+  const result = spreadRumor(context);
+  if (!result.success) return result;
+
+  resources.addSuspect(5);
+  return result;
+}

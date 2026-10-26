@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 3,
   "assets": [
     {
       "key": "player",
@@ -7,9 +7,9 @@
       "path": "assets/characters/charWorkshopIDemo/20250303demoChar00.png",
       "atlas": "assets/characters/charWorkshopIDemo/20250303demoChar00.json",
       "license": "CC0-1.0",
-      "author": "tiopalada",
-      "sourceUrl": "https://opengameart.org/content/tiny-rpg-cc0-characters-and-portraits",
-      "attribution": null
+      "author": "Overlord Syndicate",
+      "sourceUrl": null,
+      "attribution": "オーバーロードシンジケート"
     },
     {
       "key": "npc_child",
@@ -17,9 +17,9 @@
       "path": "assets/characters/charWorkshopIDemo/20250303demoChar01.png",
       "atlas": "assets/characters/charWorkshopIDemo/20250303demoChar01.json",
       "license": "CC0-1.0",
-      "author": "tiopalada",
-      "sourceUrl": "https://opengameart.org/content/tiny-rpg-cc0-characters-and-portraits",
-      "attribution": null
+      "author": "Overlord Syndicate",
+      "sourceUrl": null,
+      "attribution": "オーバーロードシンジケート"
     },
     {
       "key": "npc_housewife",
@@ -27,9 +27,29 @@
       "path": "assets/characters/charWorkshopIDemo/20250303demoChar02.png",
       "atlas": "assets/characters/charWorkshopIDemo/20250303demoChar02.json",
       "license": "CC0-1.0",
-      "author": "tiopalda",
-      "sourceUrl": "https://opengameart.org/content/tiny-rpg-cc0-characters-and-portraits",
-      "attribution": null
+      "author": "Overlord Syndicate",
+      "sourceUrl": null,
+      "attribution": "オーバーロードシンジケート"
+    },
+    {
+      "key": "npc_salaryman",
+      "type": "atlas",
+      "path": "assets/characters/charWorkshopIDemo/20250303demoChar03.png",
+      "atlas": "assets/characters/charWorkshopIDemo/20250303demoChar03.json",
+      "license": "CC0-1.0",
+      "author": "Overlord Syndicate",
+      "sourceUrl": null,
+      "attribution": "オーバーロードシンジケート"
+    },
+    {
+      "key": "npc_landlord",
+      "type": "atlas",
+      "path": "assets/characters/charWorkshopIDemo/20250303demoChar04.png",
+      "atlas": "assets/characters/charWorkshopIDemo/20250303demoChar04.json",
+      "license": "CC0-1.0",
+      "author": "Overlord Syndicate",
+      "sourceUrl": null,
+      "attribution": "オーバーロードシンジケート"
     },
     {
       "key": "ground_tile",

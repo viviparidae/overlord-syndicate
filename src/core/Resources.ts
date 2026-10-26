@@ -27,7 +27,7 @@ export class Resources {
   }
 
   addFear(amount: number): void {
-    this.fear = Math.min(100, this.fear + amount);
+    this.fear = Math.max(0, Math.min(100, this.fear + amount));
   }
 
   addFaith(amount: number): void {

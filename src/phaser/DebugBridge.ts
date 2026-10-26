@@ -26,6 +26,9 @@ declare global {
 }
 
 export function isDebugBridgeEnabled(): boolean {
+  // Only enabled when explicitly allowed via VITE_DEBUG_BRIDGE env var (unset in production builds)
+  // This prevents the ?e2e debug surface from being accessible in produced/previewed builds
+  if (import.meta.env.VITE_DEBUG_BRIDGE !== "true") return false;
   return new URLSearchParams(window.location.search).has("e2e");
 }
 
@@ -48,7 +51,9 @@ export function installDebugBridge(game: Game, engine: GameEngine): void {
     },
     getSceneKey: (): string | null => {
       const active = game.scene.getScenes(true);
-      const scene = active[active.length - 1];
+      // HudScene is always active as overlay; skip it to get the main game scene
+      const gameScene = active.find((s) => s.scene.key !== SCENE_KEYS.HUD);
+      const scene = gameScene ?? active[active.length - 1];
       return scene ? scene.scene.key : null;
     },
     getPlayerX: (): number | null => {

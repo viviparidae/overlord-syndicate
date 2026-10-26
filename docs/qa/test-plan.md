@@ -4,7 +4,7 @@ title: テスト計画とカバレッジ目標
 
 description: QA 観点・テストカバレッジ目標・検証基準。src/core/ 80% 以上。
 
-status: draft
+status: approved
 version: "0.3"
 category: qa
 tags:
@@ -111,6 +111,8 @@ verified_by:
 | Phaser 入力    | E / SPACE / T / 1 / 2 / ESC / 矢印キー + タッチボタンでシーン遷移とアクション実行が成立する              |
 | フェーズ昇格   | 閾値到達でフェーズ表示とログが更新される                                                                 |
 | 永続化         | アクション後に `localStorage` へ保存され、リロード後に復元される。破損セーブでは初期状態へ安全に復帰する |
+| キャラクターレンダリング | プレイヤー（`player`）とNPC（`npc_child` / `npc_housewife` / `npc_salaryman` / `npc_landlord`）のスプライト・アトラスがCanvasに正しく描画される |
+| アセットパイプライン | `assets.json` のアトラス（PNG + JSON）が読み込まれ、レンダリングが正しく行われる |
 | 決定性         | 外部フォントを遮断した状態で数値比較が安定する（`Intl` の全角通貨記号に依存しない）                      |
 
 ## 4. テストコマンド

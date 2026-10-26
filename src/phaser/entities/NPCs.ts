@@ -5,5 +5,7 @@ export class NPC extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, texture, "walk_down_0");
     scene.add.existing(this);
     scene.physics.add.existing(this);
+    this.setDisplaySize(72, 128);
+    this.setOrigin(0.5, 1);
   }
 }

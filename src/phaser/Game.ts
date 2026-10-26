@@ -4,6 +4,7 @@ import Phaser from "phaser";
 import { GAME_CONFIG } from "./config";
 import { setGameContext } from "./GameContext";
 import { BootScene } from "./scenes/BootScene";
+import { HudScene } from "./scenes/HudScene";
 import { ShopScene } from "./scenes/ShopScene";
 import { StreetScene } from "./scenes/StreetScene";
 import { TerminalScene } from "./scenes/TerminalScene";
@@ -13,7 +14,7 @@ export class Game extends Phaser.Game {
     setGameContext({ engine, resources });
     super({
       ...GAME_CONFIG,
-      scene: [BootScene, StreetScene, ShopScene, TerminalScene],
+      scene: [BootScene, StreetScene, ShopScene, TerminalScene, HudScene],
       antialias: false,
     });
   }

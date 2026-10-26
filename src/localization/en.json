@@ -54,5 +54,8 @@
   "log.gameOver": "> 警戒度100。ゲームオーバー。",
   "log.saved": "> セーブしました。",
   "log.insufficient": "> 資金が足りない。",
-  "log.insufficientAction": "> 資金が足りない。操作に失敗した。"
+  "log.insufficientAction": "> 資金が足りない。操作に失敗した。",
+  "ui.cmd.shop": "Run Shop",
+  "ui.cmd.rumor": "Spread Rumor",
+  "ui.cmd.intimidate": "Intimidate"
 }

@@ -13,6 +13,8 @@ tags:
 - docs/design/game-loop.md
 - docs/design/resources.md
 - docs/design/mechanics.md
+- docs/design/character-appearance.md
+- docs/design/asset-pipeline.md
 - docs/architecture/overview.md
 - docs/architecture/data-format.md
 - docs/architecture/save-format.md
@@ -38,6 +40,8 @@ tags:
 [[docs/design/game-loop]] — コアゲームループの説明
 [[docs/design/resources]] — リソース定義とフェーズ進行
 [[docs/design/mechanics]] — アクション・イベント仕様
+[[docs/design/character-appearance]] — キャラクター外観設計
+[[docs/design/asset-pipeline]] — アセットパイプライン
 
 ## 2. アーキテクチャ
 
@@ -62,7 +66,6 @@ tags:
 ## 6. 意思決定記録
 
 [[docs/adr/0001-use-phaser-and-vite]] — アーキテクチャ意思決定記録
-
 ## 8. UI統合
 
 [[docs/architecture/ui-layer]] — UIレイヤー設計（Phaser Canvas内UI）

@@ -21,6 +21,7 @@ export class StreetScene extends Phaser.Scene {
   private promptText!: Phaser.GameObjects.Text;
   private touchDirection: "none" | "left" | "right" = "none";
   private touchTap: boolean = false;
+  private touchActive: boolean = false;
   private dpadBg!: Phaser.GameObjects.Graphics;
   private btnShop!: Phaser.GameObjects.Graphics;
   private btnTerminal!: Phaser.GameObjects.Graphics;
@@ -31,47 +32,49 @@ export class StreetScene extends Phaser.Scene {
 
   create() {
     const { width, height } = this.scale;
+    // ゲーム世界を上にずらしてHUDログコンソール（下端120px）と重ならないように
+    const SHIFT_Y = -140;
 
     this.physics.world.setBounds(0, 0, width, height);
-    const ground = this.add.tileSprite(width / 2, height - 30, width, 60, "ground_tile");
+    const ground = this.add.tileSprite(width / 2, height - 30 + SHIFT_Y, width, 60, "ground_tile");
     ground.setOrigin(0.5);
     this.physics.add.existing(ground, true);
     (ground.body as Phaser.Physics.Arcade.StaticBody).immovable = true;
 
-    const shopArea = this.add.image(160, height - 120, "shop_front");
+    const shopArea = this.add.image(160, height - 120 + SHIFT_Y, "shop_front");
     shopArea.setDisplaySize(48, 48);
     shopArea.setDepth(100);
     this.shopArea = shopArea;
     this.add
-      .text(160, height - 220, "日の出文房具店", {
+      .text(160, height - 220 + SHIFT_Y, "日の出文房具店", {
         fontSize: "14px",
         color: "#4ade80",
         fontFamily: "monospace",
       })
       .setOrigin(0.5);
 
-    const alleyArea = this.add.image(width - 160, height - 120, "alley_front");
+    const alleyArea = this.add.image(width - 160, height - 120 + SHIFT_Y, "alley_front");
     alleyArea.setDisplaySize(48, 48);
     alleyArea.setDepth(100);
     this.alleyArea = alleyArea;
     this.add
-      .text(width - 160, height - 220, "怪しい路地裏", {
+      .text(width - 160, height - 220 + SHIFT_Y, "怪しい路地裏", {
         fontSize: "14px",
         color: "#f87171",
         fontFamily: "monospace",
       })
       .setOrigin(0.5);
 
-    this.player = new Player(this, 160, height - 60);
+    this.player = new Player(this, 160, height - 60 + SHIFT_Y);
     this.player.setDisplaySize(72, 72);
     this.player.setOrigin(0.5, 1);
     this.player.setDepth(200);
 
     const npcPositions = [
-      { x: 320, y: height - 60, label: "子供", key: "npc_child" },
-      { x: 480, y: height - 60, label: "主婦", key: "npc_housewife" },
-      { x: 640, y: height - 60, label: "サラリーマン", key: "npc_child" },
-      { x: 800, y: height - 60, label: "悪徳地主", key: "npc_housewife" },
+      { x: 320, y: height - 60 + SHIFT_Y, label: "子供", key: "npc_child" },
+      { x: 480, y: height - 60 + SHIFT_Y, label: "主婦", key: "npc_housewife" },
+      { x: 640, y: height - 60 + SHIFT_Y, label: "サラリーマン", key: "npc_child" },
+      { x: 800, y: height - 60 + SHIFT_Y, label: "悪徳地主", key: "npc_housewife" },
     ];
 
     for (const npcData of npcPositions) {
@@ -80,7 +83,7 @@ export class StreetScene extends Phaser.Scene {
       npc.setDepth(150);
       npc.setDisplaySize(72, 72);
       this.add
-        .text(npcData.x, npcData.y - 78, npcData.label, {
+        .text(npcData.x, npcData.y - 78 + SHIFT_Y, npcData.label, {
           fontSize: "10px",
           color: "#cccccc",
           fontFamily: "monospace",
@@ -90,7 +93,7 @@ export class StreetScene extends Phaser.Scene {
     }
 
     this.add
-      .text(width / 2, 40, "シャッター商店街", {
+      .text(width / 2, 40 + SHIFT_Y, "シャッター商店街", {
         fontSize: "18px",
         color: "#e94560",
         fontFamily: "monospace",
@@ -100,7 +103,7 @@ export class StreetScene extends Phaser.Scene {
     this.promptText = this.add
       .text(
         width / 2,
-        height - 40,
+        height - 40 + SHIFT_Y,
         "← → 移動  /  SPACE: 調べる  /  E: 店に入る  /  T: 裏工作パネル",
         {
           fontSize: "12px",
@@ -225,13 +228,11 @@ export class StreetScene extends Phaser.Scene {
       .setScrollFactor(0);
 
     this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+      if (this.touchActive) return;
+      this.touchActive = true;
+
       const dpadDist = Phaser.Math.Distance.Between(pointer.x, pointer.y, 60, gameHeight - 60);
-      const shopDist = Phaser.Math.Distance.Between(
-        pointer.x,
-        pointer.y,
-        gameWidth - 80,
-        gameHeight - 80,
-      );
+      const shopDist = Phaser.Math.Distance.Between(pointer.x, pointer.y, gameWidth - 80, gameHeight - 80);
       const terminalDist = Phaser.Math.Distance.Between(pointer.x, pointer.y, gameWidth - 80, 80);
 
       if (shopDist <= 56) {
@@ -244,30 +245,19 @@ export class StreetScene extends Phaser.Scene {
         } else if (pointer.x > 70) {
           this.touchDirection = "right";
         } else {
-          this.touchTap = true;
-        }
-      }
-    });
-
-    this.input.on("pointermove", (pointer: Phaser.Input.Pointer) => {
-      const dpadDist = Phaser.Math.Distance.Between(pointer.x, pointer.y, 60, gameHeight - 60);
-      if (dpadDist <= 70) {
-        if (pointer.x < 50) {
-          this.touchDirection = "left";
-        } else if (pointer.x > 70) {
-          this.touchDirection = "right";
-        } else {
           this.touchDirection = "none";
         }
       }
     });
 
     this.input.on("pointerup", () => {
-      this.touchDirection = "none";
-      this.touchTap = false;
+      this.touchActive = false;
+    });
+
+    this.input.on("pointercancel", () => {
+      this.touchActive = false;
     });
   }
-
   getPlayerX(): number {
     return this.player.x;
   }

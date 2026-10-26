@@ -24,9 +24,14 @@ Overlord Syndicate が使用する画像アセット・フォントのライセ�
 
 ## キャラクター
 
-| アセット                                  | 作者      | ソース                                                                               | ライセンス | フレーム             |
-| ----------------------------------------- | --------- | ------------------------------------------------------------------------------------ | ---------- | -------------------- |
-| Tiny RPG CC0 Characters (character sheet) | tiopalada | [OpenGameArt](https://opengameart.org/content/tiny-rpg-cc0-characters-and-portraits) | CC0-1.0    | 3 walk cycle × 4 dir |
+| アセット                                  | 作者               | ソース                                                                               | ライセンス | フレーム             |
+| ----------------------------------------- | ------------------ | ------------------------------------------------------------------------------------ | ---------- | -------------------- |
+| Tiny RPG CC0 Characters (character sheet) | tiopalada          | [OpenGameArt](https://opengameart.org/content/tiny-rpg-cc0-characters-and-portraits) | CC0-1.0    | 3 walk cycle × 4 dir |
+| Overlord Syndicate 原作キャラクター (player) | Overlord Syndicate | 自社制作                                                                             | CC0-1.0    | 3 walk cycle × 4 dir |
+| Overlord Syndicate 原作キャラクター (npc_child) | Overlord Syndicate | 自社制作                                                                             | CC0-1.0    | 3 walk cycle × 4 dir |
+| Overlord Syndicate 原作キャラクター (npc_housewife) | Overlord Syndicate | 自社制作                                                                             | CC0-1.0    | 3 walk cycle × 4 dir |
+| Overlord Syndicate 原作キャラクター (npc_salaryman) | Overlord Syndicate | 自社制作                                                                             | CC0-1.0    | 3 walk cycle × 4 dir |
+| Overlord Syndicate 原作キャラクター (npc_landlord) | Overlord Syndicate | 自社制作                                                                             | CC0-1.0    | 3 walk cycle × 4 dir |
 
 ## タイル
 
@@ -45,6 +50,7 @@ Overlord Syndicate が使用する画像アセット・フォントのライセ�
 - Kenney Tiny City: CC0 のため帰属不要。
 - DotGothic16: SIL Open Font License 1.1。
 - Tiny RPG CC0 Characters: CC0 のため帰属不要。
+- Overlord Syndicate 原作キャラクター: CC0-1.0。帰属不要（自社制作）。
 
 ## ライセンス許可リスト
 
