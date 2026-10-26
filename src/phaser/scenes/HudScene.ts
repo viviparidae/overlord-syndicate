@@ -61,7 +61,6 @@ export class HudScene extends Phaser.Scene {
     const overlay = this.add.graphics();
     overlay.fillStyle(0x000000, 0);
     overlay.fillRect(0, 0, width, height);
-    overlay.setInteractive({ useHandCursor: false });
     overlay.setDepth(DEPTH.GAMEOVER + 1);
     overlay.visible = false;
     this.gameOverOverlay = overlay as unknown as Phaser.GameObjects.Rectangle;
@@ -137,12 +136,8 @@ export class HudScene extends Phaser.Scene {
     const btnW = 120;
     const btnGap = 16;
 
-    // Background
+    // Background (non-interactive; buttons handle hits)
     this.add.rectangle(0, panelY, width, panelH, 0x0f0f1a).setOrigin(0, 0).setDepth(DEPTH.COMMAND);
-    this.add
-      .rectangle(0, panelY, width, panelH, 0x0f0f1a)
-      .setOrigin(0, 0)
-      .setInteractive({ useHandCursor: false });
 
     // Buttons
     const btnShop = this.add
