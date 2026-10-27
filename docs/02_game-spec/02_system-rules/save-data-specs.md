@@ -39,13 +39,13 @@ verified_by: []
   "phase": "investigation",
   "checkpoint": {
     "kind": "evidence",
-    "id": "ev_bank_slip"
+    "id": "ev_ledger_theft"
   },
   "missCount": 1,
-  "evidence": ["ev_photo_arcade", "ev_bank_slip"],
+  "evidence": ["ev_vhs_tape", "ev_ledger_theft"],
   "flags": {
     "met_chiaki": true,
-    "heard_goda_alibi": true
+    "heard_goda_statement": true
   },
   "seenDialogues": ["intro_01", "intro_02", "talk_tatsumi_01"],
   "investigation": {
@@ -100,9 +100,9 @@ verified_by: []
   "phase": 1,
   "missLimit": 3,
   "areas": ["arcade_center", "arcade_east", "shotengai_office"],
-  "requiredEvidence": ["ev_photo_arcade", "ev_bank_slip", "ev_estimate_dup"],
-  "testimonies": ["t_goda", "t_matsutani", "t_okada"],
-  "epilogueBranches": ["epi_returned", "epi_sacrificed"]
+  "requiredEvidence": ["ev_ledger_theft", "ev_vhs_tape", "ev_notebook_page", "ev_receipt_owned"],
+  "testimonies": ["t_goda", "t_matsutani", "t_wataru", "t_okada"],
+  "epilogueBranches": ["epi_rehabilitated", "epi_exposed", "epi_quiet"]
 }
 ```
 
@@ -110,9 +110,9 @@ verified_by: []
 
 ```json
 {
-  "id": "ev_bank_slip",
-  "nameKey": "evidence.bank_slip.name",
-  "descKey": "evidence.bank_slip.desc",
+  "id": "ev_ledger_theft",
+  "nameKey": "evidence.ledger_theft.name",
+  "descKey": "evidence.ledger_theft.desc",
   "icon": "bank_slip",
   "obtainedAt": "investigation",
   "persistent": false,
@@ -141,7 +141,7 @@ verified_by: []
       "textKey": "testimony.goda.02",
       "pressKey": "testimony.goda.02.press",
       "contradiction": {
-        "evidenceId": "ev_bank_slip",
+        "evidenceId": "ev_vhs_tape",
         "acceptAnyOf": [],
         "successKey": "testimony.goda.02.success",
         "failKey": "testimony.goda.02.fail"
@@ -166,7 +166,7 @@ verified_by: []
     { "textKey": "talk.tatsumi.01.b", "emotion": "think" }
   ],
   "choices": [],
-  "onEnd": { "evidence": ["ev_estimate_dup"], "flags": { "heard_tatsumi": true } }
+  "onEnd": { "evidence": ["ev_ledger_theft"], "flags": { "heard_tatsumi": true } }
 }
 ```
 

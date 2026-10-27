@@ -37,7 +37,7 @@ verified_by: []
 | 章 | `ch` | `chNN` | `ch01` |
 | エリア | `area_` | `area_{name}` | `area_arcade_center` |
 | ホットスポット | `hs_` | `hs_{name}` | `hs_safe` |
-| 証拠 | `ev_` | `ev_{name}` | `ev_bank_slip` |
+| 証拠 | `ev_` | `ev_{name}` | `ev_ledger_theft` |
 | 証言 | `t_` | `t_{speaker}` | `t_goda` |
 | 証言ブロック | `{t-id}_` | `t_goda_02` | `t_goda_02` |
 | 会話 | `talk_` | `talk_{speaker}_{nn}` | `talk_matsutani_01` |
