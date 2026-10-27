@@ -54,6 +54,7 @@ verified_by: []
 - [[docs/03_production/03_art-animation/2d-art-standards]] — 2Dスプライト・UI規格
 - [[docs/03_production/03_art-animation/animations]] — アニメーション・ステート
 - [[docs/03_production/03_art-animation/character-art-plan]] — キャラクターグラフィック制作プラン
+- [[docs/03_production/03_art-animation/ai-prompt-book]] — AI生成プロンプト集
 - [[docs/03_production/03_art-animation/background-art-plan]] — 背景制作プラン（4エリア・2層）
 
 ### 04. サウンド・音声

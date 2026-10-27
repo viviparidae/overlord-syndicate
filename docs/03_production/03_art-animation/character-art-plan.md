@@ -141,7 +141,6 @@ Japanese 1990s small-town shopkeeper, side view
 
 ## 8. 未決事項
 
-- 生成モデル（ローカル/API）と商用条件
-- 顔伏せカットを何枚作るか（1枚で全員に使い回すか）
+- 生成モデル（ローカル/API）と商用条件。プロンプトは [[docs/03_production/03_art-animation/ai-prompt-book]] を使用
 - 走査線・ノイズの有無（やりすぎると読みづらくなる）
 - 背景（[[docs/03_production/03_art-animation/background-art-plan]]）と粒の大きさを揃えるか、背景だけ細かくするか
