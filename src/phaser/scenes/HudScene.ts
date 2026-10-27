@@ -99,7 +99,7 @@ export class HudScene extends Phaser.Scene {
   }
 
   private createGameOverModal(width: number, height: number): void {
-    const modal = this.add.rectangle(width / 2, height / 2, 300, 120, 0x1a1a2e).setOrigin(0.5);
+    const modal = this.add.rectangle(width / 2, height / 2, 420, 140, 0x1a1a2e).setOrigin(0.5);
     modal.setDepth(DEPTH.GAMEOVER + 1);
     modal.setStrokeStyle(2, 0xe94560);
     modal.visible = false;
@@ -116,10 +116,12 @@ export class HudScene extends Phaser.Scene {
     this.gameOverTitle.visible = false;
 
     this.gameOverReason = this.add
-      .text(width / 2, height / 2 + 20, "", {
+      .text(width / 2, height / 2 + 26, "", {
         fontSize: "13px",
         color: "#e9e9e9",
         fontFamily: "DotGothic16, monospace",
+        align: "center",
+        wordWrap: { width: 380 },
       })
       .setOrigin(0.5)
       .setDepth(DEPTH.GAMEOVER + 2);

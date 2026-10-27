@@ -64,13 +64,17 @@ export class StreetScene extends Phaser.Scene {
       { x: 800, y: height - 60 + SHIFT_Y, label: "悪徳地主", key: "npc_landlord" },
     ];
 
+    // Character art occupies only ~57px..112px of each 72x128 atlas frame (transparent
+    // padding above/below), so anchor the label to the visible head rather than the box top.
+    const SPRITE_HEAD_OFFSET = 82;
+
     for (const npcData of npcPositions) {
       const npc = new NPC(this, npcData.x, npcData.y, npcData.key);
       npc.setOrigin(0.5, 1);
       npc.setDepth(150);
       npc.setDisplaySize(72, 128);
       this.add
-        .text(npcData.x, npcData.y - 136, npcData.label, {
+        .text(npcData.x, npcData.y - SPRITE_HEAD_OFFSET, npcData.label, {
           fontSize: "10px",
           color: "#cccccc",
           fontFamily: "monospace",
