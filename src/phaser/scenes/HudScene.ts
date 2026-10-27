@@ -7,10 +7,9 @@ import Phaser from "phaser";
 // z-depthレイヤー（docs/architecture/ui-layer.md参照）
 // 値を調整してゲーム画面が隠れるのを防ぐ
 const DEPTH = {
-  STATUS: 500,     // 下げてゲーム世界と重ならないように
-  LOG_BG: 600,     // 下げてゲーム世界と重ならないように
-  LOG_TEXT: 610,   // 下げてゲーム世界と重ならないように
-  COMMAND: 700,    // ステータスバーより上に表示
+  STATUS: 500, // 下げてゲーム世界と重ならないように
+  LOG_BG: 600, // 下げてゲーム世界と重ならないように
+  LOG_TEXT: 610, // 下げてゲーム世界と重ならないように
   GAMEOVER: 10000,
 } as const;
 
@@ -35,13 +34,10 @@ export class HudScene extends Phaser.Scene {
   private logEntries: LogEntry[] = [];
 
   // --- Game Over ---
-  private gameOverOverlay!: Phaser.GameObjects.Rectangle;
+  private gameOverOverlay!: Phaser.GameObjects.Graphics;
+  private gameOverModal!: Phaser.GameObjects.Rectangle;
   private gameOverTitle!: Phaser.GameObjects.Text;
   private gameOverReason!: Phaser.GameObjects.Text;
-
-  // --- Command Panel ---
-  // Background and buttons are created in createCommandPanel()
-  // Button hit areas are handled in createCommandPanel()
 
   constructor() {
     super({ key: SCENE_KEYS.HUD, active: true });
@@ -52,6 +48,7 @@ export class HudScene extends Phaser.Scene {
     const resources = getGameContext().resources;
     this.engine = engine;
     const { width, height } = this.scale;
+    const phase = engine.getGameState().phase;
 
     this.createStatusBar(width);
     this.createLogConsole(width, height);
@@ -59,18 +56,16 @@ export class HudScene extends Phaser.Scene {
     this.subscribeEngineEvents(resources);
 
     const overlay = this.add.graphics();
-    overlay.fillStyle(0x000000, 0);
+    overlay.fillStyle(0x000000, 0.7);
     overlay.fillRect(0, 0, width, height);
-    overlay.setDepth(DEPTH.GAMEOVER + 1);
+    overlay.setDepth(DEPTH.GAMEOVER);
     overlay.visible = false;
-    this.gameOverOverlay = overlay as unknown as Phaser.GameObjects.Rectangle;
+    this.gameOverOverlay = overlay;
     // Pre-create game-over modal (hidden)
     this.createGameOverModal(width, height);
-    this.createCommandPanel(width, height);
 
-    this.refreshStatusBar(resources);
-    this.addLogEntry("> 1990年・裏社会侵食シミュレーションを開始します。", "system");
-    this.addLogEntry("> コマンドを選択してください。", "system");
+    this.refreshStatusBar({ ...resources, phase });
+    this.addLogEntry(t("log.start"), "system");
   }
 
   private createStatusBar(width: number): void {
@@ -86,8 +81,9 @@ export class HudScene extends Phaser.Scene {
     this.fearText = this.add.text(180, 6, "", cfg).setDepth(DEPTH.STATUS + 1);
     this.faithText = this.add.text(344, 6, "", cfg).setDepth(DEPTH.STATUS + 1);
     this.suspectText = this.add.text(508, 6, "", cfg).setDepth(DEPTH.STATUS + 1);
+    const phaseX = width - 110;
     this.phaseText = this.add
-      .text(width / 2, 6, "", { ...cfg, color: "#22d3ee" })
+      .text(phaseX, 6, "", { ...cfg, color: "#22d3ee" })
       .setOrigin(0.5, 0)
       .setDepth(DEPTH.STATUS + 1);
   }
@@ -104,10 +100,10 @@ export class HudScene extends Phaser.Scene {
 
   private createGameOverModal(width: number, height: number): void {
     const modal = this.add.rectangle(width / 2, height / 2, 300, 120, 0x1a1a2e).setOrigin(0.5);
-    modal.setDepth(DEPTH.GAMEOVER);
+    modal.setDepth(DEPTH.GAMEOVER + 1);
     modal.setStrokeStyle(2, 0xe94560);
     modal.visible = false;
-    this.gameOverOverlay = modal as unknown as Phaser.GameObjects.Rectangle;
+    this.gameOverModal = modal;
 
     this.gameOverTitle = this.add
       .text(width / 2, height / 2 - 20, "", {
@@ -116,7 +112,7 @@ export class HudScene extends Phaser.Scene {
         fontFamily: "DotGothic16, monospace",
       })
       .setOrigin(0.5)
-      .setDepth(DEPTH.GAMEOVER + 1);
+      .setDepth(DEPTH.GAMEOVER + 2);
     this.gameOverTitle.visible = false;
 
     this.gameOverReason = this.add
@@ -126,86 +122,8 @@ export class HudScene extends Phaser.Scene {
         fontFamily: "DotGothic16, monospace",
       })
       .setOrigin(0.5)
-      .setDepth(DEPTH.GAMEOVER + 1);
+      .setDepth(DEPTH.GAMEOVER + 2);
     this.gameOverReason.visible = false;
-  }
-
-  private createCommandPanel(width: number, height: number): void {
-    const panelH = 70;
-    const panelY = height - panelH;
-    const btnW = 120;
-    const btnGap = 16;
-
-    // Background (non-interactive; buttons handle hits)
-    this.add.rectangle(0, panelY, width, panelH, 0x0f0f1a).setOrigin(0, 0).setDepth(DEPTH.COMMAND);
-
-    // Buttons
-    const btnShop = this.add
-      .rectangle(btnW / 2, panelY + panelH / 2, btnW, 40, 0xe94560)
-      .setOrigin(0.5);
-    btnShop.setDepth(DEPTH.COMMAND + 1);
-    const btnShopText = this.add
-      .text(btnW / 2, panelY + panelH / 2, "店番をする", {
-        fontSize: "12px",
-        color: "#e9e9e9",
-        fontFamily: "DotGothic16, monospace",
-      })
-      .setOrigin(0.5);
-    btnShopText.setDepth(DEPTH.COMMAND + 2);
-
-    const btnRumor = this.add
-      .rectangle(btnW + btnGap + btnW / 2, panelY + panelH / 2, btnW, 40, 0x22d3ee)
-      .setOrigin(0.5);
-    btnRumor.setDepth(DEPTH.COMMAND + 1);
-    const btnRumorText = this.add
-      .text(btnW + btnGap + btnW / 2, panelY + panelH / 2, "噂を流す", {
-        fontSize: "12px",
-        color: "#1a1a2e",
-        fontFamily: "DotGothic16, monospace",
-      })
-      .setOrigin(0.5);
-    btnRumorText.setDepth(DEPTH.COMMAND + 2);
-
-    const btnIntimidate = this.add
-      .rectangle(btnW * 2 + btnGap + btnW / 2, panelY + panelH / 2, btnW, 40, 0xfbbf24)
-      .setOrigin(0.5);
-    btnIntimidate.setDepth(DEPTH.COMMAND + 1);
-    const btnIntimidateText = this.add
-      .text(btnW * 2 + btnGap + btnW / 2, panelY + panelH / 2, "脅迫する", {
-        fontSize: "12px",
-        color: "#1a1a2e",
-        fontFamily: "DotGothic16, monospace",
-      })
-      .setOrigin(0.5);
-    btnIntimidateText.setDepth(DEPTH.COMMAND + 2);
-
-    // Button hit areas for clicks (rectangle overlays)
-    const shopBtn = this.add
-      .rectangle(0, panelY, btnW, 40, 0xff0000, 0)
-      .setOrigin(0, 0)
-      .setDepth(DEPTH.COMMAND + 3);
-    shopBtn.setInteractive();
-    shopBtn.on("pointerdown", () => {
-      this.engine.execute("runShop");
-    });
-
-    const rumorBtn = this.add
-      .rectangle(btnW + btnGap, panelY, btnW, 40, 0xff0000, 0)
-      .setOrigin(0, 0)
-      .setDepth(DEPTH.COMMAND + 3);
-    rumorBtn.setInteractive();
-    rumorBtn.on("pointerdown", () => {
-      this.engine.execute("spreadRumor");
-    });
-
-    const intimidateBtn = this.add
-      .rectangle(btnW * 2 + btnGap, panelY, btnW, 40, 0xff0000, 0)
-      .setOrigin(0, 0)
-      .setDepth(DEPTH.COMMAND + 3);
-    intimidateBtn.setInteractive();
-    intimidateBtn.on("pointerdown", () => {
-      this.engine.execute("intimidate");
-    });
   }
 
   private subscribeEngineEvents(resources: {
@@ -216,7 +134,7 @@ export class HudScene extends Phaser.Scene {
     phase?: number;
   }): void {
     this.engine.on("resourcesChanged", (payload) => {
-      this.refreshStatusBar({ ...payload, phase: resources.phase });
+      this.refreshStatusBar({ ...payload, phase: this.engine.getGameState().phase });
     });
     this.engine.on("phaseChanged", ({ to }) => {
       this.refreshStatusBar({
@@ -294,6 +212,7 @@ export class HudScene extends Phaser.Scene {
 
   private setGameOver(): void {
     this.gameOverOverlay.setVisible(true);
+    this.gameOverModal.setVisible(true);
     this.gameOverTitle.setText(t("gameover.title"));
     this.gameOverTitle.setVisible(true);
     this.gameOverReason.setText(t("gameover.suspect"));
