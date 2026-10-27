@@ -52,6 +52,7 @@ verified_by: []
 
 - [[docs/03_production/03_art-animation/2d-art-standards]] — 2Dスプライト・UI規格
 - [[docs/03_production/03_art-animation/animations]] — アニメーション・ステート
+- [[docs/03_production/03_art-animation/character-art-plan]] — キャラクターグラフィック制作プラン
 
 ### 04. サウンド・音声
 
