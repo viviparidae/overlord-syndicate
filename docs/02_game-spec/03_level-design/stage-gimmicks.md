@@ -53,7 +53,7 @@ verified_by: []
 | `hs_shop_counter` | west | inspect | レジ横の被害帳簿。万引きの日時と品目が手書きで続く | `ev_ledger_theft` |
 | `hs_shop_window` | west | inspect | 商店街の貼り紙。「万引きには刑事罰を」の署名運動と総会の日時 | - |
 | `hs_arcade_light` | center | inspect | 切れた電灯。犯行時刻に誰かが影に隠れていた位置関係 | `ev_vhs_tape` |
-| `hs_board` | center | inspect | 掲示板。犯人は「東口の高校生」だと書き足された落書き | - |
+| `hs_board` | center | inspect | 掲示板。「東口の中学生」だと書き足された落書き。学年の記載はない | - |
 | `hs_payphone` | center | inspect | 公衆電話。航が姉の家へかけた記録が通話メモに残る | - |
 | `hs_office_door` | center | move | 組合事務所へ | - |
 | `hs_asphalt` | center | insight | 自販機の下に挟まったレシート。航が同じ文房具を自腹で買っている | `ev_receipt_owned` |
