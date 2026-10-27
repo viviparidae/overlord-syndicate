@@ -131,7 +131,7 @@ export class GameEngine {
     const data = JSON.parse(json);
     // Determine stored version; default to 0 if absent or malformed
     let storedVersion: number;
-    if (data && typeof data === 'object' && 'version' in data) {
+    if (data && typeof data === "object" && "version" in data) {
       const version = data.version;
       storedVersion = Number.isFinite(version) ? Number(version) : 0;
     } else {
