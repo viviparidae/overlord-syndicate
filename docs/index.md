@@ -62,6 +62,7 @@ verified_by: []
 
 - [[docs/04_lore/story-timeline]] — ストーリープロット・年表
 - [[docs/04_lore/character-settings]] — キャラクター設定資料
+- [[docs/04_lore/narrative-rules]] — 叙述・情報開示規約（主人公の内面をいつ開示するか）
 
 ## 5. アーカイブ・ボツ案
 
