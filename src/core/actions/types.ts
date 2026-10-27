@@ -14,8 +14,10 @@ export type ActionResult = {
 
 import type { GameState } from "../GameState";
 import type { Resources } from "../Resources";
+import type { SeededRNG } from "../RNG";
 
 export interface ActionContext {
   resources: Resources;
   gameState: GameState;
+  rng: SeededRNG;
 }

@@ -41,10 +41,20 @@ function parseFrontmatterYaml(raw) {
 
   while (i < lines.length) {
     const line = lines[i];
-    const _indent = line.match(/^(\s*)/)[1].length;
     const trimmed = line.trim();
 
     if (!trimmed || trimmed.startsWith("#")) {
+      i++;
+      continue;
+    }
+
+    if (trimmed.startsWith("- ") && currentList !== null) {
+      currentList.push(
+        trimmed
+          .slice(2)
+          .trim()
+          .replace(/^["']|["']$/g, ""),
+      );
       i++;
       continue;
     }
@@ -62,22 +72,23 @@ function parseFrontmatterYaml(raw) {
         const items = value
           .slice(1, -1)
           .split(",")
-          .map((s) => s.trim().replace(/^"|"$/g, ""))
+          .map((s) => s.trim().replace(/^["']|["']$/g, ""))
           .filter(Boolean);
         obj[currentKey] = items;
-      } else if (value.startsWith('"') && value.endsWith('"')) {
+        currentKey = null;
+        currentList = null;
+      } else if (
+        (value.startsWith('"') && value.endsWith('"')) ||
+        (value.startsWith("'") && value.endsWith("'"))
+      ) {
         obj[currentKey] = value.slice(1, -1);
-      } else if (value.startsWith("'") && value.endsWith("'")) {
-        obj[currentKey] = value.slice(1, -1);
+        currentKey = null;
+        currentList = null;
       } else {
         obj[currentKey] = value;
+        currentKey = null;
+        currentList = null;
       }
-      currentKey = null;
-      currentList = null;
-    } else if (trimmed.startsWith("- ") && currentList !== null) {
-      currentList.push(trimmed.slice(2).trim().replace(/^"|"$/g, ""));
-    } else if (trimmed.match(/^ {2}- /) && currentList !== null) {
-      currentList.push(trimmed.trim().slice(2).trim().replace(/^"|"$/g, ""));
     }
 
     i++;
@@ -135,7 +146,8 @@ function validateFile(filePath, errors) {
     for (const impl of parsed.implemented_by) {
       // ワイルドカードパターン（*）は許容
       if (impl.includes("*")) continue;
-      const p = path.join(REPO_ROOT, impl);
+      const clean = impl.replace(/\s*[(（].*?[)）]/g, "").trim();
+      const p = path.join(REPO_ROOT, clean);
       if (!fs.existsSync(p) && !fs.existsSync(p.replace("/*", ""))) {
         errors.push({ file: filePath, issue: `implemented_by のリンク先が存在しません: ${impl}` });
       }
@@ -144,7 +156,8 @@ function validateFile(filePath, errors) {
 
   if (parsed.verified_by) {
     for (const v of parsed.verified_by) {
-      if (v.includes("（") || v.includes("レビュー") || v.includes("手動")) continue; // 手動検証の兆候
+      if (v.includes("（") || v.includes("(") || v.includes("レビュー") || v.includes("手動"))
+        continue; // 手動検証の兆候
       const p = path.join(REPO_ROOT, v);
       if (!fs.existsSync(p)) {
         errors.push({ file: filePath, issue: `verified_by のリンク先が存在しません: ${v}` });

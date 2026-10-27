@@ -3,18 +3,18 @@
 title: アセットライセンス一覧
 description: 使用するゲームアセット（キャラクター、タイル、フォント）の出典・ライセンス・帰属情報。
 status: approved
-version: 1.0.0
+version: "1.0.0"
 category: design
 tags:
 - assets
 - licensing
 - design
   traces_to:
-- docs/index
+- docs/index.md
   implemented_by:
-- scripts/fetch-assets
+- scripts/fetch-assets.mjs
   verified_by:
-- scripts/validate-assets
+- scripts/fetch-assets.mjs (手動確認)
 
 ---
 
@@ -24,14 +24,14 @@ Overlord Syndicate が使用する画像アセット・フォントのライセ�
 
 ## キャラクター
 
-| アセット                                  | 作者               | ソース                                                                               | ライセンス | フレーム             |
-| ----------------------------------------- | ------------------ | ------------------------------------------------------------------------------------ | ---------- | -------------------- |
-| Tiny RPG CC0 Characters (character sheet) | tiopalada          | [OpenGameArt](https://opengameart.org/content/tiny-rpg-cc0-characters-and-portraits) | CC0-1.0    | 3 walk cycle × 4 dir |
-| Overlord Syndicate 原作キャラクター (player) | Overlord Syndicate | 自社制作                                                                             | CC0-1.0    | 3 walk cycle × 4 dir |
-| Overlord Syndicate 原作キャラクター (npc_child) | Overlord Syndicate | 自社制作                                                                             | CC0-1.0    | 3 walk cycle × 4 dir |
+| アセット                                            | 作者               | ソース                                                                               | ライセンス | フレーム             |
+| --------------------------------------------------- | ------------------ | ------------------------------------------------------------------------------------ | ---------- | -------------------- |
+| Tiny RPG CC0 Characters (character sheet)           | tiopalada          | [OpenGameArt](https://opengameart.org/content/tiny-rpg-cc0-characters-and-portraits) | CC0-1.0    | 3 walk cycle × 4 dir |
+| Overlord Syndicate 原作キャラクター (player)        | Overlord Syndicate | 自社制作                                                                             | CC0-1.0    | 3 walk cycle × 4 dir |
+| Overlord Syndicate 原作キャラクター (npc_child)     | Overlord Syndicate | 自社制作                                                                             | CC0-1.0    | 3 walk cycle × 4 dir |
 | Overlord Syndicate 原作キャラクター (npc_housewife) | Overlord Syndicate | 自社制作                                                                             | CC0-1.0    | 3 walk cycle × 4 dir |
 | Overlord Syndicate 原作キャラクター (npc_salaryman) | Overlord Syndicate | 自社制作                                                                             | CC0-1.0    | 3 walk cycle × 4 dir |
-| Overlord Syndicate 原作キャラクター (npc_landlord) | Overlord Syndicate | 自社制作                                                                             | CC0-1.0    | 3 walk cycle × 4 dir |
+| Overlord Syndicate 原作キャラクター (npc_landlord)  | Overlord Syndicate | 自社制作                                                                             | CC0-1.0    | 3 walk cycle × 4 dir |
 
 ## タイル
 

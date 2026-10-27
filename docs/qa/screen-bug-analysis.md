@@ -13,9 +13,9 @@ tags:
   traces_to:
 - docs/design/ui-integration.md
   implemented_by:
-- tone
+- src/main.ts
   verified_by:
-- tone
+- tests/e2e/command-panel.spec.ts
 
 ---
 

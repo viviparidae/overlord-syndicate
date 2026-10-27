@@ -34,54 +34,125 @@
       border-radius: 4px;
       box-shadow: 0 0 20px rgba(233, 69, 96, 0.3);
       background: #000;
-      width: min(100%, 960px);
-      aspect-ratio: 16 / 9;
+      width: 100%;
+      height: 100%;
+      max-width: 960px;
+      max-height: 540px;
       display: block;
     }
-    /* External controller (dpad + E/T buttons) — Canvas 外 */
-    .external-controls {
+    /* コントローラ (Game Boy 風): 十字キー / A・B / SELECT・START — Canvas 外 */
+    .controller {
+      flex: 0 0 auto;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
-      padding: 16px;
+      gap: 10px;
+      padding: 12px clamp(10px, 3vw, 20px) max(14px, env(safe-area-inset-bottom));
+      background: linear-gradient(180deg, #33334a 0%, #1d1d2b 100%);
+      border-top: 2px solid #e94560;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+    .controller-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(12px, 4vw, 32px);
+      width: min(100%, 460px);
     }
     .dpad {
+      --pad: clamp(40px, 12vw, 48px);
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(3, 1fr);
-      gap: 4px;
-      width: 160px;
+      grid-template-areas:
+        ". up ."
+        "left center right"
+        ". down .";
+      grid-template-columns: repeat(3, var(--pad));
+      grid-template-rows: repeat(3, var(--pad));
+      gap: 2px;
+      filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.45));
     }
-    .dpad button {
-      width: 48px;
-      height: 48px;
-      visibility: visible;
-      font-size: 14px;
-      font-family: "DotGothic16", monospace;
-      background: #1a1a2e;
-      color: #e9e9e9;
+    .dpad-btn {
+      width: var(--pad);
+      height: var(--pad);
+      font-size: 12px;
+      color: #d8d8e6;
+      background: #17171f;
       border: 2px solid #e94560;
       border-radius: 4px;
       cursor: pointer;
-    }
-    .dpad button:active { background: #e94560; color: #1a1a2e; }
-    .action-keys {
       display: flex;
-      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      touch-action: manipulation;
     }
-    .action-keys button {
-      width: 64px;
-      height: 64px;
-      font-size: 16px;
-      font-family: "DotGothic16", monospace;
-      background: #1a1a2e;
-      color: #e9e9e9;
-      border: 2px solid #22d3ee;
-      border-radius: 6px;
+    .dpad-btn:active { background: #e94560; color: #17171f; }
+    .dpad-btn:disabled { opacity: 0; cursor: default; pointer-events: none; }
+    .dpad-up { grid-area: up; border-radius: 8px 8px 4px 4px; }
+    .dpad-down { grid-area: down; border-radius: 4px 4px 8px 8px; }
+    .dpad-left { grid-area: left; border-radius: 8px 4px 4px 8px; }
+    .dpad-right { grid-area: right; border-radius: 4px 8px 8px 4px; }
+    .dpad-center { grid-area: center; }
+    .face-buttons {
+      position: relative;
+      width: clamp(96px, 30vw, 124px);
+      height: clamp(84px, 26vw, 104px);
+      transform: rotate(-20deg);
+    }
+    .face-btn {
+      position: absolute;
+      width: clamp(48px, 15vw, 60px);
+      height: clamp(48px, 15vw, 60px);
+      border: none;
+      border-radius: 50%;
+      background: radial-gradient(circle at 32% 28%, #c2265e, #a3164b 60%, #7d0f38 100%);
+      color: #fff;
       cursor: pointer;
+      touch-action: manipulation;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(20deg);
+      box-shadow: 0 4px 0 #7d0f38, 0 6px 10px rgba(0, 0, 0, 0.45);
     }
-    .action-keys button:active { background: #22d3ee; color: #1a1a2e; }
+    .face-btn:active { box-shadow: 0 1px 0 #7d0f38; background: #c2265e; }
+    .face-a { right: 0; top: 0; }
+    .face-b { left: 0; bottom: 0; }
+    .face-label {
+      font-family: "DotGothic16", monospace;
+      font-size: clamp(14px, 4vw, 17px);
+      line-height: 1;
+    }
+    .face-sub { font-size: 9px; opacity: 0.85; margin-top: 2px; }
+    .system-buttons {
+      display: flex;
+      gap: clamp(14px, 6vw, 34px);
+      transform: rotate(-20deg);
+    }
+    .pill {
+      min-width: clamp(76px, 24vw, 96px);
+      padding: 6px 10px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #9a9ab0, #6f6f86);
+      color: #1a1a2e;
+      cursor: pointer;
+      touch-action: manipulation;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+      font-family: "DotGothic16", monospace;
+      box-shadow: 0 3px 0 #4e4e60;
+    }
+    .pill:active { box-shadow: 0 1px 0 #4e4e60; transform: translateY(2px); }
+    .pill-label { font-size: 10px; letter-spacing: 0.08em; }
+    .pill-sub { font-size: 11px; }
+    button { -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
+    @media (orientation: landscape) and (min-width: 640px) {
+      .controller { flex-direction: row; justify-content: center; gap: 32px; padding-block: 8px; }
+      .controller-row { width: auto; gap: 28px; }
+    }
     @media (max-width: 768px) {
       .game-container-wrapper { padding: 8px; }
       #game-container { border-width: 1px; }
@@ -90,37 +161,110 @@
       .game-container-wrapper { padding: 8px; }
       #game-container { border-width: 1px; }
     }
+.dialogue-panel {
+    display: none;
+    position: fixed;
+    inset: 0;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 1000;
+    padding: 24px;
+  }
+  .dialogue-panel.visible {
+    display: flex;
+  }
+  .dialogue-content {
+    width: 100%;
+    max-width: 420px;
+    background: #0f0f1a;
+    border: 2px solid #e94560;
+    border-radius: 6px;
+    padding: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+  .dialogue-header {
+    border-bottom: 1px solid #333;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+  .dialogue-speaker {
+    font-family: "DotGothic16", "Noto Sans JP", sans-serif;
+    color: #4ade80;
+    font-size: 16px;
+  }
+  .dialogue-text {
+    font-family: "DotGothic16", "Noto Sans JP", sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #e9e9e9;
+    margin-bottom: 14px;
+    min-height: 60px;
+  }
+  .dialogue-options {
+    display: grid;
+    gap: 8px;
+  }
+  .dialogue-option-btn {
+    background: #1e1e2e;
+    border: 1px solid #444;
+    color: #e9e9e9;
+    font-family: "DotGothic16", "Noto Sans JP", sans-serif;
+    font-size: 14px;
+    text-align: left;
+    padding: 10px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .dialogue-option-btn:hover {
+    background: #2e2e4e;
+    border-color: #e94560;
+  }
   </style>
 </head>
 <body>
   <main class="game-container-wrapper">
-    <div id="game-container" style="aspect-ratio: 16 / 9;"></div>
+    <div id="game-container"></div>
   </main>
 
-  <!-- External controller: dpad (WASD) + E/T keys — Canvas 外 -->
-  <div class="external-controls">
-    <div class="dpad">
-      <button type="button" id="btn-up">↑</button>
-      <div></div>
-      <button type="button" id="btn-up-empty" disabled></button>
-      <button type="button" id="btn-left">←</button>
-      <button type="button" id="btn-center" disabled></button>
-      <button type="button" id="btn-right">→</button>
-      <button type="button" id="btn-down-empty" disabled></button>
-      <div></div>
-      <button type="button" id="btn-down">↓</button>
+  <!-- コントローラ (Game Boy 風レイアウト): 十字キー / A・B / SELECT・START — Canvas 外 -->
+  <div class="controller">
+    <div class="controller-row">
+      <div class="dpad" role="group" aria-label="方向キー">
+        <button type="button" id="btn-up" class="dpad-btn dpad-up" aria-label="上">▲</button>
+        <button type="button" id="btn-left" class="dpad-btn dpad-left" aria-label="左">◀</button>
+        <button type="button" id="btn-center" class="dpad-btn dpad-center" disabled aria-hidden="true"></button>
+        <button type="button" id="btn-right" class="dpad-btn dpad-right" aria-label="右">▶</button>
+        <button type="button" id="btn-down" class="dpad-btn dpad-down" aria-label="下">▼</button>
+      </div>
+      <div class="face-buttons" role="group" aria-label="アクション">
+        <button type="button" id="btn-esc" class="face-btn face-b" aria-label="B: 戻る">
+          <span class="face-label">B</span><span class="face-sub">戻る</span>
+        </button>
+        <button type="button" id="btn-space" class="face-btn face-a" aria-label="A: 調べる">
+          <span class="face-label">A</span><span class="face-sub">調べる</span>
+        </button>
+      </div>
     </div>
-    <div class="action-keys">
-      <button type="button" id="btn-e">E</button>
-      <button type="button" id="btn-t">T</button>
+    <div class="system-buttons">
+      <button type="button" id="btn-t" class="pill" aria-label="SELECT: 裏工作パネル">
+        <span class="pill-label">SELECT</span><span class="pill-sub">裏工作</span>
+      </button>
+      <button type="button" id="btn-e" class="pill" aria-label="START: 店に入る">
+        <span class="pill-label">START</span><span class="pill-sub">店</span>
+      </button>
     </div>
   </div>
 
-  <!-- Canvas command panel buttons — for E2E test automation -->
-  <div class="command-buttons">
-    <button type="button" id="btn-shop">店番</button>
-    <button type="button" id="btn-rumor">噂</button>
-    <button type="button" id="btn-intimidate">脅迫</button>
+  <!-- 会話パネル（DOM オーバーレイ） -->
+  <div id="dialogue-panel" class="dialogue-panel">
+    <div class="dialogue-content">
+      <div class="dialogue-header">
+        <span id="dialogue-speaker" class="dialogue-speaker">NPC</span>
+      </div>
+      <div id="dialogue-text" class="dialogue-text">会話テキスト</div>
+      <div id="dialogue-options" class="dialogue-options"></div>
+    </div>
   </div>
 
   <script type="module" src="/src/main.ts"></script>

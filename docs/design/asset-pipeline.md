@@ -18,7 +18,7 @@ tags:
 - src/phaser/Game.ts
 - src/phaser/config.ts
   verified_by:
-- scripts/validate-assets
+- scripts/fetch-assets.mjs (手動確認)
 
 ---
 

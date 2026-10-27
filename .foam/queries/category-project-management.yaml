@@ -1,0 +1,7 @@
+name: "カテゴリ: プロジェクト管理 (Project Management)"
+description: "プロジェクト管理・運用関連ドキュメント（category: project-management）。"
+filter:
+  jexl: "resource.properties.category == 'project-management'"
+select: [title, properties.status, properties.category, path]
+sort: title ASC
+format: table

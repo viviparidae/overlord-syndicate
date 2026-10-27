@@ -9,7 +9,7 @@
 
 - **既存規約に合わせる。** 周囲のコードの書き方・命名・ファイル配置を先に読む。
 
-詳細なコーディング規約・ガードレール・禁止事項は `.kilo/rules/coding-conventions.md` と `.kilo/rules/restricted-files.md` を参照すること。
+詳細なコーディング規約・ガードレール・禁止事項は `.agents/rules/coding-conventions.md` と `.agents/rules/restricted-files.md` を参照すること。
 
 > **Note:** コーディング規約（TypeScriptのみ、コメント禁止等）、品質ゲート、制限ファイル、秘密情報扱い、コミット規約、URL制限などはルールファイルに集約している。AGENTS.md はプロジェクト固有のアーキテクチャ・ドメイン知識・コマンド一覧に特化する。
 
@@ -158,7 +158,7 @@ Kilo 側のコマンド: `/dev` `/test` `/build` `/balance`
 
 ## 9. エージェントとスキル
 
-`.kilo/agent/` に専門エージェント、`.kilo/skill/` に再利用スキル、`.kilo/command/` にスラッシュコマンドを配置する。
+`.agents/agent/` に専門エージェント、`.agents/skills/` に再利用スキル、`.agents/command/` にスラッシュコマンドを配置する。
 - 新しいエージェントを追加するときは `mode` (primary / subagent / all) を明示する。
 - スキルは `SKILL.md` の frontmatter に `name` と `description` を必ず書く。`description` が発動条件になるので **トリガ关键词**（ファイル名・API名・タスク語）を含める。
 - エージェント定義・スキル定義に記す参照パスは **実在するファイル** のみ。存在しないファイルを名指ししない（作成予定の場合は「planned」と明記する）。

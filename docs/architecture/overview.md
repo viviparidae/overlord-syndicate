@@ -16,7 +16,7 @@ tags:
 - src/main.ts
 - src/phaser/config.ts
 - src/core/GameEngine.ts
-- src/ui/index.ts
+- src/ui/persistence.ts
   verified_by:
 - tests/integration/game-loop.test.ts
 
@@ -68,7 +68,7 @@ src/localization/ ─┘   (Phaser非依存)   (描画層)    (DOMオーバレ�
 
 ### `src/ui/` (UIレイヤー：Phaser Canvas内)
 
-- `index.ts` — UIイベント購読・ステータス更新（現在: DOM→Canvas移行中）
+- `persistence.ts` — localStorage 永続化アダプタ（EventSystemを購読して自動保存・復元）
 - UIは `EventSystem` を購読。`GameState` と `Resources` を読み取り専用で参照し、Phaser Canvas内のText/Graphicsオブジェクトを更新
 - DOM残存: `index.html` の `game-container` wrapper div（Layout安定のため）
 

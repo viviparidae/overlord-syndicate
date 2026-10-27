@@ -63,6 +63,9 @@ describe("GameEngine", () => {
     for (let i = 0; i < 19; i++) {
       engine.execute("runShop");
     }
+    // 必須噂フラグを設定し、恐怖値を十分に確保して intimidate を実行可能にする
+    engine.getGameState().flags["rumor_yakuza_alley"] = true;
+    engine.getResources().fear = 600; // fearCost=30 × 20回分
     for (let i = 0; i < 20; i++) {
       engine.execute("intimidate");
     }

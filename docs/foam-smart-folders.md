@@ -1,10 +1,10 @@
 ---
 
-title: Smart Folders (FOAD スマートフォルダ)
+title: Smart Folders (FOAM スマートフォルダ)
 description: .foam/queries/ の YAML クエリによるスマートフォルダ運用手順。ステータス/カテゴリ/孤立/検証未設定をサイドバーで整理する。
-status: draft
+status: approved
 version: "0.1"
-category: qa
+category: project-management
 tags:
 - foam
 - smart-folders
@@ -20,7 +20,7 @@ tags:
 
 ---
 
-# Smart Folders (フォールドフォルダ)
+# Smart Folders (FOAM スマートフォルダ)
 
 ## 概要
 

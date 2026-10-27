@@ -1,4 +1,19 @@
+import {
+  advancePager,
+  currentPageText,
+  type DialoguePagerState,
+  openPager,
+} from "@core/dialogue/DialoguePager";
+import {
+  createDialogueSession,
+  type DialogueSessionState,
+  openDialogue,
+} from "@core/dialogue/DialogueSession";
+import { DEFAULT_TALK_RANGE, findNearestNpc } from "@core/dialogue/proximity";
+import { resolveOption } from "@core/dialogue/resolveOption";
+import { dialogues } from "@data/dialogue/phase1";
 import { SCENE_KEYS } from "@phaser/config";
+import type { DialogueDebugState } from "@phaser/DebugBridge";
 import { NPC } from "@phaser/entities/NPCs";
 import { Player } from "@phaser/entities/Player";
 import { getGameContext } from "@phaser/GameContext";
@@ -12,6 +27,17 @@ export class StreetScene extends Phaser.Scene {
   private alleyArea!: Phaser.GameObjects.Image;
   private currentTarget: "shop" | "npc" | "terminal" = "npc";
   private promptText!: Phaser.GameObjects.Text;
+  private dialogueSession: DialogueSessionState | null = null;
+  private pager: DialoguePagerState | null = null;
+  private dialogueEntry: {
+    id: string;
+    speaker: string;
+    text: string;
+    options?: { text: string; action: string; nextId?: string }[];
+  } | null = null;
+  private dlgObjects: Phaser.GameObjects.GameObject[] = [];
+  private dlgText!: Phaser.GameObjects.Text;
+  private dlgArrow!: Phaser.GameObjects.Text;
 
   constructor() {
     super({ key: SCENE_KEYS.STREET });
@@ -122,13 +148,77 @@ export class StreetScene extends Phaser.Scene {
   private keyA!: Phaser.Input.Keyboard.Key;
   private keyD!: Phaser.Input.Keyboard.Key;
 
+  // Canvas 外の DOM コントローラ (dpad) からの入力。キー状態の合成ではなく直接フラグを立てる。
+  private holdLeft = false;
+  private holdRight = false;
+
+  /**
+   * Canvas 外の dpad ボタンから移動入力を与える。
+   * キーボードの Key.isDown を合成イベントで再現すると Phaser は event.keyCode を見るため
+   * 反応しない。そのため直接フラグを操作する。
+   */
+  public setMoveInput(direction: "left" | "right", active: boolean): void {
+    if (direction === "left") {
+      this.holdLeft = active;
+    } else {
+      this.holdRight = active;
+    }
+  }
+
+  /** Canvas 外の SPACE ボタン用。現在地に応じた行動を実行する。 */
+  public interact(): void {
+    if (this.pager) {
+      this.advanceDialogue();
+      return;
+    }
+
+    // NPC が近接しているか判定（id は dialogue データの id と対応させる）
+    const npcs = [
+      { id: "npc_shota", x: 320 },
+      { id: "npc_mother", x: 480 },
+      { id: "npc_salaryman", x: 640 },
+      { id: "npc_landlord", x: 800 },
+    ];
+    const nearestId = findNearestNpc(this.player.x, npcs, DEFAULT_TALK_RANGE);
+
+    if (nearestId) {
+      // 会話を開く
+      this.dialogueSession = createDialogueSession();
+      openDialogue(this.dialogueSession, npcs, this.player.x, DEFAULT_TALK_RANGE);
+      this.showDialoguePanel(nearestId);
+      this.setMoveInput("left", false);
+      this.setMoveInput("right", false);
+      return;
+    }
+
+    // NPC が近くにいない場合は従来の挙動
+    if (this.currentTarget === "shop") {
+      this.enterShop();
+      return;
+    }
+    if (this.currentTarget === "terminal") {
+      this.openTerminal();
+      return;
+    }
+    // デフォルトは噂を聞く（従来互換）
+    this.handleInteraction();
+  }
+
   update() {
+    if (this.pager) {
+      this.player.idle();
+      if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
+        this.advanceDialogue();
+      }
+      return;
+    }
+
     const speed = 100;
     const delta = this.game.loop.delta / 1000;
     let moved = false;
 
-    const leftKey = this.cursors.left?.isDown || this.keyA.isDown;
-    const rightKey = this.cursors.right?.isDown || this.keyD.isDown;
+    const leftKey = this.cursors.left?.isDown || this.keyA.isDown || this.holdLeft;
+    const rightKey = this.cursors.right?.isDown || this.keyD.isDown || this.holdRight;
 
     if (leftKey) {
       this.player.x = Math.max(32, Math.min(this.scale.width - 32, this.player.x - speed * delta));
@@ -148,9 +238,9 @@ export class StreetScene extends Phaser.Scene {
       this.updateTarget();
     }
 
-    // SPACE: NPC dialogue / shop action when near NPC
-    if (Phaser.Input.Keyboard.JustDown(this.spaceKey) && this.currentTarget === "npc") {
-      this.handleInteraction();
+    // SPACE: 現在地に応じた行動（NPC近接なら会話ウィンドウ）
+    if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
+      this.interact();
     }
 
     // E: enter the stationery shop
@@ -178,19 +268,29 @@ export class StreetScene extends Phaser.Scene {
     return this.player.y;
   }
 
+  getDialogueInfo(): DialogueDebugState | null {
+    if (!this.pager) return null;
+    return {
+      isOpen: this.dialogueSession?.isOpen ?? false,
+      pageIndex: this.pager.pageIndex,
+      isFinished: this.pager.isFinished,
+      optionCount: this.pager.isFinished ? (this.dialogueEntry?.options?.length ?? 0) : 0,
+    };
+  }
+
   private updateTarget() {
     const px = this.player.x;
     if (px >= 20 && px <= 300) {
       this.currentTarget = "shop";
       this.shopArea.setTint(0x4ade80);
       this.alleyArea.setTint(0xf87171);
-      this.promptText.setText("E: 文房具店に入る  /  ← → 移動");
+      this.promptText.setText("SPACE: 店に入る  /  ← → 移動  /  E: 店  /  T: 裏工作");
       this.promptText.setColor("#4ade80");
     } else if (px >= this.scale.width - 300 && px <= this.scale.width - 20) {
       this.currentTarget = "terminal";
       this.shopArea.setTint(0xf87171);
       this.alleyArea.setTint(0x4ade80);
-      this.promptText.setText("T: 裏工作パネルを開く  /  ← → 移動");
+      this.promptText.setText("SPACE: 裏工作パネルを開く  /  ← → 移動");
       this.promptText.setColor("#f87171");
     } else {
       this.currentTarget = "npc";
@@ -243,5 +343,146 @@ export class StreetScene extends Phaser.Scene {
       ease: "Power2",
       onComplete: () => msg.destroy(),
     });
+  }
+
+  private static readonly DLG_DEPTH = 650;
+
+  /** 会話ウィンドウ（Phaser 描画）を表示。 ▼点滅つきページ送り。 */
+  private showDialoguePanel(npcId: string): void {
+    const entry = dialogues.find((d) => d.id === npcId);
+    if (!entry) return;
+
+    this.dialogueEntry = entry;
+    this.pager = openPager(entry);
+    this.dialogueSession!.isOpen = true;
+    this.setMoveInput("left", false);
+    this.setMoveInput("right", false);
+    this.renderDialogueWindow();
+  }
+
+  private renderDialogueWindow(): void {
+    const { width, height } = this.scale;
+    const winH = 110;
+    const winY = height - 125 - winH;
+    const font = { fontFamily: "DotGothic16, monospace" };
+
+    if (this.dlgObjects.length === 0) {
+      const bg = this.add
+        .rectangle(0, winY, width, winH, 0x0f0f1a)
+        .setOrigin(0, 0)
+        .setDepth(StreetScene.DLG_DEPTH)
+        .setStrokeStyle(1, 0x444466)
+        .setInteractive({ useHandCursor: true });
+      bg.on("pointerup", () => this.advanceDialogue());
+
+      const speaker = this.add
+        .text(12, winY + 6, "", { ...font, fontSize: "12px", color: "#22d3ee" })
+        .setDepth(StreetScene.DLG_DEPTH + 1);
+
+      this.dlgText = this.add
+        .text(12, winY + 26, "", {
+          ...font,
+          fontSize: "13px",
+          color: "#e9e9e9",
+          wordWrap: { width: width - 24 },
+        })
+        .setDepth(StreetScene.DLG_DEPTH + 1);
+
+      this.dlgArrow = this.add
+        .text(width - 20, winY + winH - 14, "▼", {
+          ...font,
+          fontSize: "12px",
+          color: "#e9e9e9",
+        })
+        .setOrigin(0.5)
+        .setDepth(StreetScene.DLG_DEPTH + 1);
+      this.tweens.add({
+        targets: this.dlgArrow,
+        alpha: 0,
+        duration: 400,
+        yoyo: true,
+        repeat: -1,
+      });
+
+      this.dlgObjects = [bg, speaker, this.dlgText, this.dlgArrow];
+      this.dlgSpeaker = speaker;
+    }
+
+    const pager = this.pager!;
+    this.dlgSpeaker.setText(pager.speaker);
+    this.dlgText.setText(currentPageText(pager));
+    this.dlgArrow.setVisible(!pager.isFinished);
+
+    this.clearDialogueOptions();
+    if (pager.isFinished && this.dialogueEntry?.options) {
+      const optionsEl = this.dialogueEntry.options;
+      const startX = width / 2 - (optionsEl.length * 130) / 2 + 65;
+      optionsEl.forEach((opt, i) => {
+        const btn = this.add
+          .text(startX + i * 130, winY + winH - 16, opt.text, {
+            ...font,
+            fontSize: "11px",
+            color: "#4ade80",
+            backgroundColor: "#1a1a2e",
+            padding: { x: 6, y: 3 },
+          })
+          .setOrigin(0.5)
+          .setDepth(StreetScene.DLG_DEPTH + 2)
+          .setInteractive({ useHandCursor: true });
+        btn.on("pointerup", () => this.selectDialogueOption(opt));
+        this.dlgObjects.push(btn);
+        this.dlgOptionTexts.push(btn);
+      });
+    }
+  }
+
+  private dlgSpeaker!: Phaser.GameObjects.Text;
+  private dlgOptionTexts: Phaser.GameObjects.Text[] = [];
+
+  private clearDialogueOptions(): void {
+    for (const btn of this.dlgOptionTexts) {
+      this.dlgObjects = this.dlgObjects.filter((o) => o !== btn);
+      btn.destroy();
+    }
+    this.dlgOptionTexts = [];
+  }
+
+  private advanceDialogue(): void {
+    if (!this.pager) return;
+    advancePager(this.pager);
+    this.renderDialogueWindow();
+  }
+
+  private closeDialogueWindow(): void {
+    this.tweens.killTweensOf(this.dlgArrow);
+    for (const obj of this.dlgObjects) {
+      (obj as Phaser.GameObjects.GameObject).destroy();
+    }
+    this.dlgObjects = [];
+    this.dlgOptionTexts = [];
+    this.pager = null;
+    this.dialogueEntry = null;
+  }
+
+  private selectDialogueOption(option: { text: string; action: string }): void {
+    this.closeDialogueWindow();
+    this.dialogueSession!.isOpen = false;
+    this.dialogueSession = null;
+
+    const resolved = resolveOption(option);
+    if (resolved.kind === "close") return;
+    if (resolved.kind === "scene") {
+      if (resolved.sceneId === "shop") {
+        this.enterShop();
+        return;
+      }
+      if (resolved.sceneId === "terminal") {
+        this.openTerminal();
+        return;
+      }
+    }
+    if (resolved.kind === "action") {
+      this.engine.execute(resolved.actionId);
+    }
   }
 }

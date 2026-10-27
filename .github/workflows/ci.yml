@@ -15,7 +15,9 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
       - run: pnpm typecheck
-      - run: pnpm test:run
+      - run: VITE_DEBUG_BRIDGE=true pnpm test:run
+        env:
+          VITE_DEBUG_BRIDGE: "true"
       - run: pnpm docs:validate
       - run: pnpm build
       - uses: actions/upload-pages-artifact@v3
@@ -40,7 +42,9 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
-      - run: pnpm test:e2e
+      - run: VITE_DEBUG_BRIDGE=true pnpm test:e2e
+        env:
+          VITE_DEBUG_BRIDGE: "true"
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

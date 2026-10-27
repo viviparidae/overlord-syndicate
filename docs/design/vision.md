@@ -13,11 +13,9 @@ tags:
 - docs/design/game-loop.md
   implemented_by:
 - README.md
-- .kilo/agent/game-architect.md
+- .agents/agent/game-architect.md
   verified_by:
 - AGENTS.md (セクション 3: ゲームドメイン)
-
----
 
 ---
 
@@ -36,7 +34,7 @@ tags:
 
 ## ── ゲームの目的
 
-すべての 4 Phase を達成し **Phase 4 (グローバル) → 警戒度 100 を達成** し、世界支配を完了する。
+すべての 4 Phase を達成し、**Phase 4 (グローバル) で世界支配を完了**する。警戒度 100 に達すると警察が介入しゲームオーバーとなるため、警戒度をコントロールしながら目標を達成する。
 
 ## ── 除外事項
 

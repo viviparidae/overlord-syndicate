@@ -162,7 +162,9 @@ test("モバイル: D-Pad中央タップでSPACE相当(NPC対話)が可能", asy
   const playerX = await page.evaluate(() => (window as any).__OVERLORD__?.getPlayerX() ?? null);
   console.log("Player X after moves:", playerX);
   
-  // 対話を試みる
-  const logs = await page.locator(".log-entry").allTextContents();
-  expect(logs.some((l) => l.includes("噂") || l.includes("資金が足りない"))).toBeTruthy();
+  // 対話を試みる: NPC近接でSPACE相当 → 会話ウィンドウが開く
+  await page.click("#btn-space");
+  await page.waitForTimeout(300);
+  const dlg = await page.evaluate(() => (window as any).__OVERLORD__?.getDialogue() ?? null);
+  expect(dlg?.isOpen).toBe(true);
 });

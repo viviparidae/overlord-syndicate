@@ -9,6 +9,7 @@ import type { ActionContext, ActionResult } from "@core/actions/types";
 import { EventSystem } from "./EventSystem";
 import { GameState } from "./GameState";
 import { Resources } from "./Resources";
+import { SeededRNG } from "./RNG";
 
 export type GameEventMap = {
   actionExecuted: { actionId: string; result: ActionResult };
@@ -93,7 +94,8 @@ export class GameEngine {
       };
     }
 
-    const result = handler({ resources: this.resources, gameState: this.gameState });
+    const rng = new SeededRNG(this.gameState.seed + this.gameState.turnCount);
+    const result = handler({ resources: this.resources, gameState: this.gameState, rng });
 
     this.gameState.incrementTurn();
     this.gameState.resources = this.resources.snapshot();
@@ -162,8 +164,8 @@ export class GameEngine {
         };
       }
       typed.version = 1;
-      this.gameState.restore(typed.state as any);
-      this.resources.restore(typed.resources as any);
+      this.gameState.restore(typed.state as { phase: number; funds: number; fear: number; faith: number; suspect: number; seed: number; flags: Record<string, boolean>; gameOver: boolean });
+      this.resources.restore(typed.resources as { funds: number; fear: number; faith: number; suspect: number });
     } else if (storedVersion === 1) {
       // Current version — no migration needed
       this.gameState.restore(data.state);

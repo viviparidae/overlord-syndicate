@@ -1,10 +1,11 @@
 import { ActionRegistry } from "@core/actions/registry";
 import { GameState } from "@core/GameState";
 import { Resources } from "@core/Resources";
+import { SeededRNG } from "@core/RNG";
 import { describe, expect, it } from "vitest";
 
 function makeContext() {
-  return { resources: new Resources(), gameState: new GameState() };
+  return { resources: new Resources(), gameState: new GameState(), rng: new SeededRNG(12345) };
 }
 
 describe("ActionRegistry", () => {

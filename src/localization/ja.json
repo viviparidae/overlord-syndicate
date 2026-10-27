@@ -10,7 +10,11 @@
   "action.spreadRumor.success": "噂を流した。資金 {cost} 円。街の空気が変わった。",
   "action.spreadRumor.insufficientFunds": "噂を流す資金が足りない。{cost} 円必要。",
   "action.intimidate.success": "脅迫した。資金 {cost} 円。相手の顔から血の気が引いた。",
+  "action.intimidate.fail": "失敗した。恐怖 {cost}。相手は怯まなかった。警戒度が上がる。",
   "action.intimidate.insufficientFunds": "用地代が足りない。{cost} 円必要。",
+  "action.intimidate.insufficientFear": "恐怖が足りない。{cost} 必要。",
+  "action.intimidate.missingRumor": "{target} を脅迫する材料が足りない。",
+  "action.intimidate.missingFlag": "{target} にまだ手が届かない。",
   "action.gameOver": "警戒度が限界だ。もう動けない。",
 
   "gameover.title": "ゲームオーバー",
@@ -36,6 +40,8 @@
   "scene.street.npcHousewife": "主婦",
   "scene.street.npcSalaryman": "サラリーマン",
   "scene.street.npcLandlord": "悪徳地主",
+  "scene.street.npcShota": "翔太",
+  "scene.street.npcMother": "翔太の母",
 
   "scene.shop.title": "日の出文房具店 — 店番",
   "scene.shop.description": "「いらっしゃいませ。文房具ですかね」\n表の顔。勤勉で礼儀正しい息子を演じる。",
@@ -57,5 +63,89 @@
   "log.insufficientAction": "> 資金が足りない。操作に失敗した。",
   "ui.cmd.shop": "店番をする",
   "ui.cmd.rumor": "噂を流す",
-  "ui.cmd.intimidate": "脅迫する"
+  "ui.cmd.intimidate": "脅迫する",
+
+  "dialogue.shota.kind": "うん、翔太くんも偉いね、お手伝い？",
+  "dialogue.shota.grandpa": "おじいちゃん、元気？",
+  "dialogue.shota.sticker": "ポケベルのシール、新しいの入ったよ",
+  "dialogue.mother.kind": "いえ、翔太くんはいい子ですよ",
+  "dialogue.mother.empathy": "大変ですよね、いろいろと",
+  "dialogue.salaryman.polite": "タバコ、これですね。フィルター付きのやつ",
+  "dialogue.salaryman.listen": "何かあったんですか？　話、聞きますよ",
+  "dialogue.landlord.grandson": "はい、よく来てくれますよ。可愛い孫さんですね",
+  "dialogue.landlord.rent": "家賃の件、なんとかなりませんか",
+  "terminal.intimidate.landlord.exile": "孫と嫁を盾に、地主は膝をついた。",
+  "terminal.intimidate.landlord.subordinate": "頭を下げ、『これからは若旦那さんの言う通りに』と言った。",
+  "log.phase1.exile": "悪徳地主を追放した。商店街の実質的支配権を獲得。",
+  "log.phase1.subordinate": "悪徳地主を傘下に収めた。商店街の資金ルートを確保。",
+  "epilogue.mother": "あなた、最近頼もしくなったわね。お父さん、喜んでるわ",
+  "epilogue.protagonist": "母さん、守るよ。この店も、この街も、母さんも。全部",
+
+  "scenario.ch1.start.monologue": "平成9年、シャッター商店街。実家の文房具店を切り盛りしながら、裏では情報を売る毎日。だが今夜、裏路地で死体が見つかった。警察の目が光る。",
+  "scenario.ch1.start.choice.outside": "店の外へ出る",
+  "scenario.ch1.start.choice.ledger": "帳簿を確認する",
+
+  "scenario.ch1.street.entrance": "シャッター商店街。人の気配はまばらだ。路地裏からは不穏な空気が漂う。",
+  "scenario.ch1.street.choice.detective": "刑事・黒田に話を聞く",
+  "scenario.ch1.street.choice.alley": "裏路地を調べる",
+  "scenario.ch1.street.choice.landlord": "地主・山田を問い詰める",
+
+  "scenario.ch1.detective.intro": "黒田「お、若旦那か。今日は暇そうじゃねえか。事件の話でも聞きたいか？」",
+  "scenario.ch1.detective.choice.ask_case": "事件の概要を聞く",
+  "scenario.ch1.detective.choice.ask_victim": "被害者について聞く",
+  "scenario.ch1.detective.choice.leave": "また後で",
+
+  "scenario.ch1.detective.case_info": "黒田「裏路地で男が刺されてな。身元不明。財布もない。強盗殺人に見せかけてるが……違和感があるんだよ」",
+  "scenario.ch1.detective.victim_info": "黒田「被害者はこの辺の不動産屋の手先らしい。地主の山田と揉めてたらしいが、証拠はねえ」",
+
+  "scenario.ch1.alley.discovery": "裏路地の奥、ゴミの陰に何かある。近づくと……古びた帳簿だ。地主・山田の名前が並んでいる。",
+  "scenario.ch1.alley.choice.examine": "帳簿を調べる",
+  "scenario.ch1.alley.choice.return": "商店街に戻る",
+
+  "scenario.ch1.alley.ledger_content": "『山田組・裏帳簿 平成9年1月〜』。土地買収の資金源、政治家への献金、そして『始末』という項目まで。これは決定的だ。",
+
+  "scenario.ch1.landlord.confrontation": "山田「なんだ貴様、文房具屋の倅が。用がねえなら帰れ」",
+  "scenario.ch1.landlord.choice.present_ledger": "「異議あり！」帳簿を突きつける",
+  "scenario.ch1.landlord.choice.bluff": "証拠はあると見せかけて虚勢を張る",
+  "scenario.ch1.landlord.choice.retreat": "一旦引く",
+
+  "scenario.ch1.landlord.confession": "山田「……ちっ、分かったよ。全部吐く。政治家の名前も、資金の流れもな。だからその帳簿、警察には渡すな」",
+  "scenario.ch1.landlord.choice.end": "第1章 完",
+
+  "scenario.ch1.landlord.threaten": "山田「調子に乗りやがって……後悔させてやるぞ、若旦那」",
+  "scenario.ch1.landlord.choice.retry": "もう一度問い詰める",
+  "scenario.ch1.landlord.choice.retreat": "一旦引く",
+
+  "scenario.ch1.end.monologue": "帳簿を手に入れた。地主を追い詰める切り札だ。だが、これはまだ序章に過ぎない。黒田刑事の言葉が頭をよぎる――『違和感がある』と。",
+
+  "evidence.ledger.name": "山田組・裏帳簿",
+  "evidence.ledger.desc": "地主・山田の不正な土地買収と政治家への裏献金を記録した帳簿。『始末』という不穏な項目がある。",
+  "evidence.victim_photo.name": "被害者の写真",
+  "evidence.victim_photo.desc": "裏路地で発見された身元不明の男性の遺体写真。胸元に刺し傷。財布なし。",
+  "evidence.rumor_note.name": "噂のメモ",
+  "evidence.rumor_note.desc": "商店街で聞き込んだ噂話のメモ。地主と不動産屋の癒着、政治家の影。",
+
+  "location.shop.name": "日の出文房具店",
+  "location.shopping_street.name": "シャッター商店街",
+  "location.back_alley.name": "裏路地",
+  "location.landlord_office.name": "山田不動産・社長室",
+
+  "character.protagonist.name": "主人公（若旦那）",
+  "character.protagonist.desc": "表の顔：実家の文房具店を切り盛りする礼儀正しい息子。裏の顔：商店街の情報を掌握する冷徹な策略家。",
+  "character.kuroda.name": "黒田刑事",
+  "character.kuroda.desc": "担当刑事。表向きは協力的だが、内心では主人公をマークしている。",
+  "character.yamada.name": "山田（悪徳地主）",
+  "character.yamada.desc": "商店街の土地を買い占める悪徳地主。政治家と癒着し、邪魔者は『始末』する。",
+
+  "trial.ch1.landlord.stmt_1": "山田「ワシはただの不動産屋だ。土地を買うのが仕事じゃ、何が悪い」",
+  "trial.ch1.landlord.press_1": "山田「……買う『だけ』じゃねえよな。脅して安く買い叩くのが仕事だろ」",
+  "trial.ch1.landlord.stmt_2": "山田「帳簿なんて知らん。誰かがでっち上げたに決まってる」",
+  "trial.ch1.landlord.stmt_3": "山田「政治家の名前？　寄付しただけだ。違法じゃねえ」",
+  "trial.ch1.landlord.press_3": "山田「……寄付じゃなくて『献金』だろ。見返りがあるから払うんだよ」",
+  "trial.ch1.landlord.contradiction_1": "「異議あり！」この帳簿には、山田が土地を強引に買収した証拠がすべて記録されている！",
+  "trial.ch1.kuroda.stmt_1": "黒田「被害者は不動産屋の手先だった。山田と揉めてたのは事実だ」",
+  "trial.ch1.kuroda.press_1": "黒田「……揉めてただけじゃねえ。命を狙われてたんだよ、被害者は」",
+  "trial.ch1.kuroda.stmt_2": "黒田「現場に証拠はなかった。強盗殺人として処理するしかねえ」",
+  "trial.ch1.kuroda.contradiction_1": "「異議あり！」被害者の写真を見ろ。財布がないのは強盗の仕業じゃない。最初から金目当てじゃない証拠だ！",
+  "trial.ch1.verdict": "裁判長「被告・山田、不正土地買収および関与の疑いが晴れぬ限り、本件は捜査継続とする」"
 }

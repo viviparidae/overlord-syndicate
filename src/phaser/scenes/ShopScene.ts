@@ -61,6 +61,16 @@ export class ShopScene extends Phaser.Scene {
     }
   }
 
+  /** Canvas 外の SPACE ボタン用。店番アクションを1回実行する。 */
+  public runShopAction() {
+    this.runShop();
+  }
+
+  /** Canvas 外の ESC ボタン用。街に戻る。 */
+  public exitToStreet() {
+    this.returnToStreet();
+  }
+
   private runShop() {
     const result = this.engine.execute("runShop");
     if (result.success) {

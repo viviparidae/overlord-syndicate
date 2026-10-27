@@ -7,6 +7,7 @@ import { Resources } from "@core/Resources";
 import { SCENE_KEYS } from "@phaser/config";
 import { installDebugBridge } from "@phaser/DebugBridge";
 import { Game } from "@phaser/Game";
+import type { ShopScene } from "@phaser/scenes/ShopScene";
 import type { StreetScene } from "@phaser/scenes/StreetScene";
 import { persist, restore } from "@ui/persistence";
 
@@ -45,47 +46,87 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // External DOM buttons (dpad + E/T) — Canvas 外
-  // dpad (WASD equivalent): move player
-  document.getElementById("btn-up")?.addEventListener("click", () => {
-    const event = new KeyboardEvent("keydown", { key: "ArrowUp", bubbles: true });
-    window.dispatchEvent(event);
-  });
-  document.getElementById("btn-down")?.addEventListener("click", () => {
-    const event = new KeyboardEvent("keydown", { key: "ArrowDown", bubbles: true });
-    window.dispatchEvent(event);
-  });
-  document.getElementById("btn-left")?.addEventListener("click", () => {
-    const event = new KeyboardEvent("keydown", { key: "ArrowLeft", bubbles: true });
-    window.dispatchEvent(event);
-  });
-  document.getElementById("btn-right")?.addEventListener("click", () => {
-    const event = new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true });
-    window.dispatchEvent(event);
-  });
-  // Space key → NPC dialogue / 調べる
+  // External DOM controller (dpad + E/T) — Canvas 外
+  // Phaser は KeyboardEvent.keyCode で判定するため、合成 KeyboardEvent では入力できない。
+  // そのためシーンの公開 API を直接呼ぶ。
+  const activeStreet = (): StreetScene | null => {
+    const scene = game.scene.getScene(SCENE_KEYS.STREET) as StreetScene | null;
+    return scene && game.scene.isActive(SCENE_KEYS.STREET) ? scene : null;
+  };
+
+  // 押下開始から最低この時間は入力を保持し、素早いタップでも1歩は動かす
+  const MIN_PRESS_MS = 120;
+
+  const bindHold = (id: string, direction: "left" | "right"): void => {
+    const button = document.getElementById(id);
+    if (!button) return;
+
+    let pressedAt = 0;
+    let releaseTimer: number | null = null;
+
+    const press = (event: Event): void => {
+      event.preventDefault();
+      if (releaseTimer !== null) {
+        window.clearTimeout(releaseTimer);
+        releaseTimer = null;
+      }
+      pressedAt = performance.now();
+      activeStreet()?.setMoveInput(direction, true);
+    };
+
+    const release = (): void => {
+      if (pressedAt === 0) return;
+      const held = performance.now() - pressedAt;
+      const finish = (): void => {
+        activeStreet()?.setMoveInput(direction, false);
+        pressedAt = 0;
+        releaseTimer = null;
+      };
+      if (held < MIN_PRESS_MS) {
+        releaseTimer = window.setTimeout(finish, MIN_PRESS_MS - held);
+      } else {
+        finish();
+      }
+    };
+
+    button.addEventListener("pointerdown", press);
+    button.addEventListener("pointerup", release);
+    button.addEventListener("pointercancel", release);
+    button.addEventListener("pointerleave", release);
+  };
+
+  bindHold("btn-left", "left");
+  bindHold("btn-right", "right");
+
+  // SPACE: 街では NPC 会話、店では店番
   document.getElementById("btn-space")?.addEventListener("click", () => {
-    const event = new KeyboardEvent("keydown", { key: " ", bubbles: true });
-    window.dispatchEvent(event);
+    const street = activeStreet();
+    if (street) {
+      street.interact();
+      return;
+    }
+    const shop = game.scene.getScene(SCENE_KEYS.SHOP) as ShopScene | null;
+    if (shop && game.scene.isActive(SCENE_KEYS.SHOP)) {
+      shop.runShopAction();
+    }
   });
-  // Escape key → シーン戻る
+
+  // ESC: 店/裏工作パネルから街に戻る
   document.getElementById("btn-esc")?.addEventListener("click", () => {
-    const event = new KeyboardEvent("keydown", { key: "Escape", bubbles: true });
-    window.dispatchEvent(event);
+    for (const key of [SCENE_KEYS.SHOP, SCENE_KEYS.TERMINAL]) {
+      if (!game.scene.isActive(key)) continue;
+      const scene = game.scene.getScene(key) as { exitToStreet?: () => void } | null;
+      scene?.exitToStreet?.();
+      return;
+    }
   });
   // E key → shop scene transition (direct scene change, not engine action)
   document.getElementById("btn-e")?.addEventListener("click", () => {
-    const street = game.scene.getScene(SCENE_KEYS.STREET) as StreetScene | null;
-    if (street && game.scene.isActive(SCENE_KEYS.STREET)) {
-      street.enterShop();
-    }
+    activeStreet()?.enterShop();
   });
   // T key → terminal (裏工作) panel scene transition
   document.getElementById("btn-t")?.addEventListener("click", () => {
-    const street = game.scene.getScene(SCENE_KEYS.STREET) as StreetScene | null;
-    if (street && game.scene.isActive(SCENE_KEYS.STREET)) {
-      street.openTerminal();
-    }
+    activeStreet()?.openTerminal();
   });
   // Canvas command panel buttons — for E2E test automation
   document.getElementById("btn-shop")?.addEventListener("click", () => {

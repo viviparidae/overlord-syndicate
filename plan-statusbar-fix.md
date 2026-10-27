@@ -10,12 +10,12 @@ After reviewing the codebase, the issue has several possible dimensions:
 
 The HUD scene uses depth values that were previously too high, potentially causing rendering conflicts:
 
-| Element | Original Depth | New Depth | Change |
-|---------|---------------|-----------|--------|
-| STATUS (status bar) | 800 | 500 | ↓ 300 |
-| LOG_BG (log console background) | 900 | 600 | ↓ 300 |
-| LOG_TEXT (log text entries) | 910 | 610 | ↓ 310 |
-| COMMAND (command panel) | 999 | 700 | ↓ 299 |
+| Element                         | Original Depth | New Depth | Change |
+| ------------------------------- | -------------- | --------- | ------ |
+| STATUS (status bar)             | 800            | 500       | ↓ 300  |
+| LOG_BG (log console background) | 900            | 600       | ↓ 300  |
+| LOG_TEXT (log text entries)     | 910            | 610       | ↓ 310  |
+| COMMAND (command panel)         | 999            | 700       | ↓ 299  |
 
 **Fix**: Adjusted depth values downward so HUD elements don't obscure game world content from other scenes (StreetScene, TerminalScene, etc.).
 
@@ -23,7 +23,7 @@ The HUD scene uses depth values that were previously too high, potentially causi
 
 The `addLogEntry` method was calculating y-position dynamically using `this.scale.height - 120 + 8 + this.logEntries.length * 14`, which caused entries to shift downward with each new entry, potentially extending beyond the log console background or overlapping game content.
 
-**Fix**: 
+**Fix**:
 - Pre-calculate `entryY = this.scale.height - 120 + 8` (fixed position at the top of the log background)
 - All entries now position relative to this fixed starting point
 - After adding entries, reposition all existing entries to maintain correct order

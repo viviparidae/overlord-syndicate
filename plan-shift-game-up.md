@@ -35,13 +35,13 @@ commandPanel = rectangle(0, height - 70, width, 70, ...) // 下から70px、高�
 
 ```typescript
 // StreetScene.create() でのシフト量
-const SHIFT_Y = -120;  // 下から120px上に移動（HUDログコンソールの上端に合わせる）
+const SHIFT_Y = -120; // 下から120px上に移動（HUDログコンソールの上端に合わせる）
 
 // 各オブジェクトの表示位置を調整
-this.player.y += SHIFT_Y;        // または新規作成時に height - 60 + SHIFT_Y
+this.player.y += SHIFT_Y; // または新規作成時に height - 60 + SHIFT_Y
 this.shopArea.y += SHIFT_Y;
 this.alleyArea.y += SHIFT_Y;
-ground.y += SHIFT_Y;             // tileSprite の中心位置を調整
+ground.y += SHIFT_Y; // tileSprite の中心位置を調整
 // NPC の位置も同様
 ```
 

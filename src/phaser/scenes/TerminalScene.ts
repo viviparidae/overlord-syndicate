@@ -199,6 +199,11 @@ export class TerminalScene extends Phaser.Scene {
     });
   }
 
+  /** Canvas 外の ESC ボタン用。街に戻る。 */
+  public exitToStreet() {
+    this.returnToStreet();
+  }
+
   private returnToStreet() {
     this.scene.start(SCENE_KEYS.STREET);
   }

@@ -18,6 +18,14 @@ export interface DebugBridge {
   getSceneKey(): string | null;
   getPlayerX(): number | null;
   getPlayerY(): number | null;
+  getDialogue(): DialogueDebugState | null;
+}
+
+export interface DialogueDebugState {
+  isOpen: boolean;
+  pageIndex: number;
+  isFinished: boolean;
+  optionCount: number;
 }
 
 declare global {
@@ -66,6 +74,11 @@ export function installDebugBridge(game: Game, engine: GameEngine): void {
       if (!game.scene.isActive(SCENE_KEYS.STREET)) return null;
       const street = game.scene.getScene(SCENE_KEYS.STREET) as StreetScene | null;
       return street ? street.getPlayerY() : null;
+    },
+    getDialogue: (): DialogueDebugState | null => {
+      if (!game.scene.isActive(SCENE_KEYS.STREET)) return null;
+      const street = game.scene.getScene(SCENE_KEYS.STREET) as StreetScene | null;
+      return street ? street.getDialogueInfo() : null;
     },
   };
 }

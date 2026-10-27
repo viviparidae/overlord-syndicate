@@ -1,0 +1,7 @@
+name: "カテゴリ: 規約・ルール (Rules)"
+description: "コーディング規約・アーキテクチャ意思決定・用語集（category: rules）。"
+filter:
+  jexl: "resource.properties.category == 'rules'"
+select: [title, properties.status, properties.category, path]
+sort: title ASC
+format: table

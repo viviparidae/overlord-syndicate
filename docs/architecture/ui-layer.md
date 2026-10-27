@@ -18,8 +18,10 @@ tags:
 - src/phaser/scenes/HudScene.ts
 - src/phaser/scenes/StreetScene.ts
 - src/phaser/config.ts
+- src/phaser/scenes/HudScene.ts (fix: remove extra setInteractive on background/gameOverOverlay, t_21590ece)
   verified_by:
 - scripts/validate-docs.mjs
+- tests/e2e/command-panel.spec.ts (E2E verification of fixed pointerdown interaction, t_834a9986)
 
 ---
 
@@ -30,17 +32,17 @@ tags:
 
 ## ── 概要
 
-| 目標                   | 達成指標                                              |
-| ---------------------- | ----------------------------------------------------- |
-| ステータスバー完全統合 | Canvas内ステータスバーを `updateStatusBar` で維持     |
-| コマンドパネル構成     | `index.html` の `#command-panel` と3ボタンを配置      |
-| ログコンソール完全統合 | Canvas内ログを `addLogEntry` で維持                   |
-| ゲームオーバー統合     | DOMオーバーレイを維持せずPhaserで処理                 |
-| DOM残存最小化          | `game-container` wrapper divのみを残す                |
-| 入力統一               | キーボード + タッチ + マウスを Phaserイベントで統一   |
-| パフォーマンス最適化   | UI更新はイベント駆動（毎フレーム再描画なし）          |
-| テスト                 | E2Eでボタン動作・ステータス更新を検証                 |
-| 品質                   | タップターゲット最小44px、モバイル/デスクトップ両対応 |
+| 目標                   | 達成指標                                                            |
+| ---------------------- | ------------------------------------------------------------------- |
+| ステータスバー完全統合 | Canvas内ステータスバーを `updateStatusBar` で維持                   |
+| コマンドパネル構成     | `index.html` の `.external-controls` (D-pad + E/T/SPACE/ESC) を配置 |
+| ログコンソール完全統合 | Canvas内ログを `addLogEntry` で維持                                 |
+| ゲームオーバー統合     | DOMオーバーレイを維持せずPhaserで処理                               |
+| DOM残存最小化          | `game-container` wrapper divのみを残す                              |
+| 入力統一               | キーボード + タッチ + マウスを Phaserイベントで統一                 |
+| パフォーマンス最適化   | UI更新はイベント駆動（毎フレーム再描画なし）                        |
+| テスト                 | E2Eでボタン動作・ステータス更新を検証                               |
+| 品質                   | タップターゲット最小44px、モバイル/デスクトップ両対応               |
 
 `src/ui/` の管理コードは段階的に Phaser Canvas UI に移行する方針であり、DOM要素はコマンドパネルのみ残り、ステータスバー・ログは Canvas 内で統合管理する。DOM残存は最小化し、イベント結線は `src/main.ts` で `engine.execute()` へ橋渡しする。
 
@@ -226,23 +228,32 @@ const reasonText = this.add.text(width/2, height/2 + 20, "警戒度が100に達�
 
 ## ── DOM残存管理
 
-DOM要素を最小限にする。以下のDOM IDが残る：
+Canvas外の外部操作コントローラー（D-pad + アクションキー）を配置する。
 
-| DOM ID           | 残存理由                                       |
-| ---------------- | ---------------------------------------------- |
-| `game-container` | Phaser Canvasラッパーdiv（Layout安定のため）   |
-| `command-panel`  | 3つのコマンドボタンのDOM容器（Canvas外に配置） |
+| DOM ID / クラス                                                            | 残存理由                                                    |
+| -------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| `game-container`                                                           | Phaser Canvasラッパーdiv（16:9 レトロ画面）                 |
+| `.external-controls`                                                       | Canvas外コントローラーのラッパー容器                        |
+| `.dpad` (`#btn-up`, `#btn-down`, `#btn-left`, `#btn-right`, `#btn-center`) | 十字キー（矢印キー / Spaceイベントを dispatch）             |
+| `.action-keys` (`#btn-e`, `#btn-t`, `#btn-space`, `#btn-esc`)              | E (店番), T (裏工作), SPACE (NPC対話), ESC (ストリート復帰) |
 
-残HTML CSS: `@media (max-width: ...)` モバイル用 font-size 調整のみ
-残JS: `main.ts` 内でPhaser UIの初期化のみ
-
-**コマンドパネル構成:**
+**外部コントローラー構成:**
 
 ```html
-<div id="command-panel">
-  <button id="btn-shop">店番をする</button>
-  <button id="btn-rumor">噂を流す</button>
-  <button id="btn-intimidate">地主を脅迫する</button>
+<div class="external-controls">
+  <div class="dpad">
+    <button type="button" id="btn-up" class="dpad-btn dpad-up">↑</button>
+    <button type="button" id="btn-left" class="dpad-btn dpad-left">←</button>
+    <button type="button" id="btn-center" class="dpad-btn dpad-center" disabled></button>
+    <button type="button" id="btn-right" class="dpad-btn dpad-right">→</button>
+    <button type="button" id="btn-down" class="dpad-btn dpad-down">↓</button>
+  </div>
+  <div class="action-keys">
+    <button type="button" id="btn-e">E</button>
+    <button type="button" id="btn-t">T</button>
+    <button type="button" id="btn-space">SPACE</button>
+    <button type="button" id="btn-esc">ESC</button>
+  </div>
 </div>
 ```
 

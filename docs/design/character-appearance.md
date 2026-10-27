@@ -10,7 +10,7 @@ tags:
 - design
 - assets
   traces_to:
-- docs/design/assets.md
+- docs/design/asset-pipeline.md
 - docs/asset-licenses.md
 - docs/design/ui-integration.md
   implemented_by:
@@ -27,17 +27,18 @@ tags:
 
 ## 1. キャラクター一覧
 
-| キー | タイプ | アトラスパス | サイズ | 方向 | 使途 |
-| --- | --- | --- | --- | --- | --- |
-| `player` | atlas | `assets/characters/charWorkshopIDemo/20250303demoChar00.png` | 3×4 | 4 dir | プレイヤー |
-| `npc_child` | atlas | `assets/characters/charWorkshopIDemo/20250303demoChar01.png` | 3×4 | 4 dir | 子供NPC |
-| `npc_housewife` | atlas | `assets/characters/charWorkshopIDemo/20250303demoChar02.png` | 3×4 | 4 dir | 主婦NPC |
-| `npc_salaryman` | atlas | `assets/characters/charWorkshopIDemo/20250303demoChar03.png` | 3×4 | 4 dir | サラリーマンNPC |
-| `npc_landlord` | atlas | `assets/characters/charWorkshopIDemo/20250303demoChar04.png` | 3×4 | 4 dir | 家主NPC |
+| キー            | タイプ | アトラスパス                                                 | サイズ | 方向  | 使途            |
+| --------------- | ------ | ------------------------------------------------------------ | ------ | ----- | --------------- |
+| `player`        | atlas  | `assets/characters/charWorkshopIDemo/20250303demoChar00.png` | 3×4    | 4 dir | プレイヤー      |
+| `npc_child`     | atlas  | `assets/characters/charWorkshopIDemo/20250303demoChar01.png` | 3×4    | 4 dir | 子供NPC         |
+| `npc_housewife` | atlas  | `assets/characters/charWorkshopIDemo/20250303demoChar02.png` | 3×4    | 4 dir | 主婦NPC         |
+| `npc_salaryman` | atlas  | `assets/characters/charWorkshopIDemo/20250303demoChar03.png` | 3×4    | 4 dir | サラリーマンNPC |
+| `npc_landlord`  | atlas  | `assets/characters/charWorkshopIDemo/20250303demoChar04.png` | 3×4    | 4 dir | 家主NPC         |
 
 ## 2. レンダリング設定
 
-- `setDisplaySize(72, 72)` — プレイヤー
+- `setDisplaySize(72, 128)` — プレイヤー / NPC（縦長ドットアスペクト比）
+- `setOrigin(0.5, 1)` — 足元原点
 - `setDepth(200)` — プレイヤー > NPC > 背景
 - `Phaser.Physics.Arcade.Sprite` — 物理対応
 
