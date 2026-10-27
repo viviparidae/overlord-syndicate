@@ -102,7 +102,6 @@ verified_by: []
   "areas": ["arcade_center", "arcade_east", "shotengai_office"],
   "requiredEvidence": ["ev_ledger_theft", "ev_vhs_tape", "ev_notebook_page", "ev_receipt_owned"],
   "testimonies": ["t_goda", "t_matsutani", "t_wataru", "t_okada"],
-  "epilogueBranches": ["epi_rehabilitated", "epi_exposed", "epi_quiet"]
 }
 ```
 

@@ -55,7 +55,7 @@ verified_by: []
 | `pause` | ポーズメニュー | DOM | 上下、決定 | セーブ、設定、章選択へ |
 | `gameOver` | ゲームオーバー | DOM | 上下、決定 | 再開地点を選ぶ |
 | `chapterResult` | 章結果 | DOM | 決定 | 正答数、所要時間、称号（演出のみ） |
-| `epilogue` | エピローグADV | Phaser | 決定、スキップ | 章分岐あり |
+| `epilogue` | エピローグADV | Phaser | 決定、スキップ | 結末は章ごとに固定 |
 
 ## 3. 遷移の原則
 
