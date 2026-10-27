@@ -17,6 +17,7 @@ export interface DebugBridge {
   getState(): DebugState;
   getSceneKey(): string | null;
   getPlayerX(): number | null;
+  getPlayerY(): number | null;
 }
 
 declare global {
@@ -60,6 +61,11 @@ export function installDebugBridge(game: Game, engine: GameEngine): void {
       if (!game.scene.isActive(SCENE_KEYS.STREET)) return null;
       const street = game.scene.getScene(SCENE_KEYS.STREET) as StreetScene | null;
       return street ? street.getPlayerX() : null;
+    },
+    getPlayerY: (): number | null => {
+      if (!game.scene.isActive(SCENE_KEYS.STREET)) return null;
+      const street = game.scene.getScene(SCENE_KEYS.STREET) as StreetScene | null;
+      return street ? street.getPlayerY() : null;
     },
   };
 }
