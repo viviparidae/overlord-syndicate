@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
 
 test("debug btn-shop click", async ({ page }) => {
   // Wait for canvas

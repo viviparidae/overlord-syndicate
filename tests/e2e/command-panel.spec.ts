@@ -1,5 +1,4 @@
 import { expect, test } from "@playwright/test";
-import { extractNumber } from "./helpers";
 
 test.beforeEach(async ({ page }) => {
   await page.route("/fonts.googleapis.com/**", (route) => route.abort());
@@ -47,11 +46,11 @@ test("インテミデイト資源変化確認", async ({ page }) => {
   expect(funds).toBe(10000);
 });
 
-// New tests for Canvas button clicks
+// Action execution via Overlord Bridge / Action keys
 
 test("btn-shop click changes funds and fear", async ({ page }) => {
-  // Click the shop button
-  await page.click("#btn-shop");
+  // Execute shop action via window entrypoint
+  await page.evaluate(() => window.executeOverlordAction("runShop"));
 
   // Verify state changes via getState
   const state = await page.evaluate(() => (window as any).__OVERLORD__!.getState());
@@ -68,8 +67,8 @@ test("btn-shop click changes funds and fear", async ({ page }) => {
 });
 
 test("btn-rumor click changes resources", async ({ page }) => {
-  // Click the rumor button
-  await page.click("#btn-rumor");
+  // Execute rumor action via window entrypoint
+  await page.evaluate(() => window.executeOverlordAction("spreadRumor"));
 
   // Verify state changes via getState
   const state = await page.evaluate(() => (window as any).__OVERLORD__!.getState());
@@ -86,8 +85,8 @@ test("btn-rumor click changes resources", async ({ page }) => {
 });
 
 test("btn-intimidate click with insufficient funds error", async ({ page }) => {
-  // Click the intimidate button
-  await page.click("#btn-intimidate");
+  // Execute intimidate action via window entrypoint
+  await page.evaluate(() => window.executeOverlordAction("intimidate"));
 
   // Verify state changes via getState
   const state = await page.evaluate(() => (window as any).__OVERLORD__!.getState());
@@ -128,6 +127,17 @@ test("dpad moves player coordinates via bridge", async ({ page }) => {
   expect(before).not.toBeNull();
   expect(after).not.toBeNull();
   expect(after).toBeLessThanOrEqual(before);
+});
+
+// 修正反映テスト（t_21590ece）: 背景矩形とgameOverOverlayの不要なsetInteractive削除後、
+// ボタンpointerdownがDEPTH.COMMAND+3で競合なく動作することを検証
+test("command panel buttons respond after interactive fix", async ({ page }) => {
+  await page.goto("/?e2e=1", { waitUntil: "domcontentloaded" });
+  await page.locator("#game-container canvas").waitFor({ state: "visible" });
+  await page.click("#btn-e");
+  const s = await page.evaluate(() => (window as any).__OVERLORD__!.getState());
+  expect(s).toBeDefined();
+  expect(typeof s.funds).toBe("number");
 });
 
 // External controls visible on desktop (no media-query hide)

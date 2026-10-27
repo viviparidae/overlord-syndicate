@@ -4,7 +4,7 @@
     "module": "ESNEXT",
     "moduleResolution": "Bundler",
     "lib": ["DOM", "ES2022"],
-    "types": ["node", "vite"],
+    "types": ["node", "vite/client"],
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
