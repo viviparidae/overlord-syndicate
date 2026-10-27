@@ -80,3 +80,18 @@ verified_by: []
 
 - プロトタイプでは**収録しない**。
 - 将来的に主要台詞のみ部分ボイスを想定。字幕は常時表示する。
+
+## 8. 調達方針（人的リソース0）
+
+作曲・効果音制作の人員がいないため、**フリー音源のみ**で構成する（[[docs/03_production/01_conventions/asset-sourcing-policy]]）。
+
+| 種別 | 調達元の候補 | 条件 |
+| --- | --- | --- |
+| BGM | DOVA-SYNDROME、OtoLogic、Free Music Archive（CC0/CC BY） | クレジット表記の要否を確認 |
+| SE | 効果音ラボ、OtoLogic、freesound（CC0） | 再配布禁止のものは同梱しない |
+| 環境音 | freesound（CC0） | ループ加工はコードで行う |
+
+- クレジット必須の素材は README に記載する。
+- 選定した素材は [[docs/asset-licenses]] に記録する。
+- 代替不能な音（1990年代のポケベル音など）は、フリー素材で近いものがなければ**その演出を削る**。
+- 自作BGM・発注は行わない。

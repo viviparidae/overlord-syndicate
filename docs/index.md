@@ -40,6 +40,7 @@ verified_by: []
 
 ### 01. 共通規約
 
+- [[docs/03_production/01_conventions/asset-sourcing-policy]] — アセット調達方針（人的リソース0）
 - [[docs/03_production/01_conventions/naming-conventions]] — ファイル・フォルダ命名規則
 - [[docs/03_production/01_conventions/directory-structure]] — プロジェクト内階層ルール
 
@@ -53,12 +54,12 @@ verified_by: []
 - [[docs/03_production/03_art-animation/2d-art-standards]] — 2Dスプライト・UI規格
 - [[docs/03_production/03_art-animation/animations]] — アニメーション・ステート
 - [[docs/03_production/03_art-animation/character-art-plan]] — キャラクターグラフィック制作プラン
-- [[docs/03_production/03_art-animation/background-art-plan]] — 背景制作プラン（4エリア・3層）
+- [[docs/03_production/03_art-animation/background-art-plan]] — 背景制作プラン（4エリア・2層）
 
 ### 04. サウンド・音声
 
 - [[docs/03_production/04_audio/audio-specs]] — オーディオ仕様・再生トリガー
-- [[docs/03_production/04_audio/audio-list]] — BGM/SE管理・発注リスト
+- [[docs/03_production/04_audio/audio-list]] — BGM/SE選定リスト
 
 ## 4. 世界観・シナリオ
 
@@ -69,6 +70,10 @@ verified_by: []
 ## 5. アーカイブ・ボツ案
 
 - [[docs/05_archive/README]] — 没案・旧仕様の退避場所
+
+## 台帳
+
+- [[docs/asset-licenses]] — アセットライセンス記録
 
 ## 用語
 
