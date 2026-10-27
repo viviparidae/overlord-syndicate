@@ -8,23 +8,10 @@ export class StreetScene extends Phaser.Scene {
   private engine = getGameContext().engine;
   private player!: Player;
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
-  private wasd!: {
-    left: Phaser.Input.Keyboard.Key;
-    right: Phaser.Input.Keyboard.Key;
-    space: Phaser.Input.Keyboard.Key;
-    e: Phaser.Input.Keyboard.Key;
-    t: Phaser.Input.Keyboard.Key;
-  };
   private shopArea!: Phaser.GameObjects.Image;
   private alleyArea!: Phaser.GameObjects.Image;
   private currentTarget: "shop" | "npc" | "terminal" = "npc";
   private promptText!: Phaser.GameObjects.Text;
-  private touchDirection: "none" | "left" | "right" = "none";
-  private touchTap: boolean = false;
-  private touchActive: boolean = false;
-  private dpadBg!: Phaser.GameObjects.Graphics;
-  private btnShop!: Phaser.GameObjects.Graphics;
-  private btnTerminal!: Phaser.GameObjects.Graphics;
 
   constructor() {
     super({ key: SCENE_KEYS.STREET });
@@ -66,24 +53,24 @@ export class StreetScene extends Phaser.Scene {
       .setOrigin(0.5);
 
     this.player = new Player(this, 160, height - 60 + SHIFT_Y);
-    this.player.setDisplaySize(72, 72);
+    this.player.setDisplaySize(72, 128);
     this.player.setOrigin(0.5, 1);
     this.player.setDepth(200);
 
     const npcPositions = [
       { x: 320, y: height - 60 + SHIFT_Y, label: "子供", key: "npc_child" },
       { x: 480, y: height - 60 + SHIFT_Y, label: "主婦", key: "npc_housewife" },
-      { x: 640, y: height - 60 + SHIFT_Y, label: "サラリーマン", key: "npc_child" },
-      { x: 800, y: height - 60 + SHIFT_Y, label: "悪徳地主", key: "npc_housewife" },
+      { x: 640, y: height - 60 + SHIFT_Y, label: "サラリーマン", key: "npc_salaryman" },
+      { x: 800, y: height - 60 + SHIFT_Y, label: "悪徳地主", key: "npc_landlord" },
     ];
 
     for (const npcData of npcPositions) {
       const npc = new NPC(this, npcData.x, npcData.y, npcData.key);
       npc.setOrigin(0.5, 1);
       npc.setDepth(150);
-      npc.setDisplaySize(72, 72);
+      npc.setDisplaySize(72, 128);
       this.add
-        .text(npcData.x, npcData.y - 78 + SHIFT_Y, npcData.label, {
+        .text(npcData.x, npcData.y - 136, npcData.label, {
           fontSize: "10px",
           color: "#cccccc",
           fontFamily: "monospace",
@@ -93,7 +80,7 @@ export class StreetScene extends Phaser.Scene {
     }
 
     this.add
-      .text(width / 2, 40 + SHIFT_Y, "シャッター商店街", {
+      .text(width / 2, 90, "シャッター商店街", {
         fontSize: "18px",
         color: "#e94560",
         fontFamily: "monospace",
@@ -114,28 +101,30 @@ export class StreetScene extends Phaser.Scene {
       .setOrigin(0.5);
 
     this.cursors = this.input.keyboard!.createCursorKeys();
-    this.wasd = {
-      left: this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.A),
-      right: this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.D),
-      space: this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
-      e: this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.E),
-      t: this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.T),
-    };
-
-    this.createTouchControls();
+    this.spaceKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.escKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.keyE = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+    this.keyT = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.T);
+    this.keyA = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    this.keyD = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
     this.updateTarget();
   }
+
+  private spaceKey!: Phaser.Input.Keyboard.Key;
+  private escKey!: Phaser.Input.Keyboard.Key;
+  private keyE!: Phaser.Input.Keyboard.Key;
+  private keyT!: Phaser.Input.Keyboard.Key;
+  private keyA!: Phaser.Input.Keyboard.Key;
+  private keyD!: Phaser.Input.Keyboard.Key;
 
   update() {
     const speed = 100;
     const delta = this.game.loop.delta / 1000;
     let moved = false;
 
-    const leftKey =
-      this.cursors.left?.isDown || this.wasd.left?.isDown || this.touchDirection === "left";
-    const rightKey =
-      this.cursors.right?.isDown || this.wasd.right?.isDown || this.touchDirection === "right";
+    const leftKey = this.cursors.left?.isDown || this.keyA.isDown;
+    const rightKey = this.cursors.right?.isDown || this.keyD.isDown;
 
     if (leftKey) {
       this.player.x = Math.max(32, Math.min(this.scale.width - 32, this.player.x - speed * delta));
@@ -155,111 +144,34 @@ export class StreetScene extends Phaser.Scene {
       this.updateTarget();
     }
 
-    if (Phaser.Input.Keyboard.JustDown(this.wasd.space) || this.touchTap) {
+    // SPACE: NPC dialogue / shop action when near NPC
+    if (Phaser.Input.Keyboard.JustDown(this.spaceKey) && this.currentTarget === "npc") {
       this.handleInteraction();
-      this.touchTap = false;
     }
-    if (Phaser.Input.Keyboard.JustDown(this.wasd.e)) {
+
+    // E: enter the stationery shop
+    if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
       this.enterShop();
     }
-    if (Phaser.Input.Keyboard.JustDown(this.wasd.t)) {
+
+    // T: open the terminal (裏工作) panel
+    if (Phaser.Input.Keyboard.JustDown(this.keyT)) {
       this.openTerminal();
+    }
+
+    // ESC: Return to street (no-op in StreetScene, handled by other scenes)
+    if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
+      // In StreetScene, ESC does nothing (already on street)
+      // Other scenes (Shop, Terminal) should handle ESC to return to StreetScene
     }
   }
 
-  private createTouchControls(): void {
-    const gameWidth = 960;
-    const gameHeight = 540;
-
-    this.dpadBg = this.add.graphics();
-    this.dpadBg.fillStyle(0x000000, 0.6);
-    this.dpadBg.beginPath();
-    this.dpadBg.arc(60, gameHeight - 60, 70, 0, Math.PI * 2);
-    this.dpadBg.fillPath();
-    this.dpadBg.lineStyle(3, 0xe94560, 0.9);
-    this.dpadBg.beginPath();
-    this.dpadBg.arc(60, gameHeight - 60, 70, 0, Math.PI * 2);
-    this.dpadBg.strokePath();
-    this.dpadBg.setDepth(999);
-    this.dpadBg.setScrollFactor(0);
-
-    this.btnShop = this.add.graphics();
-    this.btnShop.fillStyle(0x000000, 0.6);
-    this.btnShop.beginPath();
-    this.btnShop.arc(gameWidth - 80, gameHeight - 80, 56, 0, Math.PI * 2);
-    this.btnShop.fillPath();
-    this.btnShop.lineStyle(3, 0xe94560, 0.9);
-    this.btnShop.beginPath();
-    this.btnShop.arc(gameWidth - 80, gameHeight - 80, 56, 0, Math.PI * 2);
-    this.btnShop.strokePath();
-    this.btnShop.setDepth(999);
-    this.btnShop.setScrollFactor(0);
-
-    this.add
-      .text(gameWidth - 80, gameHeight - 80, "E", {
-        fontSize: "24px",
-        color: "#e94560",
-        fontFamily: "DotGothic16, monospace",
-      })
-      .setOrigin(0.5)
-      .setDepth(1000)
-      .setScrollFactor(0);
-
-    this.btnTerminal = this.add.graphics();
-    this.btnTerminal.fillStyle(0x000000, 0.6);
-    this.btnTerminal.beginPath();
-    this.btnTerminal.arc(gameWidth - 80, 80, 44, 0, Math.PI * 2);
-    this.btnTerminal.fillPath();
-    this.btnTerminal.lineStyle(3, 0xf87171, 0.9);
-    this.btnTerminal.beginPath();
-    this.btnTerminal.arc(gameWidth - 80, 80, 44, 0, Math.PI * 2);
-    this.btnTerminal.strokePath();
-    this.btnTerminal.setDepth(999);
-    this.btnTerminal.setScrollFactor(0);
-
-    this.add
-      .text(gameWidth - 80, 80, "T", {
-        fontSize: "18px",
-        color: "#f87171",
-        fontFamily: "DotGothic16, monospace",
-      })
-      .setOrigin(0.5)
-      .setDepth(1000)
-      .setScrollFactor(0);
-
-    this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
-      if (this.touchActive) return;
-      this.touchActive = true;
-
-      const dpadDist = Phaser.Math.Distance.Between(pointer.x, pointer.y, 60, gameHeight - 60);
-      const shopDist = Phaser.Math.Distance.Between(pointer.x, pointer.y, gameWidth - 80, gameHeight - 80);
-      const terminalDist = Phaser.Math.Distance.Between(pointer.x, pointer.y, gameWidth - 80, 80);
-
-      if (shopDist <= 56) {
-        this.enterShop();
-      } else if (terminalDist <= 44) {
-        this.openTerminal();
-      } else if (dpadDist <= 70) {
-        if (pointer.x < 50) {
-          this.touchDirection = "left";
-        } else if (pointer.x > 70) {
-          this.touchDirection = "right";
-        } else {
-          this.touchDirection = "none";
-        }
-      }
-    });
-
-    this.input.on("pointerup", () => {
-      this.touchActive = false;
-    });
-
-    this.input.on("pointercancel", () => {
-      this.touchActive = false;
-    });
-  }
   getPlayerX(): number {
     return this.player.x;
+  }
+
+  getPlayerY(): number {
+    return this.player.y;
   }
 
   private updateTarget() {
@@ -300,11 +212,11 @@ export class StreetScene extends Phaser.Scene {
     }
   }
 
-  private enterShop() {
+  public enterShop() {
     this.scene.start(SCENE_KEYS.SHOP);
   }
 
-  private openTerminal() {
+  public openTerminal() {
     this.scene.start(SCENE_KEYS.TERMINAL);
   }
 
