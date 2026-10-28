@@ -100,5 +100,7 @@
   "inspect.window": "ガラス戸に貼り紙。「万引きには刑事罰を」とだけ書かれている。",
   "inspect.light": "切れた蛍光灯。半分が交換されないまま、年を越している。",
   "inspect.board": "掲示板。「東口の中学生」と書き足された落書きがある。",
-  "inspect.payphone": "公衆電話。受話器が少し浮いている。"
+  "inspect.payphone": "公衆電話。受話器が少し浮いている。",
+  "speaker.kenta": "丸福 健太",
+  "speaker.chinatsu": "榎本 千夏"
 }

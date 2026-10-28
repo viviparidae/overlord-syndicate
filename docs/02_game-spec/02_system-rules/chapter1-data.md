@@ -100,6 +100,21 @@ verified_by: []
 - 全ほころび指摘後、航の `tw_02` 問い返しで動機が確定し、エピローグへ。
 - 誤答時は `testimony.{speaker}.{nn}.fail` を表示し、ミスを1加算して同じブロックに戻る。
 
+## 3.6 NPCの配置
+
+会話ホットスポットにはNPCを立てる（`src/data/chapters/ch01/npcs.ts`）。
+
+| NPC | ホットスポット | 立ち位置（世界座標） | 話者キー |
+| --- | --- | --- | --- |
+| 丸福 健太 | `hs_tofu_shop` | x=82（東口） | `speaker.kenta` |
+| 松谷 静江 | `hs_liquor_shop` | x=216（東口） | `speaker.matsutani` |
+| 榎本 千夏 | `hs_photo_studio` | x=350（東口） | `speaker.chinatsu` |
+| 郷田 権造 | `hs_goda_office` | x=524（東口） | `speaker.goda` |
+
+- 台詞は2行（`talk.{name}.01.a/b`）。会話中は移動を止め、テキストウィンドウのタップで送る。
+- 会話の最後に証拠を入手する（`evidenceId`）。
+- 会話中は世界レイヤを70px上へずらし、キャラがウィンドウに隠れないようにする。
+
 ## 4. 会話・テキスト
 
 | ID | 種類 | 話者 | 内容 | 効果 |

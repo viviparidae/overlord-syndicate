@@ -100,5 +100,7 @@
   "inspect.window": "A notice on the glass door: 'Shoplifting is a crime.'",
   "inspect.light": "A dead fluorescent light. Half of them have been out since last year.",
   "inspect.board": "The notice board. Someone scrawled 'the middle schooler from the east gate'.",
-  "inspect.payphone": "A public phone. The receiver is slightly off the hook."
+  "inspect.payphone": "A public phone. The receiver is slightly off the hook.",
+  "speaker.kenta": "Kenta Marufuku",
+  "speaker.chinatsu": "Chinatsu Enomoto"
 }

@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { WALK_SPEED, ZOOM } from "../../balance/constants";
 import { chapter } from "../../data/chapters/ch01";
+import { type Npc, npcByHotspot, npcs } from "../../data/chapters/ch01/npcs";
 import { t } from "../../localization";
 import { createStage } from "../stage";
 import { currentChapter, saveNow } from "../state";
@@ -10,7 +11,7 @@ const AREA_WIDTH = 640;
 const SCREEN_WIDTH = 320;
 const EDGE_LEFT = 12;
 const EDGE_RIGHT = AREA_WIDTH - 12;
-const FEET_Y = 124;
+const FEET_Y = 135;
 
 export class InvestigationScene extends Phaser.Scene {
   private direction = 0;
@@ -25,6 +26,9 @@ export class InvestigationScene extends Phaser.Scene {
   private promptLabel!: Phaser.GameObjects.BitmapText;
   private logText!: Phaser.GameObjects.BitmapText;
   private logFrame!: Phaser.GameObjects.Rectangle;
+  private speakerText!: Phaser.GameObjects.BitmapText;
+  private npcSprites: { npc: Npc; sprite: Phaser.GameObjects.Image }[] = [];
+  private dialogue: { npc: Npc; index: number } | null = null;
   private counterText!: Phaser.GameObjects.BitmapText;
   private currentArea = "arcade_center";
   private areaLabel!: Phaser.GameObjects.BitmapText;
@@ -61,16 +65,29 @@ export class InvestigationScene extends Phaser.Scene {
       world.add(tile);
     }
 
+    for (const npc of npcs) {
+      const sprite = this.add
+        .image(npc.x, FEET_Y, `char_${npc.charId}`)
+        .setOrigin(0.5, 1)
+        .setVisible(false);
+      this.npcSprites.push({ npc, sprite });
+      world.add(sprite);
+    }
+
     this.player = this.add.image(this.playerX, FEET_Y, "char_ryo").setOrigin(0.5, 1);
     world.add(this.player);
 
-    this.logFrame = this.add.rectangle(16, 364, 928, 112, 0x12121a, 0.94).setOrigin(0, 0);
+    this.logFrame = this.add.rectangle(16, 352, 928, 188, 0x12121a, 0.94).setOrigin(0, 0);
     this.logFrame.setStrokeStyle(2, 0xe8d9a0, 0.7);
     this.logFrame.setVisible(false);
     ui.add(this.logFrame);
-    this.logText = addText(this, ui, 32, 380, "");
+    this.speakerText = addText(this, ui, 32, 358, "");
+    this.speakerText.setVisible(false);
+    this.logText = addText(this, ui, 32, 390, "");
     this.logText.setMaxWidth(890);
     this.logText.setVisible(false);
+    this.logFrame.setInteractive({ useHandCursor: true });
+    this.logFrame.on("pointerdown", () => this.advanceDialogue());
 
     const counterPanel = this.add.rectangle(676, 14, 92, 44, 0x0b0b10, 0.82).setOrigin(0, 0);
     ui.add(counterPanel);
@@ -188,6 +205,12 @@ export class InvestigationScene extends Phaser.Scene {
   }
 
   override update(_time: number, delta: number): void {
+    this.refreshNpcs();
+    if (this.dialogue) {
+      this.direction = 0;
+      this.prompt.setVisible(false);
+      return;
+    }
     if (this.direction === 0) {
       this.edgeLock = false;
     }
@@ -250,6 +273,11 @@ export class InvestigationScene extends Phaser.Scene {
     const state = currentChapter();
     const result = state.investigation.interact(id);
     if (result.kind === "evidence") {
+      const npc = npcByHotspot(id);
+      if (npc) {
+        this.startDialogue(npc);
+        return;
+      }
       const gained = state.collectEvidence(result.evidenceId);
       const item = chapter.evidence.find((e) => e.id === result.evidenceId);
       if (gained && item) {
@@ -272,6 +300,56 @@ export class InvestigationScene extends Phaser.Scene {
       this.edgeLock = false;
       this.applyScroll();
     }
+  }
+
+  private refreshNpcs(): void {
+    const areaOfHotspot = (hotspotId: string) =>
+      chapter.hotspots.find((h) => h.id === hotspotId)?.areaId;
+    for (const { npc, sprite } of this.npcSprites) {
+      const visible = areaOfHotspot(npc.hotspotId) === this.currentArea;
+      sprite.setVisible(visible);
+      if (visible) sprite.setFlipX(this.playerX > npc.x);
+    }
+  }
+
+  private startDialogue(npc: Npc): void {
+    this.dialogue = { npc, index: 0 };
+    this.direction = 0;
+    this.world.setY(-70);
+    this.speakerText.setText(t(npc.speakerKey));
+    this.speakerText.setVisible(true);
+    const first = npc.lines[0];
+    if (first) this.showLog(t(first));
+    this.prompt.setVisible(false);
+  }
+
+  private advanceDialogue(): void {
+    if (!this.dialogue) return;
+    const { npc, index } = this.dialogue;
+    const next = npc.lines[index + 1];
+    if (next) {
+      this.dialogue.index = index + 1;
+      this.showLog(t(next));
+      return;
+    }
+    if (npc.evidenceId) {
+      const gained = currentChapter().collectEvidence(npc.evidenceId);
+      const item = chapter.evidence.find((e) => e.id === npc.evidenceId);
+      if (gained && item) {
+        this.refreshCounter();
+        this.showLog(t("log.evidence.obtained", { name: t(item.nameKey) }));
+        this.time.delayedCall(900, () => this.closeDialogue());
+        return;
+      }
+    }
+    this.closeDialogue();
+  }
+
+  private closeDialogue(): void {
+    this.dialogue = null;
+    this.world.setY(0);
+    this.speakerText.setVisible(false);
+    this.hideLog();
   }
 
   private showLog(message: string): void {
