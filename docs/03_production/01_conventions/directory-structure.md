@@ -18,12 +18,41 @@ verified_by: []
 ```
 overlord-syndicate/
 ├── docs/            # 設計ドキュメント（FOAM）
-├── public/assets/   # 画像・音声・フォント
+├── assets-src/      # 制作原本（AI生成の原画、参照画像、パレット）
+├── public/assets/   # ビルドに含める確定アセット（縮小・減色済み）
 ├── src/             # ゲームコード
 ├── tests/           # unit / e2e
 ├── scripts/         # 開発補助スクリプト（docs検証など）
 └── .foam/queries/   # FOAM スマートフォルダ定義
 ```
+
+## 1.1 アセットの置き場所
+
+**原画と確定アセットを分ける。** `public/` に入るのは加工済みだけ。
+
+```
+assets-src/                       # Git管理。ビルド対象外
+├── generated/                    # AI生成の原画（1024px前後）
+│   ├── characters/               # char_{id}_raw.png
+│   ├── portraits/                # face_{id}_{emotion}_raw.png
+│   ├── backgrounds/              # bg_{area}_{layer}_raw.png
+│   └── ui/                       # ui_frame_raw.png
+├── reference/                    # 基準画像（同一性を保つための参照）
+│   └── ref_char_ryo.png
+└── palette/                      # 共通16色パレット（.gpl / .aseprite）
+
+public/assets/                    # 確定アセットのみ
+├── characters/                   # char_{id}.png（32×48）
+├── portraits/                    # face_{id}_{emotion}.png（128×160）
+├── backgrounds/                  # bg_{area}_{layer}.png（320×180）
+├── evidence/                     # icon_ev_{name}.png（16×16）
+├── ui/                           # ui_{part}.png（9スライス等）
+└── fonts/                        # フリーフォント
+```
+
+- 原画は削除しない（再加工のため）。`_raw` を付けて保存する。
+- 確定アセットに `_raw` / `_final` / `_new` を付けない（規約）。
+- 画像の追加時は [[docs/asset-licenses]] にモデル名・生成日を記録する。
 
 ## 2. docs/
 

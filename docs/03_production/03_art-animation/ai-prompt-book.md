@@ -206,10 +206,14 @@ window frame suitable for 9-slice scaling, flat front view.
 
 ### 7.7 生成後の処理
 
+0. 原画は `assets-src/generated/{characters,portraits,backgrounds,ui}/` に `_raw` 付きで保存する（例: `char_ryo_raw.png`）
 1. 1:1 の元画像を **32×48（スプライト）/ 128×160（立ち絵）/ 320×180（背景）** へ最近傍縮小
 2. 16色へ減色（ディザあり）
 3. マゼンタ背景を透過に置換
 4. 3倍表示で確認
+5. 確定版を `public/assets/{characters,portraits,backgrounds,ui}/` へ置く（`char_ryo.png`）
+
+置き場所の規則は [[docs/03_production/01_conventions/directory-structure]] を参照。
 
 
 
