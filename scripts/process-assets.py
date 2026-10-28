@@ -12,6 +12,8 @@ from PIL import Image
 
 SRC = Path("assets-src/generated")
 DST = Path("public/assets")
+# 横スクロール用のAI背景が用意できたら True にして調査パートの背景も差し替える
+WRITE_INVESTIGATION_BG = False
 
 CHAR_IDS = {
     "篠宮 涼": "ryo",
@@ -183,8 +185,11 @@ def main() -> None:
             img = img.crop(box)
         img = clean_background(img)
         img = cover_resize(img, (320, 180))
-        quant16(img).save(DST / "backgrounds" / f"{bid}.png")
-        made.append(str(DST / "backgrounds" / f"{bid}.png"))
+        if WRITE_INVESTIGATION_BG:
+            quant16(img).save(DST / "backgrounds" / f"{bid}.png")
+            made.append(str(DST / "backgrounds" / f"{bid}.png"))
+        quant16(img).save(DST / "backgrounds" / f"story_{bid}.png")
+        made.append(str(DST / "backgrounds" / f"story_{bid}.png"))
     # 証拠アイコン（16×16）
     ev_dir = SRC / "evidence"
     if ev_dir.exists():

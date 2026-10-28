@@ -23,6 +23,14 @@ export class BootScene extends Phaser.Scene {
       this.load.image(area, `assets/backgrounds/${area}.png`);
     }
     this.load.image("bg_arcade_center_far", "assets/backgrounds/bg_arcade_center_far.png");
+    this.load.image(
+      "bg_story_arcade_center_mid",
+      "assets/backgrounds/story_bg_arcade_center_mid.png",
+    );
+    this.load.image(
+      "bg_story_shotengai_office",
+      "assets/backgrounds/story_bg_shotengai_office.png",
+    );
     for (const item of chapter.evidence) {
       this.load.image(`icon_${item.id}`, `assets/evidence/icon_${item.id}.png`);
     }

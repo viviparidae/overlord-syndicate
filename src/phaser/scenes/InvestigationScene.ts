@@ -24,6 +24,7 @@ export class InvestigationScene extends Phaser.Scene {
   private prompt!: Phaser.GameObjects.Container;
   private promptLabel!: Phaser.GameObjects.BitmapText;
   private logText!: Phaser.GameObjects.BitmapText;
+  private logFrame!: Phaser.GameObjects.Rectangle;
   private counterText!: Phaser.GameObjects.BitmapText;
   private currentArea = "arcade_center";
   private areaLabel!: Phaser.GameObjects.BitmapText;
@@ -63,12 +64,16 @@ export class InvestigationScene extends Phaser.Scene {
     this.player = this.add.image(this.playerX, FEET_Y, "char_ryo").setOrigin(0.5, 1);
     world.add(this.player);
 
-    const frame = this.add.rectangle(16, 364, 928, 112, 0x12121a, 0.94).setOrigin(0, 0);
-    frame.setStrokeStyle(2, 0xe8d9a0, 0.7);
-    ui.add(frame);
+    this.logFrame = this.add.rectangle(16, 364, 928, 112, 0x12121a, 0.94).setOrigin(0, 0);
+    this.logFrame.setStrokeStyle(2, 0xe8d9a0, 0.7);
+    this.logFrame.setVisible(false);
+    ui.add(this.logFrame);
     this.logText = addText(this, ui, 32, 380, "");
     this.logText.setMaxWidth(890);
+    this.logText.setVisible(false);
 
+    const counterPanel = this.add.rectangle(676, 14, 92, 44, 0x0b0b10, 0.82).setOrigin(0, 0);
+    ui.add(counterPanel);
     this.counterText = addText(this, ui, 690, 24, "");
     this.refreshCounter();
 
@@ -84,7 +89,7 @@ export class InvestigationScene extends Phaser.Scene {
       onClick: () => {
         const on = currentChapter().investigation.toggleInsight();
         this.cameras.main.setBackgroundColor(on ? "#141c2b" : "#0b0b10");
-        this.logText.setText(on ? "洞察の視点" : "");
+        this.showLog(on ? "洞察の視点" : "");
       },
     });
 
@@ -187,6 +192,7 @@ export class InvestigationScene extends Phaser.Scene {
       this.edgeLock = false;
     }
     if (this.direction !== 0) {
+      this.hideLog();
       this.playerX = this.playerX + this.direction * WALK_SPEED * (delta / 1000);
       if (!this.edgeLock && this.playerX <= EDGE_LEFT) {
         this.moveToArea(-1);
@@ -195,7 +201,7 @@ export class InvestigationScene extends Phaser.Scene {
       }
       this.playerX = Phaser.Math.Clamp(this.playerX, EDGE_LEFT, EDGE_RIGHT);
       this.player.setX(this.playerX);
-      this.player.setFlipX(this.direction < 0);
+      this.player.setFlipX(this.direction > 0);
       this.applyScroll();
     }
 
@@ -229,7 +235,7 @@ export class InvestigationScene extends Phaser.Scene {
         const state = currentChapter();
         const error = state.startResolution();
         if (error) {
-          this.logText.setText("まだ材料が足りない");
+          this.showLog("まだ材料が足りない");
           return;
         }
         saveNow();
@@ -247,15 +253,15 @@ export class InvestigationScene extends Phaser.Scene {
       const gained = state.collectEvidence(result.evidenceId);
       const item = chapter.evidence.find((e) => e.id === result.evidenceId);
       if (gained && item) {
-        this.logText.setText(t("log.evidence.obtained", { name: t(item.nameKey) }));
+        this.showLog(t("log.evidence.obtained", { name: t(item.nameKey) }));
         this.refreshCounter();
       } else {
-        this.logText.setText(t("log.evidence.already"));
+        this.showLog(t("log.evidence.already"));
       }
       return;
     }
     if (result.kind === "text") {
-      this.logText.setText(t(result.textKey));
+      this.showLog(t(result.textKey));
       return;
     }
     if (result.kind === "move") {
@@ -266,6 +272,17 @@ export class InvestigationScene extends Phaser.Scene {
       this.edgeLock = false;
       this.applyScroll();
     }
+  }
+
+  private showLog(message: string): void {
+    this.logText.setText(message);
+    this.logText.setVisible(message !== "");
+    this.logFrame.setVisible(message !== "");
+  }
+
+  private hideLog(): void {
+    this.logText.setVisible(false);
+    this.logFrame.setVisible(false);
   }
 
   private refreshCounter(): void {

@@ -15,6 +15,7 @@ export class StoryScene extends Phaser.Scene {
   private index = 0;
   private text!: Phaser.GameObjects.BitmapText;
   private skipButton?: Phaser.GameObjects.Container;
+  private frame!: Phaser.GameObjects.Rectangle;
 
   constructor() {
     super("Story");
@@ -28,11 +29,15 @@ export class StoryScene extends Phaser.Scene {
     const { world, ui } = createStage(this);
     this.cameras.main.setBackgroundColor("#0b0b10");
 
-    world.add(this.add.image(160, 90, "bg_arcade_center_mid").setDisplaySize(320, 180));
+    const storyBg =
+      this.storyData.phase === "intro" ? "bg_story_arcade_center_mid" : "bg_story_shotengai_office";
+    const bg = this.add.image(160, 90, storyBg).setDisplaySize(320, 180);
+    if (this.storyData.phase === "epilogue") bg.setTint(0x8890a0);
+    world.add(bg);
 
-    const frame = this.add.rectangle(40, 336, 880, 176, 0x12121a, 0.94).setOrigin(0, 0);
-    frame.setStrokeStyle(2, 0xe8d9a0, 0.7);
-    ui.add(frame);
+    this.frame = this.add.rectangle(40, 336, 880, 176, 0x12121a, 0.94).setOrigin(0, 0);
+    this.frame.setStrokeStyle(2, 0xe8d9a0, 0.7);
+    ui.add(this.frame);
 
     this.text = addText(this, ui, 60, 356, "", 24);
     this.text.setMaxWidth(840);
@@ -44,8 +49,8 @@ export class StoryScene extends Phaser.Scene {
     this.showLine();
 
     const advance = () => this.advance();
-    frame.setInteractive({ useHandCursor: true });
-    frame.on("pointerdown", advance);
+    this.frame.setInteractive({ useHandCursor: true });
+    this.frame.on("pointerdown", advance);
     this.input.keyboard?.on("keydown-Z", advance);
     this.input.keyboard?.on("keydown-SPACE", advance);
     this.input.keyboard?.on("keydown-ENTER", advance);
@@ -69,7 +74,9 @@ export class StoryScene extends Phaser.Scene {
       this.showLine();
       return;
     }
-    this.finish();
+    this.frame.setVisible(false);
+    this.text.setVisible(false);
+    this.time.delayedCall(180, () => this.finish());
   }
 
   private finish(): void {
