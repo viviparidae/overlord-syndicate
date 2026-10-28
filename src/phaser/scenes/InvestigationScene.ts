@@ -255,7 +255,6 @@ export class InvestigationScene extends Phaser.Scene {
     } else {
       this.prompt.setVisible(false);
     }
-
   }
 
   private interactNearby(): void {
