@@ -37,7 +37,6 @@ verified_by: []
 | `bgm_select` | 章選択 | 1:00 | 静かな時計の音を含む | 未選定 |
 | `bgm_intro_ch01` | 第1章導入 | 1:30 | ピアノ単音、余白多め | 未選定 |
 | `bgm_investigation` | 調査（商店街） | 2:00 | 控えめなベース、環境音と干渉しない | 未選定 |
-| `bgm_investigation_insight` | 洞察視点 | 2:00 | 同曲のローパス版 | 未選定 |
 | `bgm_resolution` | 弁論 | 2:30 | 弦の刻み、テンポ 96 | 未選定 |
 | `bgm_break` | ほころび指摘成功 | 0:20 | 短いブレイク用 | 未選定 |
 | `bgm_gameover` | ゲームオーバー | 0:30 | 低音の持続、解決しない和音 | 未選定 |
@@ -52,8 +51,6 @@ verified_by: []
 | `se_cancel` | 戻る | 0.1s | 未選定 |
 | `se_found` | ホットスポット発見 | 0.3s | 未選定 |
 | `se_evidence_get` | 証拠入手 | 0.6s | 未選定 |
-| `se_insight_on` | 洞察視点 ON | 0.4s | 未選定 |
-| `se_insight_off` | 洞察視点 OFF | 0.3s | 未選定 |
 | `se_door` | 組合事務所の扉 | 0.5s | 未選定 |
 | `se_askback` | 問い返し | 0.2s | 未選定 |
 | `se_offer_success` | 差し出し成功 | 1.0s | 未選定 |

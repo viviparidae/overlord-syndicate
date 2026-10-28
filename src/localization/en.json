@@ -4,7 +4,6 @@
   "role.summarizer": "Mediator",
   "ui.investigation.inspect": "Inspect",
   "ui.investigation.talk": "Talk",
-  "ui.investigation.insight": "Insight",
   "ui.investigation.evidence": "Evidence",
   "ui.investigation.pause": "Pause",
   "ui.investigation.hint": "Look for what is missing",
@@ -111,6 +110,5 @@
   "talk.chiaki.01.c": "You only see his back, but the time is exact.",
   "talk.chiaki.01.d": "I'll borrow it.",
   "talk.goda.01.c": "A shopkeeper should understand that.",
-  "talk.goda.01.d": "I understand it very well.",
-  "ui.investigation.insightOn": "Insight ON"
+  "talk.goda.01.d": "I understand it very well."
 }

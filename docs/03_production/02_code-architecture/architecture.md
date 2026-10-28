@@ -68,7 +68,6 @@ verified_by: []
 | --- | --- | --- |
 | `story/StoryRunner` | テキスト送り、カーソル管理、既読管理 | `StoryScript`, `StoryCursor` |
 | `investigation/InvestigationState` | エリア、ホットスポット、証拠入手 | `Hotspot`, `AreaState` |
-| `investigation/InsightMode` | 洞察視点の切替と表示対象の決定 | `InsightFilter` |
 | `resolution/ResolutionEngine` | 証言ブロック進行、差し出し判定、ミス | `Testimony`, `OfferResult` |
 | `resolution/MissCounter` | ミス加算と上限判定 | `MissState` |
 | `state/ChapterState` | 章全体の状態保持（`scale`/`venueKey`/`roleKey` 含む） | `ChapterState` |
@@ -100,7 +99,7 @@ IntroDone → Investigation(area, position) → Resolution(testimony, block) →
 | `TitleScene` | タイトル、開始/再開 |
 | `ChapterSelectScene` | 章一覧 |
 | `StoryScene` | 導入とエピローグのADV描画（**共通**。`phase` で挙動を分ける） |
-| `InvestigationScene` | 横スクロール、ホットスポット、洞察視点 |
+| `InvestigationScene` | 横スクロール、ホットスポット、NPC会話 |
 | `ResolutionScene` | 弁論、立ち絵、証言UI、差し出し演出 |
 | `PauseScene` / `GameOverScene` / `EvidenceDetailScene` | UIカメラ上のオーバーレイ（Phaserシーン、`launch` で重ねる） |
 

@@ -103,7 +103,6 @@ export const hotspots: Hotspot[] = [
     labelKey: "ui.investigation.inspect",
     textKey: "inspect.slips",
     evidenceId: "ev_shop_receipt",
-    insightOnly: true,
     x: 280,
     width: 28,
   },

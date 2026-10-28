@@ -52,8 +52,6 @@ verified_by: []
 | 章選択 | `bgm_select` | ループ |
 | 導入開始 | `bgm_intro_ch01` | 静かなピアノ |
 | 調査開始 | `bgm_investigation` | 環境音と重ねる |
-| 洞察視点 ON | `se_insight_on` + フィルタ | BGMにローパス |
-| 洞察視点 OFF | `se_insight_off` | フィルタ解除 |
 | ホットスポット発見 | `se_found` | 1回 |
 | 証拠入手 | `se_evidence_get` | アイコン飛翔と同期 |
 | 会話送り | `se_text_advance` | 0.1秒、音量 -20dB |

@@ -4,7 +4,6 @@
   "role.summarizer": "まとめ役",
   "ui.investigation.inspect": "調べる",
   "ui.investigation.talk": "話す",
-  "ui.investigation.insight": "洞察",
   "ui.investigation.evidence": "証拠",
   "ui.investigation.pause": "ポーズ",
   "ui.investigation.hint": "足りない材料を探す",
@@ -111,6 +110,5 @@
   "talk.chiaki.01.c": "映ってるのは後姿だけど、時間は正確よ。",
   "talk.chiaki.01.d": "借ります。",
   "talk.goda.01.c": "あんたも商売人なら、そのくらい分かるだろう。",
-  "talk.goda.01.d": "よく分かっています。",
-  "ui.investigation.insightOn": "洞察中"
+  "talk.goda.01.d": "よく分かっています。"
 }

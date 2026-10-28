@@ -42,8 +42,7 @@ verified_by: []
 | `resolution/MissCounter` | ミス加算、上限判定（3でゲームオーバー）、リトライ時のリセット | 最高 |
 | `state/ChapterState` | 遷移の妥当性（調査前に解決へ飛べない）、`TransitionError` の返却 | 最高 |
 | `save/SaveRepository` | 往復保存、破損データの初期化、`version` によるマイグレーション | 最高 |
-| `investigation/InvestigationState` | 証拠入手、必須4件の充足判定、`hs_counter_slips` は洞察視点でのみ | 高 |
-| `investigation/InsightMode` | 洞察視点の切替と、洞察専用ホットスポットの表示 | 高 |
+| `investigation/InvestigationState` | 証拠入手、必須4件の充足判定、近接判定 | 高 |
 | `story/StoryRunner` | カーソル進行、既読管理、テキスト長0の異常系 | 中 |
 | `src/localization` | `LocKey` の型安全化（全キーが ja.json に存在）。unitではなく型で担保 | 型で担保 |
 
@@ -65,7 +64,6 @@ Playwright（Chromium）。シナリオは遊びの動線順に並べる。
 | `e2e/smoke.spec.ts` | タイトル→章選択→第1章が開ける |
 | `e2e/intro.spec.ts` | 導入ADVのテキスト送り、既読スキップ |
 | `e2e/investigation.spec.ts` | 移動、バルーンボタンでの調べる/話す、証拠入手の進行 |
-| `e2e/insight.spec.ts` | 洞察トグルと `hs_counter_slips` のみの発見 |
 | `e2e/resolution.spec.ts` | 証言送り、問い返し、差し出し（正解・不正解） |
 | `e2e/gameover.spec.ts` | ミス上限でゲームオーバー→リトライで解決パート冒頭 |
 | `e2e/save.spec.ts` | 途中保存→再読込→続きから |

@@ -41,7 +41,7 @@ verified_by: []
 | `ev_ledger_theft` | `evidence.ledger_theft` | `hs_shop_counter`（west） | ○ | 被害帳簿。5店14件の日時・品目。**全て日常品で換金価値がない** |
 | `ev_vhs_tape` | `evidence.vhs_tape` | `talk_chiaki_01`（east） | ○ | 写真館が貸した防犯用VHS。犯行時刻に航らしき人物が映る |
 | `ev_notebook_page` | `evidence.notebook_page` | `hs_waiting_chair`（office） | ○ | 航が待合椅子に落としたノート。走り書きに「もう終わりにしたい」 |
-| `ev_shop_receipt` | `evidence.shop_receipt` | `hs_counter_slips`（west・洞察） | ○ | 篠宮文具店の購入控え。航が同じ文房具を自腹で繰り返し買っていた記録 |
+| `ev_shop_receipt` | `evidence.shop_receipt` | `hs_counter_slips`（west） | ○ | 篠宮文具店の購入控え。航が同じ文房具を自腹で繰り返し買っていた記録 |
 | `ev_kenta_sighting` | `evidence.kenta_sighting` | `talk_kenta_01`（east） | - | 健太の目撃証言。後姿と時刻の記憶 |
 | `ev_matsutani_report` | `evidence.matsutani_report` | `talk_matsutani_01`（east） | - | 松谷の被害報告。金額が実際より大きい |
 | `ev_goda_statement` | `evidence.goda_statement` | `talk_goda_01`（east） | - | 郷田の「内輪で済ませろ」という発言の要旨 |
@@ -50,7 +50,6 @@ verified_by: []
 
 - 必須4件が揃うと組合事務所前に「総会」マーカーが出る。
 - 任意証拠は、問い返し時の補強テキストと誤答時の反応差分に使う（正解判定には使わない）。
-- 洞察視点でのみ入手できるのは `ev_shop_receipt` の1件（4件中1件）。
 
 ## 3. 証言
 
@@ -140,7 +139,7 @@ verified_by: []
 | `f_intro_done` | 導入終了 | 調査開始 |
 | `f_heard_kenta` | `talk_kenta_01` | 任意会話の既読表示 |
 | `f_heard_matsutani` | `talk_matsutani_01` | 同上 |
-| `f_saw_vhs` | `talk_chiaki_01` | 洞察視点のヒント表示 |
+| `f_saw_vhs` | `talk_chiaki_01` | VHS会話の既読管理 |
 | `f_read_notebook` | `inspect_notebook` | 郷田 `tg_04` の問い返しテキスト差分 |
 | `f_goda_lied_time` | `tg_02` 正解 | 郷田の表情（姿勢）変化 |
 | `f_resolution_started` | 解決パート開始 | 自動保存のチェックポイント |
@@ -174,7 +173,7 @@ inspect.slips
 inspect.settlement
 inspect.memo
 ui.resolution.{askBack,offer,evidence}
-ui.investigation.{inspect,talk,insight}
+ui.investigation.{inspect,talk}
 ui.gameover.{title,retry_part,retry_chapter}
 log.evidence.{obtained,already}
 ```

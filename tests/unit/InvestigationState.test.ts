@@ -18,7 +18,6 @@ const hotspots: Hotspot[] = [
     kind: "inspect",
     labelKey: "ui.investigation.inspect",
     evidenceId: "ev_shop_receipt",
-    insightOnly: true,
     x: 200,
     width: 20,
   },
@@ -33,21 +32,14 @@ const hotspots: Hotspot[] = [
 ];
 
 describe("調査パート", () => {
-  it("洞察視点を切ると洞察専用の対象は見えない", () => {
+  it("エリア内の対象をすべて返す", () => {
     const state = new InvestigationState(hotspots);
 
-    const visible = state.visibleHotspots("west");
-
-    expect(visible.map((h) => h.id)).toEqual(["hs_ledger", "hs_door"]);
-  });
-
-  it("洞察視点を入れると洞察専用の対象が見える", () => {
-    const state = new InvestigationState(hotspots);
-    state.toggleInsight();
-
-    const visible = state.visibleHotspots("west");
-
-    expect(visible.map((h) => h.id)).toEqual(["hs_ledger", "hs_slips", "hs_door"]);
+    expect(state.visibleHotspots("west").map((h) => h.id)).toEqual([
+      "hs_ledger",
+      "hs_slips",
+      "hs_door",
+    ]);
   });
 
   it("調べると証拠が手に入る", () => {
@@ -59,19 +51,22 @@ describe("調査パート", () => {
     expect(state.foundEvidence).toEqual(["ev_ledger_theft"]);
   });
 
-  it("洞察視点なしでは洞察専用の対象を調べられない", () => {
-    const state = new InvestigationState(hotspots);
-
-    const result = state.interact("hs_slips");
-
-    expect(result.kind).toBe("none");
-    expect(state.foundEvidence).toEqual([]);
-  });
-
   it("近くの対象を返す", () => {
     const state = new InvestigationState(hotspots);
 
     expect(state.hotspotNear("west", 105)?.id).toBe("hs_ledger");
     expect(state.hotspotNear("west", 150)).toBeNull();
+  });
+
+  it("重なった対象では中心が近い方を返す", () => {
+    const state = new InvestigationState(hotspots);
+
+    expect(state.hotspotNear("west", 208)?.id).toBe("hs_slips");
+  });
+
+  it("移動ホットスポットは移動結果を返す", () => {
+    const state = new InvestigationState(hotspots);
+
+    expect(state.interact("hs_door")).toEqual({ kind: "move", areaId: "west" });
   });
 });

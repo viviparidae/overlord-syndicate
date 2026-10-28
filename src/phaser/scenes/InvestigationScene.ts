@@ -32,10 +32,6 @@ export class InvestigationScene extends Phaser.Scene {
   private portraitRyo!: Phaser.GameObjects.Image;
   private portraitNpc!: Phaser.GameObjects.Image;
   private moveButtons: Phaser.GameObjects.Container[] = [];
-  private insightMarkers: Phaser.GameObjects.Arc[] = [];
-  private insightBadge!: Phaser.GameObjects.BitmapText;
-  private insightButtonBg!: Phaser.GameObjects.Rectangle;
-  private insightButton!: Phaser.GameObjects.Container;
   private counterText!: Phaser.GameObjects.BitmapText;
   private currentArea = "arcade_center";
   private areaLabel!: Phaser.GameObjects.BitmapText;
@@ -118,29 +114,6 @@ export class InvestigationScene extends Phaser.Scene {
     ui.add(hudPanel);
     addText(this, ui, 24, 18, t("chapter.ch01.title")).setTint(0xe8d9a0);
     this.areaLabel = addText(this, ui, 24, 52, "商店街・中央通り");
-
-    this.insightButton = this.add.container(276, 480);
-    this.insightButtonBg = this.add
-      .rectangle(0, 0, 132, 56, 0x12121a, 0.92)
-      .setOrigin(0, 0)
-      .setStrokeStyle(2, 0xe8d9a0, 0.8)
-      .setInteractive({ useHandCursor: true });
-    const eye = this.add.ellipse(66, 28, 52, 26).setStrokeStyle(3, 0xe8d9a0, 1);
-    const pupil = this.add.circle(66, 28, 7, 0xe8d9a0, 1);
-    this.insightButton.add([this.insightButtonBg, eye, pupil]);
-    ui.add(this.insightButton);
-    this.insightButtonBg.on("pointerdown", () => this.toggleInsight());
-
-    this.insightBadge = addText(this, ui, 424, 496, "").setTint(0x9dc8ff);
-    this.insightBadge.setVisible(false);
-
-    for (const hotspot of chapter.hotspots.filter((h) => h.insightOnly)) {
-      const marker = this.add.circle(hotspot.x + hotspot.width / 2, 112, 5, 0x9dc8ff, 1);
-      marker.setVisible(false);
-      this.tweens.add({ targets: marker, alpha: 0.35, duration: 700, yoyo: true, repeat: -1 });
-      this.insightMarkers.push(marker);
-      world.add(marker);
-    }
 
     addButton(this, ui, 776, 18, "ui.investigation.evidence", {
       width: 170,
@@ -362,20 +335,8 @@ export class InvestigationScene extends Phaser.Scene {
     this.setControlsVisible(false);
   }
 
-  private toggleInsight(): void {
-    const on = currentChapter().investigation.toggleInsight();
-    for (const tile of this.midTiles) tile.setTint(on ? 0x9db4d0 : 0xffffff);
-    for (const tile of this.farTiles) tile.setTint(on ? 0x6b7a94 : 0x8a8aa0);
-    this.insightButtonBg.setStrokeStyle(2, on ? 0x9dc8ff : 0xe8d9a0, on ? 1 : 0.8);
-    this.insightButtonBg.setFillStyle(on ? 0x1c2a3e : 0x12121a, 0.95);
-    for (const marker of this.insightMarkers) marker.setVisible(on);
-    this.insightBadge.setVisible(on);
-    this.insightBadge.setText(on ? t("ui.investigation.insightOn") : "");
-  }
-
   private setControlsVisible(visible: boolean): void {
     for (const button of this.moveButtons) button.setVisible(visible);
-    this.insightButton.setVisible(visible);
   }
 
   private showEntry(index: number): void {

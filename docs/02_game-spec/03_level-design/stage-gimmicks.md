@@ -34,17 +34,9 @@ verified_by: []
 
 ### 2.1 二つの視点
 
-本作の探索は「日常の視点」と「店主の視点」の2層で構成する。
-店主の視点は、**人の言葉の裏と物の不自然さ**が見える状態。特殊能力ではなく、商売で培った観察眼として描く。
-
-| 視点 | 見えるもの | 切替 |
-| --- | --- | --- |
-| 日常 | 通常のホットスポット、人物 | 既定 |
-| 洞察 | 追加ホットスポット（`insight`）、人物の「言い淀み」マーカー | `Shift` 長押し / 専用ボタン |
-
-- 洞察視点中は移動速度が半減する（考えながら歩く演出）。
-- 洞察視点でしか見つからない必須証拠が、章1では4件中1件。
-- 洞察視点の使用に制限は設けない（回数制限はテンポを損なうため不採用）。
+探索は**1層のみ**。視点の切り替えや特殊な「見える」能力は持たない。
+主人公の観察眼は台詞と地の文で表現し、メカニクスとしては「調べる」「話す」だけで完結させる。
+（視点切替は『都市伝説解体センター』の念視に近く、模倣と受け取られるため不採用）
 
 ### 2.2 ホットスポット一覧（第1章）
 
@@ -56,17 +48,17 @@ verified_by: []
 | `hs_board` | center | inspect | 掲示板。「東口の中学生」だと書き足された落書き。学年の記載はない | - |
 | `hs_payphone` | center | inspect | 公衆電話。航が姉の家へかけた記録が通話メモに残る | - |
 | `hs_office_door` | center | move | 組合事務所へ | - |
-| `hs_counter_slips` | west | insight | レジ横の購入控え綴り。同じ品を繰り返し買っている客がいる | `ev_shop_receipt` |
+| `hs_counter_slips` | west | inspect | レジ横の購入控え綴り。同じ品を繰り返し買っている客がいる | `ev_shop_receipt` |
 | `hs_tofu_shop` | east | talk | 丸福商店の健太。犯人の後姿を目撃した話と噂の出所 | `ev_kenta_sighting` |
 | `hs_liquor_shop` | east | talk | 松谷静江。自分の店の被害を語る。被害額が大きくなる | `ev_matsutani_report` |
 | `hs_photo_studio` | east | talk | 写真館の娘・千夏。店頭に貸し出した防犯用ビデオカメラのVHS | `ev_vhs_tape` |
 | `hs_goda_office` | east | talk | 地主・郷田権造。「内輪で済ませろ」と主張する | `ev_goda_statement` |
 | `hs_desk` | office | inspect | 過去の万引き対応記録。内輪で済ませた前例が2件 | `ev_past_settlement` |
 | `hs_phone_office` | office | inspect | 電話の脇のメモ。郷田からの「新聞に出すな」の言付け | `ev_goda_memo` |
-| `hs_waiting_chair` | office | insight | 待合椅子の下に落ちたノート。航が総会の呼び出しで待たされた際の落書き | `ev_notebook_page` |
+| `hs_waiting_chair` | office | inspect | 待合椅子の下に落ちたノート。航が総会の呼び出しで待たされた際の落書き | `ev_notebook_page` |
 
 必須証拠は `ev_ledger_theft` / `ev_vhs_tape` / `ev_notebook_page` / `ev_shop_receipt` の4件。
-うち `ev_shop_receipt` は洞察視点でのみ入手可能（`hs_counter_slips` を調べる導線）。
+`ev_shop_receipt` は西口のレジ横（`hs_counter_slips`）で入手する。
 
 ### 2.3 ギミックの原則
 
@@ -89,4 +81,3 @@ verified_by: []
 ## 4. 没にした案
 
 - 商店街全体を4画面以上に拡張 → プロトタイプの作業量に対して探索密度が薄まるため却下。
-- 洞察視点に「集中力ゲージ」 → リソース管理を復活させてしまうため却下。[[docs/05_archive/README]]

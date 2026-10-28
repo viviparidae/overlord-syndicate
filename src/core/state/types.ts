@@ -40,7 +40,6 @@ export interface Hotspot {
   labelKey: LocKey;
   textKey?: LocKey;
   evidenceId?: string;
-  insightOnly?: boolean;
   x: number;
   width: number;
 }
