@@ -188,7 +188,12 @@ export class InvestigationScene extends Phaser.Scene {
     this.applyScroll();
   }
 
-  private createMoveButton(x: number, y: number, label: string, dir: number): Phaser.GameObjects.Container {
+  private createMoveButton(
+    x: number,
+    y: number,
+    label: string,
+    dir: number,
+  ): Phaser.GameObjects.Container {
     const container = this.add.container(x, y);
     const bg = this.add
       .rectangle(0, 0, 112, 64, 0x12121a, 0.92)
