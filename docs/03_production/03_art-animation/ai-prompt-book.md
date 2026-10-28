@@ -217,7 +217,44 @@ window frame suitable for 9-slice scaling, flat front view.
 
 
 
-## 8. 未決事項
+## 8. 追加生成用プロンプト（不足分）
+
+### 8.1 遠景レイヤ3枚（16:9）
+
+共通 `Style:` 文 + 次の本文。
+
+| 用途 | プロンプト |
+| --- | --- |
+| 西口・遠景 | `A distant evening skyline of a small Japanese town seen from inside a shopping arcade, power lines, distant apartment blocks, darkening sky, no people, no readable signs.` |
+| 東口・遠景 | `A distant evening view of a small Japanese town street continuing east, telephone poles, low rooftops, faint windows, no people, no readable signs.` |
+| 組合事務所・遠景 | `A plain dim wall of a small office, a frosted glass window, faint yellow light, flat and uncluttered, no people, no readable signs.` |
+
+### 8.2 証拠アイコン9枚（1:1、16×16に縮小）
+
+共通の接頭語:
+
+```
+A single item on a flat magenta background, thick dark outline, low-resolution
+1998 PlayStation pixel art style, muted colors, no text, no shadows on the
+background.
+```
+
+| 証拠 | 本文 |
+| --- | --- |
+| 被害帳簿 | `An open handwritten shop ledger with columns of dates and item names, slightly worn.` |
+| 防犯用VHS | `A black VHS video cassette tape with a white label.` |
+| 航のノート | `A small closed school notebook with a pen, slightly crumpled.` |
+| 自販機のレシート | `A small store receipt slip with a printed date, lying flat.` |
+| 健太の目撃 | `A witness testimony card with a hand-drawn silhouette of a person.` |
+| 松谷の報告 | `A folded expense report sheet with numbers.` |
+| 郷田の発言 | `A speech note card with a firm handwritten mark.` |
+| 過去の処理記録 | `A stack of old filed documents tied with a string.` |
+| 郷田のメモ | `A small memo paper with a short handwritten scrawl and a phone number.` |
+
+保存先: `assets-src/generated/evidence/{名前}.jpg`（名前は `scripts/process-assets.py` の `EV_IDS` どおり）。
+保存後 `python3 scripts/process-assets.py` で `public/assets/evidence/icon_ev_*.png`（16×16）を生成する。
+
+## 9. 未決事項
 
 - 生成モデル（ローカル/API）と商用条件 → 決定後に上表へ反映
 - 一度に生成する枚数（モデルの料金・レート制限に応じて）

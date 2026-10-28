@@ -27,8 +27,22 @@ BG_IDS = {
     "中央通り・中景": "bg_arcade_center_mid",
     "中央通り・遠景": "bg_arcade_center_far",
     "西口・中景": "bg_arcade_west_mid",
+    "西口・遠景": "bg_arcade_west_far",
     "東口・中景": "bg_arcade_east_mid",
+    "東口・遠景": "bg_arcade_east_far",
     "組合事務所": "bg_shotengai_office",
+    "組合事務所・遠景": "bg_shotengai_office_far",
+}
+EV_IDS = {
+    "被害帳簿": "ev_ledger_theft",
+    "防犯用VHS": "ev_vhs_tape",
+    "航のノート": "ev_notebook_page",
+    "自販機のレシート": "ev_receipt_owned",
+    "健太の目撃": "ev_kenta_sighting",
+    "松谷の報告": "ev_matsutani_report",
+    "郷田の発言": "ev_goda_statement",
+    "過去の処理記録": "ev_past_settlement",
+    "郷田のメモ": "ev_goda_memo",
 }
 
 def remove_bg(img: Image.Image, tol: int = 40) -> Image.Image:
@@ -152,6 +166,25 @@ def main() -> None:
         img = cover_resize(img, (320, 180))
         quant16(img).save(DST / "backgrounds" / f"{bid}.png")
         made.append(str(DST / "backgrounds" / f"{bid}.png"))
+    # 証拠アイコン（16×16）
+    ev_dir = SRC / "evidence"
+    if ev_dir.exists():
+        for jp, eid in EV_IDS.items():
+            path = ev_dir / f"{jp}.jpg"
+            if not path.exists():
+                continue
+            img = remove_bg(Image.open(path))
+            box = img.getbbox()
+            if box:
+                img = img.crop(box)
+            w, h = img.size
+            scale = min(16 / w, 16 / h)
+            nw, nh = max(1, round(w * scale)), max(1, round(h * scale))
+            body = img.resize((nw, nh), Image.NEAREST)
+            canvas = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+            canvas.paste(body, ((16 - nw) // 2, (16 - nh) // 2))
+            quant16(canvas).save(DST / "evidence" / f"icon_{eid}.png")
+            made.append(str(DST / "evidence" / f"icon_{eid}.png"))
     # UI
     ui_raw = SRC / "ui" / "UI枠.jpg"
     if ui_raw.exists():
