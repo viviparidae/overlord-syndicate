@@ -40,7 +40,8 @@ verified_by: []
 
 | フォント | 出典 | ライセンス | 同梱可否 |
 | --- | --- | --- | --- |
-| （未選定） | - | - | - |
+| `assets-src/fonts/PixelMplus12-Regular.ttf` | https://github.com/itouhiro/PixelMplus | M+ FONT LICENSE（商用可・改変可・再配布可・無保証） | 可。`public/assets/fonts/pixelmplus12.{png,fnt}` として同梱（LICENSE-PixelMplus.txt を同梱） |
+| `public/assets/fonts/pixelmplus12.{png,fnt}` | 上記TTFから生成 | 上記に従う（派生物） | 可 |
 
 ## 4. 音源
 

@@ -64,7 +64,7 @@ verified_by: []
 
 | 用途 | 規格 |
 | --- | --- |
-| 本文 | ビットマップフォント（`.fnt` + PNG）をUIカメラに描く。フリーの日本語ドットフォントを変換して使う |
+| 本文 | **PixelMplus12** をBMFont化した `pixelmplus12`（12px・等幅・2値化）。`scripts/generate-bitmap-font.py` で再生成。フリーの日本語ドットフォント（M+ FONT LICENSE） |
 | 見出し | 同フォントの16px二重描き（太字ウェイトがなければ） |
 | 欧文数字 | 等幅。金額表示に使用 |
 | フォールバック | `Noto Sans JP`（Webフォント。読込失敗時のみ） |
