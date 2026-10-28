@@ -22,7 +22,14 @@ const hotspots: Hotspot[] = [
     x: 200,
     width: 20,
   },
-  { id: "hs_door", areaId: "west", kind: "move", labelKey: "ui.investigation.inspect", x: 300, width: 20 },
+  {
+    id: "hs_door",
+    areaId: "west",
+    kind: "move",
+    labelKey: "ui.investigation.inspect",
+    x: 300,
+    width: 20,
+  },
 ];
 
 describe("調査パート", () => {

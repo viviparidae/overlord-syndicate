@@ -1,5 +1,5 @@
-import type { LocKey } from "../../../localization";
 import type { EvidenceItem, Hotspot, Testimony } from "../../../core/state/types";
+import type { LocKey } from "../../../localization";
 
 export const chapterId = "ch01";
 export const chapterTitleKey: LocKey = "chapter.ch01.title";
@@ -260,8 +260,16 @@ export const testimonies: Testimony[] = [
     id: "t_wataru",
     speaker: "wataru",
     blocks: [
-      { id: "tw_01", textKey: "testimony.wataru.01.text", askBackKey: "testimony.wataru.01.askBack" },
-      { id: "tw_02", textKey: "testimony.wataru.02.text", askBackKey: "testimony.wataru.02.askBack" },
+      {
+        id: "tw_01",
+        textKey: "testimony.wataru.01.text",
+        askBackKey: "testimony.wataru.01.askBack",
+      },
+      {
+        id: "tw_02",
+        textKey: "testimony.wataru.02.text",
+        askBackKey: "testimony.wataru.02.askBack",
+      },
     ],
   },
   {
@@ -274,13 +282,7 @@ export const testimonies: Testimony[] = [
   },
 ];
 
-export const introLines: LocKey[] = [
-  "intro.01",
-  "intro.02",
-  "intro.03",
-  "intro.04",
-  "intro.05",
-];
+export const introLines: LocKey[] = ["intro.01", "intro.02", "intro.03", "intro.04", "intro.05"];
 
 export const epilogueLines: LocKey[] = ["epilogue.01", "epilogue.02", "epilogue.03", "epilogue.04"];
 

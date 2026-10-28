@@ -1,14 +1,21 @@
 ---
 title: 全体アーキテクチャ・設計思想
-description: 単一Canvas構成、世界とUIの2カメラ、状態管理（ポーリング）、シーン構成、型安全な章データの方針。
+description: 単一Canvas構成、世界レイヤの3倍拡大、状態管理（ポーリング）、シーン構成、型安全な章データの方針。
 status: draft
-version: "0.3"
+version: "0.4"
 category: architecture
 tags: [architecture, design, core, phaser, resolution]
 traces_to:
 - docs/03_production/01_conventions/directory-structure.md
 - docs/02_game-spec/02_system-rules/game-loop.md
-implemented_by: []
+implemented_by:
+- src/main.ts
+- src/phaser/stage.ts
+- src/phaser/scenes/
+- src/core/
+verified_by:
+- tests/unit/
+- tests/e2e/smoke.spec.ts
 verified_by: []
 ---
 
@@ -25,25 +32,20 @@ verified_by: []
 5. **決定性。** 乱数を使わない（本作に乱数要素はない）。同じ入力は同じ結果になる。
 6. **演出の進行はPhaser、判定はcore。** フラッシュやズームの「何秒目か」は描画層が持ち、正誤とミスはcoreだけが決める。
 
-## 2. 単一Canvasと2カメラ
+## 2. 単一Canvasと世界レイヤ
 
 **すべてPhaserの1つのCanvasで描く。DOMオーバーレイは使わない。**
 
-| カメラ | 見る範囲 | 拡大 | 描くもの |
+| レイヤ | 座標系 | 拡大 | 描くもの |
 | --- | --- | --- | --- |
-| `worldCamera` | 320 × 180 | `zoom: 3` | 背景、キャラ、ホットスポット、エフェクト |
-| `uiCamera` | 960 × 540 | `zoom: 1` | テキスト、HUD、メニュー、証拠品一覧、ボタン |
+| `world`（Container） | 320 × 180 | `setScale(3)` | 背景、キャラ、ホットスポット、エフェクト |
+| `ui`（Container） | 960 × 540 | 1 | テキスト、HUD、メニュー、証拠品一覧、ボタン |
 
-- ゲームサイズは 960 × 540（`Scale.FIT` + `pixelArt: true` + `roundPixels: true`）。
-- 世界レイヤのオブジェクトを `uiCamera.ignore()`、UIレイヤを `worldCamera.ignore()` に登録して分離する。
+- ゲームサイズは 960 × 540（`Scale.FIT` + `pixelArt: true` + `roundPixels: true`）。カメラは1つ。
 - 世界座標（320×180）とUI座標（960×540）の比率は 3:1。ホットスポットの当たり判定は世界座標で持つ。
-- 文字はUIカメラ側で描くため、**ビットマップフォント**（`.fnt`/`.xml` + PNG）を使う。Phaserの `Text`（Canvas描画）は最終手段とし、ピクセル感が崩れる場合は使わない。
-- 文字サイズ設定（100/125/150%）はUIレイヤのスケールで実現する。
-
-### 2.1 なぜ2カメラか
-
-1つのカメラで世界も文字も拡大すると、文字が3倍に引き伸ばされて読めない。
-世界だけ3倍・UIは等倍にすることで、**ドットの粗さと可読性を両立**し、かつDOMを排除できる。
+- **カメラを2つに分ける方式は採用しない。** 実装検証で、複数カメラがポインタ座標の変換と入力ヒットテストを二重化し、UIボタンの押下が不安定になったため。
+  世界側だけ `Container.setScale(3)` で拡大し、カメラは1つに保つ。
+- 文字は16pxのビットマップフォント（`.xml` + PNG、PixelMplus16）で描く。文字サイズ設定（100/125/150%）はUIレイヤのスケールで実現する。
 
 ## 3. レイヤ
 
@@ -140,6 +142,7 @@ export type LocKey = keyof typeof ja;
 | 証拠品詳細 | Phaserのオーバーレイシーン（UIカメラ） |
 | 章データの形式 | 型付き TS。ローカライズキーは `LocKey` で型安全化 |
 | 状態の通知 | 毎フレーム参照（イベント機関なし） |
-| 解像度 | 単一Canvas。世界カメラ 320×180（zoom 3）＋ UIカメラ 960×540（zoom 1） |
+| 解像度 | 単一Canvas・単一カメラ。世界レイヤ 320×180 を `setScale(3)`、UIレイヤは等倍 |
 | UIの実装 | すべてPhaser（DOMなし）。オーバーレイはシーンとして重ねる |
+| カメラ構成 | 1カメラ。2カメラ方式は入力不具合のため不採用（世界はコンテナ拡大） |
 | シーン統合 | `Intro` / `Epilogue` を `StoryScene` に統合 |

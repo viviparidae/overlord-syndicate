@@ -100,8 +100,20 @@
 - [x] コンセプト・世界観設計（1990年代 × 横スクロール調査）
 - [x] ゲーム仕様の策定（三層構造・弁論・ミスカウント）
 - [x] アーキテクチャ・制作ガイドラインの策定
-- [ ] 第1章の実装（未着手）
-- [ ] アセット制作・プレイテスト
+- [x] 第1章の実装（導入 → 調査 → 弁論 → エピローグ）
+- [x] アセット（AI生成・PS1風）とビットマップフォント
+- [ ] プレイテストとバランス調整
+
+## ── 動かし方
+
+```bash
+pnpm install
+pnpm dev        # http://localhost:5173
+pnpm build      # dist/
+pnpm preview    # http://localhost:4173
+pnpm test:run   # unit (vitest)
+pnpm test:e2e   # Playwright（build + preview を使用）
+```
 
 ---
 

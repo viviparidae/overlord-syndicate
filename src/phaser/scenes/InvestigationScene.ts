@@ -1,10 +1,10 @@
 import Phaser from "phaser";
-import { createStage } from "../stage";
-import { addButton, addText } from "../ui/components";
-import { currentChapter, saveNow } from "../state";
+import { WALK_SPEED } from "../../balance/constants";
 import { chapter } from "../../data/chapters/ch01";
 import { t } from "../../localization";
-import { WALK_SPEED } from "../../balance/constants";
+import { createStage } from "../stage";
+import { currentChapter, saveNow } from "../state";
+import { addButton, addText } from "../ui/components";
 
 export class InvestigationScene extends Phaser.Scene {
   private direction = 0;
@@ -89,7 +89,12 @@ export class InvestigationScene extends Phaser.Scene {
     saveNow();
   }
 
-  private static readonly AREAS = ["arcade_west", "arcade_center", "arcade_east", "shotengai_office"];
+  private static readonly AREAS = [
+    "arcade_west",
+    "arcade_center",
+    "arcade_east",
+    "shotengai_office",
+  ];
   private static readonly AREA_LABELS: Record<string, string> = {
     arcade_west: "商店街・西口",
     arcade_center: "商店街・中央通り",
@@ -102,7 +107,10 @@ export class InvestigationScene extends Phaser.Scene {
     const next = index + delta;
     if (next < 0 || next >= InvestigationScene.AREAS.length) return;
     this.currentArea = InvestigationScene.AREAS[next] ?? this.currentArea;
-    const texture = this.currentArea === "shotengai_office" ? "bg_shotengai_office" : `bg_${this.currentArea}_mid`;
+    const texture =
+      this.currentArea === "shotengai_office"
+        ? "bg_shotengai_office"
+        : `bg_${this.currentArea}_mid`;
     if (this.textures.exists(texture)) {
       this.background.setTexture(texture);
     }
@@ -151,7 +159,9 @@ export class InvestigationScene extends Phaser.Scene {
       const screenX = hotspot.x * 3;
       const screenY = 120;
       this.prompt.setPosition(screenX, screenY);
-      this.promptLabel.setText(t(hotspot.kind === "talk" ? "ui.investigation.talk" : "ui.investigation.inspect"));
+      this.promptLabel.setText(
+        t(hotspot.kind === "talk" ? "ui.investigation.talk" : "ui.investigation.inspect"),
+      );
       this.prompt.setVisible(true);
     } else {
       this.prompt.setVisible(false);

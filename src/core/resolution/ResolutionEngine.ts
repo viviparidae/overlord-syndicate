@@ -1,6 +1,6 @@
 import type { LocKey } from "../../localization";
-import type { MissCounter } from "./MissCounter";
 import type { OfferOutcome, Testimony, TestimonyBlock } from "../state/types";
+import type { MissCounter } from "./MissCounter";
 
 export interface OfferResult {
   outcome: OfferOutcome;
@@ -53,8 +53,7 @@ export class ResolutionEngine {
 
     const gap = block.gap;
     const accepted =
-      gap !== undefined &&
-      (evidenceId === gap.evidenceId || gap.acceptAnyOf.includes(evidenceId));
+      gap !== undefined && (evidenceId === gap.evidenceId || gap.acceptAnyOf.includes(evidenceId));
     if (accepted) {
       this.advance();
       return { outcome: "correct" };

@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { SaveRepository, type GameSnapshot, type StorageLike } from "../../src/core/save/SaveRepository";
 import { SAVE_KEY } from "../../src/balance/constants";
+import {
+  type GameSnapshot,
+  SaveRepository,
+  type StorageLike,
+} from "../../src/core/save/SaveRepository";
 
 class MemoryStorage implements StorageLike {
   private map = new Map<string, string>();

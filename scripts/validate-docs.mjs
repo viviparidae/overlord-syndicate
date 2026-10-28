@@ -6,7 +6,7 @@
  *  - frontmatter の traces_to のパスが実在するか
  * 使用法: node scripts/validate-docs.mjs
  */
-import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 const ROOT = "docs";

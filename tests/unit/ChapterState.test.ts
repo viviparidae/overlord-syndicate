@@ -3,8 +3,22 @@ import { ChapterState } from "../../src/core/state/ChapterState";
 import type { Hotspot, Testimony } from "../../src/core/state/types";
 
 const hotspots: Hotspot[] = [
-  { id: "h1", areaId: "a", kind: "inspect", labelKey: "ui.investigation.inspect", x: 10, width: 10 },
-  { id: "h2", areaId: "a", kind: "inspect", labelKey: "ui.investigation.inspect", x: 40, width: 10 },
+  {
+    id: "h1",
+    areaId: "a",
+    kind: "inspect",
+    labelKey: "ui.investigation.inspect",
+    x: 10,
+    width: 10,
+  },
+  {
+    id: "h2",
+    areaId: "a",
+    kind: "inspect",
+    labelKey: "ui.investigation.inspect",
+    x: 40,
+    width: 10,
+  },
 ];
 
 const testimonies: Testimony[] = [

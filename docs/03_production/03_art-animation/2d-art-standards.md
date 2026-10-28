@@ -8,7 +8,11 @@ tags: [art, pixel-art, ui, assets]
 traces_to:
 - docs/02_game-spec/01_flow-ui/hud-controls.md
 - docs/03_production/03_art-animation/animations.md
-implemented_by: []
+implemented_by:
+- scripts/generate-bitmap-font.py
+- src/phaser/ui/components.ts
+verified_by:
+- tests/e2e/smoke.spec.ts
 verified_by: []
 ---
 
@@ -64,7 +68,7 @@ verified_by: []
 
 | 用途 | 規格 |
 | --- | --- |
-| 本文 | **PixelMplus12** をBMFont化した `pixelmplus12`（12px・等幅・2値化）。`scripts/generate-bitmap-font.py` で再生成。フリーの日本語ドットフォント（M+ FONT LICENSE） |
+| 本文 | **PixelMplus16**（PixelMplus12 を16pxでBMFont化した `pixelmplus16`）。`scripts/generate-bitmap-font.py --size 16 --name pixelmplus16` で再生成。フリーの日本語ドットフォント（M+ FONT LICENSE） |
 | 見出し | 同フォントの16px二重描き（太字ウェイトがなければ） |
 | 欧文数字 | 等幅。金額表示に使用 |
 | フォールバック | `Noto Sans JP`（Webフォント。読込失敗時のみ） |

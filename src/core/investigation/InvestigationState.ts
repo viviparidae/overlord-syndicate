@@ -1,5 +1,5 @@
-import type { Hotspot, InteractionResult } from "../state/types";
 import type { LocKey } from "../../localization";
+import type { Hotspot, InteractionResult } from "../state/types";
 
 export class InvestigationState {
   private insight = false;

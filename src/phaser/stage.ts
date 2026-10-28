@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+import type Phaser from "phaser";
 import { ZOOM } from "../balance/constants";
 
 export interface Stage {

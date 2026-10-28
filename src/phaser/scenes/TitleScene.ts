@@ -1,8 +1,8 @@
 import Phaser from "phaser";
-import { createStage } from "../stage";
-import { addButton, addText } from "../ui/components";
-import { newChapterState } from "../state";
 import { t } from "../../localization";
+import { createStage } from "../stage";
+import { newChapterState } from "../state";
+import { addButton, addText } from "../ui/components";
 
 export class TitleScene extends Phaser.Scene {
   constructor() {

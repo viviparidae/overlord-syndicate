@@ -26,7 +26,16 @@ export class BootScene extends Phaser.Scene {
     for (const item of chapter.evidence) {
       this.load.image(`icon_${item.id}`, `assets/evidence/icon_${item.id}.png`);
     }
-    for (const id of ["ryo", "goda", "wataru", "matsutani", "chinatsu", "okada", "tatsumi", "kenta"]) {
+    for (const id of [
+      "ryo",
+      "goda",
+      "wataru",
+      "matsutani",
+      "chinatsu",
+      "okada",
+      "tatsumi",
+      "kenta",
+    ]) {
       this.load.image(`char_${id}`, `assets/characters/char_${id}.png`);
       this.load.image(`face_${id}_normal`, `assets/portraits/face_${id}_normal.png`);
       this.load.image(`face_${id}_down`, `assets/portraits/face_${id}_down.png`);

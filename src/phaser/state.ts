@@ -1,8 +1,7 @@
-import { SAVE_KEY, SETTINGS_KEY } from "../balance/constants";
-import { SaveRepository, type GameSnapshot } from "../core/save/SaveRepository";
+import { MISS_LIMIT_DEFAULT, SAVE_KEY, SETTINGS_KEY } from "../balance/constants";
+import { type GameSnapshot, SaveRepository } from "../core/save/SaveRepository";
 import { ChapterState } from "../core/state/ChapterState";
 import { chapter } from "../data/chapters/ch01";
-import { MISS_LIMIT_DEFAULT } from "../balance/constants";
 
 export interface Settings {
   textSpeed: "slow" | "normal" | "fast" | "instant";

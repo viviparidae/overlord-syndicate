@@ -1,9 +1,9 @@
 import Phaser from "phaser";
-import { createStage } from "../stage";
-import { addButton, addText } from "../ui/components";
-import { currentChapter, saveNow } from "../state";
 import { chapter } from "../../data/chapters/ch01";
 import { t } from "../../localization";
+import { createStage } from "../stage";
+import { currentChapter, saveNow } from "../state";
+import { addButton, addText } from "../ui/components";
 
 export class ResolutionScene extends Phaser.Scene {
   private text!: Phaser.GameObjects.BitmapText;

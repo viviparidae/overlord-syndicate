@@ -1,9 +1,9 @@
 import Phaser from "phaser";
-import { createStage } from "../stage";
-import { addButton, addText } from "../ui/components";
-import { currentChapter, saveNow } from "../state";
 import { chapter } from "../../data/chapters/ch01";
 import { t } from "../../localization";
+import { createStage } from "../stage";
+import { currentChapter, saveNow } from "../state";
+import { addButton, addText } from "../ui/components";
 
 export interface StoryData {
   phase: "intro" | "epilogue";
@@ -37,7 +37,9 @@ export class StoryScene extends Phaser.Scene {
     this.text = addText(this, ui, 60, 396, "", 12);
     this.text.setMaxWidth(840);
 
-    this.lines = [...(this.storyData.phase === "intro" ? chapter.introLines : chapter.epilogueLines)];
+    this.lines = [
+      ...(this.storyData.phase === "intro" ? chapter.introLines : chapter.epilogueLines),
+    ];
     this.index = 0;
     this.showLine();
 

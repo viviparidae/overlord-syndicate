@@ -1,9 +1,9 @@
 import Phaser from "phaser";
-import { createStage } from "../stage";
-import { addButton, addText } from "../ui/components";
-import { currentChapter } from "../state";
 import { chapter } from "../../data/chapters/ch01";
 import { t } from "../../localization";
+import { createStage } from "../stage";
+import { currentChapter } from "../state";
+import { addButton, addText } from "../ui/components";
 
 export interface EvidenceData {
   mode: "view" | "offer";
@@ -27,7 +27,13 @@ export class EvidenceScene extends Phaser.Scene {
 
     ui.add(this.add.rectangle(0, 0, 960, 540, 0x05050a, 0.82).setOrigin(0, 0).setInteractive());
 
-    addText(this, ui, 60, 48, t("ui.evidence.count", { have: owned.length, total: chapter.evidence.length })).setTint(0xe8d9a0);
+    addText(
+      this,
+      ui,
+      60,
+      48,
+      t("ui.evidence.count", { have: owned.length, total: chapter.evidence.length }),
+    ).setTint(0xe8d9a0);
 
     if (owned.length === 0) {
       addText(this, ui, 60, 90, t("ui.evidence.empty"));

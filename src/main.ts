@@ -1,13 +1,13 @@
 import { createGame } from "./phaser/game";
 import { BootScene } from "./phaser/scenes/BootScene";
 import { ChapterSelectScene } from "./phaser/scenes/ChapterSelectScene";
-import { currentChapter } from "./phaser/state";
 import { EvidenceScene } from "./phaser/scenes/EvidenceScene";
 import { GameOverScene } from "./phaser/scenes/GameOverScene";
 import { InvestigationScene } from "./phaser/scenes/InvestigationScene";
 import { ResolutionScene } from "./phaser/scenes/ResolutionScene";
 import { StoryScene } from "./phaser/scenes/StoryScene";
 import { TitleScene } from "./phaser/scenes/TitleScene";
+import { currentChapter } from "./phaser/state";
 
 const game = createGame("game");
 declare global {

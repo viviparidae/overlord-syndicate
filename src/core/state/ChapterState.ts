@@ -1,6 +1,6 @@
+import { InvestigationState } from "../investigation/InvestigationState";
 import { MissCounter } from "../resolution/MissCounter";
 import { ResolutionEngine } from "../resolution/ResolutionEngine";
-import { InvestigationState } from "../investigation/InvestigationState";
 import type { ChapterPhase, Hotspot, Testimony, TransitionErrorCode } from "./types";
 import { TransitionError } from "./types";
 

@@ -1,6 +1,6 @@
-import Phaser from "phaser";
+import type Phaser from "phaser";
 import { TAP_MIN_SIZE } from "../../balance/constants";
-import { t, type LocKey } from "../../localization";
+import { type LocKey, t } from "../../localization";
 
 export interface ButtonOptions {
   width?: number;
