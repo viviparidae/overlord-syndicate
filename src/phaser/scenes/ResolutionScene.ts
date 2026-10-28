@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { chapter } from "../../data/chapters/ch01";
+import { flipFor } from "../../data/chapters/ch01/facing";
 import { t } from "../../localization";
 import { createStage } from "../stage";
 import { currentChapter, saveNow } from "../state";
@@ -24,7 +25,6 @@ export class ResolutionScene extends Phaser.Scene {
     this.cameras.main.setBackgroundColor("#0b0b10");
 
     const bg = this.add.image(160, 90, "bg_shotengai_office").setDisplaySize(320, 180);
-    bg.setTint(0x555570);
     world.add(bg);
 
     const frame = this.add.rectangle(30, 336, 900, 184, 0x12121a, 0.95).setOrigin(0, 0);
@@ -88,7 +88,10 @@ export class ResolutionScene extends Phaser.Scene {
     this.text.setText(block ? t(block.textKey) : "");
 
     const id = this.speakerId();
-    if (id) this.portrait.setTexture(`face_${id}_normal`);
+    if (id) {
+      this.portrait.setTexture(`face_${id}_normal`);
+      this.portrait.setFlipX(flipFor(id, "left"));
+    }
     this.askBackButton?.setVisible(block?.askBackKey !== undefined);
     this.askBackShown = "";
     this.resultText.setText("");

@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { WALK_SPEED, ZOOM } from "../../balance/constants";
 import { chapter } from "../../data/chapters/ch01";
+import { flipFor } from "../../data/chapters/ch01/facing";
 import { type Npc, npcByHotspot, npcs } from "../../data/chapters/ch01/npcs";
 import { t } from "../../localization";
 import { createStage } from "../stage";
@@ -95,7 +96,7 @@ export class InvestigationScene extends Phaser.Scene {
     this.portraitRyo = this.add
       .image(195, 238, "face_ryo_normal")
       .setDisplaySize(210, 240)
-      .setFlipX(true)
+      .setFlipX(flipFor("ryo", "right"))
       .setVisible(false);
     this.portraitNpc = this.add
       .image(765, 238, "face_kenta_normal")
@@ -237,7 +238,7 @@ export class InvestigationScene extends Phaser.Scene {
       }
       this.playerX = Phaser.Math.Clamp(this.playerX, EDGE_LEFT, EDGE_RIGHT);
       this.player.setX(this.playerX);
-      this.player.setFlipX(this.direction > 0);
+      this.player.setFlipX(flipFor("ryo", this.direction > 0 ? "right" : "left"));
       this.applyScroll();
     }
 
@@ -321,7 +322,7 @@ export class InvestigationScene extends Phaser.Scene {
     for (const { npc, sprite } of this.npcSprites) {
       const visible = areaOfHotspot(npc.hotspotId) === this.currentArea;
       sprite.setVisible(visible);
-      if (visible) sprite.setFlipX(this.playerX > npc.x);
+      if (visible) sprite.setFlipX(flipFor(npc.charId, this.playerX < npc.x ? "left" : "right"));
     }
   }
 
@@ -348,6 +349,7 @@ export class InvestigationScene extends Phaser.Scene {
     const isRyo = entry.speaker === "speaker.ryo";
     this.portraitRyo.setVisible(isRyo);
     this.portraitNpc.setVisible(!isRyo);
+    this.portraitNpc.setFlipX(flipFor(this.dialogue.npc.charId, "left"));
   }
 
   private advanceDialogue(): void {

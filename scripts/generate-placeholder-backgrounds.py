@@ -172,28 +172,28 @@ def east_bg() -> Image.Image:
 def office_bg() -> Image.Image:
     img = Image.new("RGB", (W, H), (0, 0, 0))
     d = ImageDraw.Draw(img)
-    d.rectangle((0, 0, W, H), fill=(34, 34, 42))
-    dither_rect(d, 0, 0, W, H, (34, 34, 42), (28, 28, 34), step=6)
+    d.rectangle((0, 0, W, H), fill=(58, 58, 70))
+    dither_rect(d, 0, 0, W, H, (58, 58, 70), (50, 50, 60), step=6)
     # 壁のパネル
     for xx in range(0, W, 96):
-        d.rectangle((xx, 20, xx + 92, 250), fill=(38, 38, 46))
-        d.rectangle((xx + 2, 22, xx + 90, 248), fill=(32, 32, 40))
+        d.rectangle((xx, 20, xx + 92, 250), fill=(66, 66, 78))
+        d.rectangle((xx + 2, 22, xx + 90, 248), fill=(58, 58, 70))
     # 机
-    d.rectangle((120, 250, 360, 286), fill=(58, 44, 36))
-    d.rectangle((132, 286, 348, 330), fill=(44, 33, 27))
+    d.rectangle((120, 250, 360, 286), fill=(96, 74, 58))
+    d.rectangle((132, 286, 348, 330), fill=(74, 56, 44))
     # 黒電話
     d.rectangle((260, 226, 330, 250), fill=(20, 20, 24))
     d.rectangle((296, 216, 320, 230), fill=(24, 24, 28))
     # 証明書ふうの額
-    d.rectangle((420, 60, 520, 150), fill=(50, 44, 38))
+    d.rectangle((420, 60, 520, 150), fill=(92, 80, 66))
     # 待合椅子
     for i in range(3):
         x = 470 + i * 62
-        d.rectangle((x, 256, x + 54, 300), fill=(40, 40, 50))
+        d.rectangle((x, 256, x + 54, 300), fill=(78, 78, 92))
         d.rectangle((x + 6, 300, x + 12, 322), fill=(30, 30, 36))
         d.rectangle((x + 42, 300, x + 48, 322), fill=(30, 30, 36))
     # 床
-    d.rectangle((0, 300, W, H), fill=(44, 42, 50))
+    d.rectangle((0, 300, W, H), fill=(72, 68, 80))
     d.line((0, 300, W, 300), fill=(24, 24, 30))
     return img
 
