@@ -72,6 +72,9 @@ export class InvestigationScene extends Phaser.Scene {
     this.counterText = addText(this, ui, 690, 24, "");
     this.refreshCounter();
 
+    const hudPanel = this.add.rectangle(10, 8, 470, 84, 0x0b0b10, 0.82).setOrigin(0, 0);
+    hudPanel.setStrokeStyle(2, 0x4a4a55, 0.8);
+    ui.add(hudPanel);
     addText(this, ui, 24, 18, t("chapter.ch01.title")).setTint(0xe8d9a0);
     this.areaLabel = addText(this, ui, 24, 52, "商店街・中央通り");
 

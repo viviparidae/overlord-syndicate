@@ -18,6 +18,12 @@ verified_by: []
 前提: 作画できる人はいない（[[docs/03_production/01_conventions/asset-sourcing-policy]]）。
 第1章の背景のみを対象とする。
 
+## 0. 現状（仮背景）
+
+AI生成ができない間は、**コードで描いた仮背景**を使用する（`scripts/generate-placeholder-backgrounds.py`）。
+真横視点・地面ライン75%・等間隔の店先という本仕様を満たすため、横スクロールの検証が可能。
+AI生成に戻す際は同じファイル名で差し替え、`scripts/process-assets.py` を実行する。
+
 ## 1. 仕様
 
 | 項目 | 値 |
