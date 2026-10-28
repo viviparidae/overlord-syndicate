@@ -121,7 +121,99 @@ no people, no animals, no readable text, no signs with letters, no logo
 | --- | --- | --- | --- | --- | --- |
 | （未使用） | スプライト | 涼 | - | 0/3 | - |
 
-## 7. 未決事項
+## 7. Nano Banana（Gemini アプリ）用プロンプト
+
+Nano Banana は対話型の画像生成・編集モデル。**文章で指示し、参照画像で一貫性を保つ**のが特徴。
+以下の英文をそのまま貼り付けて使う。比率は 1:1（スプライト・立ち絵）、16:9（背景）。
+
+### 7.1 共通スタイル文（毎回の末尾に付ける）
+
+```
+Style: low-resolution 1998 PlayStation-era game art, muted desaturated palette,
+harsh top-left key light, deep black shadows, coarse dithering, thick dark
+outline, only 16 colors, grainy texture. No text, no logos, no watermark,
+no smooth gradients, no antialiasing.
+```
+
+人物の場合は加えて:
+
+```
+Full body, standing, three-quarter side view, arms hanging at the sides,
+hands hidden, plain flat magenta background for easy cutout.
+```
+
+（マゼンタ背景は切り抜き用。黒背景だと髪と服が溶ける）
+
+### 7.2 スプライト（32×48の元画像）
+
+| 人物 | プロンプト本文 |
+| --- | --- |
+| 篠宮 涼 | `A slim 27-year-old Japanese man, short black hair, navy blue work jacket over a white collared shirt, calm neutral expression, face half in shadow, small-town stationery shopkeeper.` |
+| 郷田 権造 | `A large heavy-set 61-year-old Japanese man, short grey hair, tan zip-up jacket, flat cap, broad shoulders, confident angry expression, local landlord.` |
+| 郷田 航 | `A small skinny 14-year-old Japanese boy, short dark hair, grey school blazer, white shirt, head slightly lowered, hands in pockets, sullen middle-school student.` |
+| 松谷 静江 | `A 58-year-old Japanese woman, grey hair in a bun, purple apron over a white blouse, thin frame, tired calm expression, liquor store owner.` |
+| 榎本 千夏 | `A 24-year-old slim Japanese woman, short black bob, orange jacket, white shirt, camera strap on her shoulder, curious expression, local newsletter editor.` |
+| 岡田 修 | `A 19-year-old Japanese man, blue work overalls, white towel around his neck, short hair, awkward posture, shop helper.` |
+| 辰巳 徳造 | `A 68-year-old large Japanese man, indigo samue workwear, flat cap, wrinkled calm face, neighborhood association chairman.` |
+| 丸福 健太 | `A 22-year-old Japanese man, white apron over a light blue shirt, short hair, rubber boots, friendly open expression, tofu shop son.` |
+
+### 7.3 立ち絵（128×160の元画像）
+
+スプライトで採用した画像を**添付して編集モードで**指示する（同一性が保てる）。
+
+```
+Keep this exact character, same face, same colors, same lighting.
+Change only the framing to a chest-up bust portrait, facing the camera,
+plain dark grey background, keep the low-resolution pixelated PS1 look.
+```
+
+- 参照画像なしで作る場合: スプライト用の本文 + `bust portrait, chest-up, facing the camera, plain dark grey background`。
+- 顔伏せカット（全員共用）: `Keep this character. Lower the head so the face is completely in shadow, looking down, same framing and colors.`
+
+### 7.4 背景（16:9・人物なし）
+
+| 用途 | プロンプト |
+| --- | --- |
+| 中央通り・中景 | `A 1990s Japanese covered shopping arcade at dusk, half of the fluorescent lights broken, shuttered shops, a notice board, a public phone booth, a wooden office door, empty street, no people, no readable signs.` |
+| 中央通り・遠景 | `A distant evening skyline of a small Japanese town, power lines, low buildings, darkening sky, no people.` |
+| 西口・中景 | `The west end of a 1990s Japanese shopping arcade, a small stationery shop with a glass front, a vending machine, closed shutters, no people, no readable signs.` |
+| 東口・中景 | `The east side of a Japanese shopping arcade, a tofu shop, a liquor shop with a noren curtain, a photo studio display case, a real-estate office, no people, no readable signs.` |
+| 組合事務所 | `A small neighborhood association office interior at night, a wooden desk, a black telephone, filing cabinets, three waiting chairs, one fluorescent light, no people.` |
+
+背景は毎回 `Style:` 文を付ける。文字・人物・現代的な機器（スマホ、LED）を入れない。
+1レイヤずつ生成する（1枚絵から層を分けない）。
+
+### 7.5 UI・アイコン
+
+```
+Style: 1998 PlayStation game UI, low-resolution pixel art, dark navy panel,
+thin beige 1px border, subtle dithering, no text. A rectangular dialogue
+window frame suitable for 9-slice scaling, flat front view.
+```
+
+証拠アイコンはフリー素材（game-icons.net）で足りるため、生成は任意。
+
+### 7.6 Nano Banana で失敗しやすい点と対処
+
+| 症状 | 対処 |
+| --- | --- |
+| ドットが細かすぎる／滑らかになる | `coarse dithering, visible square pixels, low resolution` を強調。`smooth shading` を禁止語に |
+| 目や指が崩れる | 目はそのまま採用可。指は `hands hidden` で回避 |
+| 文字が入る | `no text, no letters, no signage` を必ず付ける |
+| 8人の画風がバラける | 涼の採用画像を毎回添付し、`same style as the reference image` と指示 |
+| 背景が人物と合わない | 背景も同じ `Style:` 文で生成し、後で16色へ減色 |
+| 比率が違う | アプリ側で 1:1 / 16:9 を指定。指定できない場合はプロンプト冒頭に `square image` / `wide 16:9 image` |
+
+### 7.7 生成後の処理
+
+1. 1:1 の元画像を **32×48（スプライト）/ 128×160（立ち絵）/ 320×180（背景）** へ最近傍縮小
+2. 16色へ減色（ディザあり）
+3. マゼンタ背景を透過に置換
+4. 3倍表示で確認
+
+
+
+## 8. 未決事項
 
 - 生成モデル（ローカル/API）と商用条件 → 決定後に上表へ反映
 - 一度に生成する枚数（モデルの料金・レート制限に応じて）
