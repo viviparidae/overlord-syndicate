@@ -36,6 +36,7 @@ verified_by: []
 
 - [[docs/02_game-spec/03_level-design/stage-gimmicks]] — ステージ構成・ギミック
 - [[docs/02_game-spec/03_level-design/difficulty-curve]] — 難易度曲線・バランシング
+- [[docs/02_game-spec/03_level-design/scale-design]] — 舞台スケール設計（商店街→都市国家）
 
 ## 3. 資産・実装ガイドライン
 

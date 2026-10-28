@@ -23,6 +23,9 @@ verified_by: []
 | 項目 | 値 |
 | --- | --- |
 | `id` | `ch01` |
+| `scale` | `1`（商店街・自治会） |
+| `venueKey` | `venue.assembly`（臨時総会） |
+| `roleKey` | `role.summarizer`（まとめ役） |
 | タイトルキー | `chapter.ch01.title` |
 | フェーズ | 1 |
 | ミス上限 | 3 |
