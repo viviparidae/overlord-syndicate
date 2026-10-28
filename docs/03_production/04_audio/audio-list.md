@@ -13,6 +13,9 @@ verified_by: []
 
 # BGM/SE管理・選定リスト
 
+> **第1章では音を実装しない（無音）。** 本リストは将来の実装用（保留）。
+> 現行スコープは [[docs/03_production/01_conventions/asset-sourcing-policy]] を参照。
+
 人的リソース0のため、**発注は行わない**。フリー音源から選定する（[[docs/03_production/04_audio/audio-specs]]）。
 状態は「未選定 / 選定済 / 導入済 / 代替（削除）」の4つ。
 

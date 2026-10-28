@@ -57,7 +57,7 @@ verified_by: []
 - [[docs/03_production/03_art-animation/ai-prompt-book]] — AI生成プロンプト集
 - [[docs/03_production/03_art-animation/background-art-plan]] — 背景制作プラン（4エリア・2層）
 
-### 04. サウンド・音声
+### 04. サウンド・音声（今回は未実装・保留）
 
 - [[docs/03_production/04_audio/audio-specs]] — オーディオ仕様・再生トリガー
 - [[docs/03_production/04_audio/audio-list]] — BGM/SE選定リスト

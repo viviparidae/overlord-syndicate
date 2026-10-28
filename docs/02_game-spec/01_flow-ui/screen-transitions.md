@@ -46,7 +46,7 @@ verified_by: []
 
 | ID | 画面 | 種別 | 入力 | 備考 |
 | --- | --- | --- | --- | --- |
-| `title` | タイトル | DOM/Phaser | 決定、上下 | BGMフェードイン |
+| `title` | タイトル | DOM/Phaser | 決定、上下 | BGMなし（無音） |
 | `chapterSelect` | 章選択 | DOM | 左右、決定 | 進行度をセーブから読む |
 | `intro` | 導入ADV | Phaser | 決定、スキップ | 失敗なし。既読スキップ対応 |
 | `investigation` | 調査 | Phaser | 移動、調べる、話す、証拠品 | 遷移は「移動」のみ |

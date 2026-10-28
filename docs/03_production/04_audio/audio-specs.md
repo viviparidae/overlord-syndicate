@@ -14,6 +14,9 @@ verified_by: []
 
 # オーディオ仕様・再生トリガー
 
+> **第1章では音を実装しない（無音）。** 本書は将来実装時の仕様として残す。
+> 現行スコープは [[docs/03_production/01_conventions/asset-sourcing-policy]] を参照。
+
 ## 1. 形式
 
 | 項目 | 値 |
