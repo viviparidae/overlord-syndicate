@@ -1,0 +1,13 @@
+export const MISS_LIMIT_DEFAULT = 3;
+export const SAVE_VERSION = 1;
+export const SAVE_KEY = "overlord_syndicate_v2";
+export const SETTINGS_KEY = "overlord_syndicate_v2_settings";
+export const WORLD_WIDTH = 320;
+export const WORLD_HEIGHT = 180;
+export const UI_WIDTH = 960;
+export const UI_HEIGHT = 540;
+export const ZOOM = 3;
+export const WALK_SPEED = 42;
+export const TAP_MIN_SIZE = 44;
+export const EVIDENCE_TILE_SIZE = 48;
+export const TEXT_DELAY_MS = { slow: 60, normal: 30, fast: 12, instant: 0 } as const;
