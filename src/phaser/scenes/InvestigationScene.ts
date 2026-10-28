@@ -29,6 +29,7 @@ export class InvestigationScene extends Phaser.Scene {
   private speakerText!: Phaser.GameObjects.BitmapText;
   private npcSprites: { npc: Npc; sprite: Phaser.GameObjects.Image }[] = [];
   private dialogue: { npc: Npc; index: number } | null = null;
+  private portrait!: Phaser.GameObjects.Image;
   private counterText!: Phaser.GameObjects.BitmapText;
   private currentArea = "arcade_center";
   private areaLabel!: Phaser.GameObjects.BitmapText;
@@ -88,6 +89,12 @@ export class InvestigationScene extends Phaser.Scene {
     this.logText.setVisible(false);
     this.logFrame.setInteractive({ useHandCursor: true });
     this.logFrame.on("pointerdown", () => this.advanceDialogue());
+
+    this.portrait = this.add
+      .image(760, 196, "face_kenta_normal")
+      .setDisplaySize(250, 312)
+      .setVisible(false);
+    ui.add(this.portrait);
 
     const counterPanel = this.add.rectangle(676, 14, 92, 44, 0x0b0b10, 0.82).setOrigin(0, 0);
     ui.add(counterPanel);
@@ -314,8 +321,9 @@ export class InvestigationScene extends Phaser.Scene {
 
   private startDialogue(npc: Npc): void {
     this.dialogue = { npc, index: 0 };
+    this.portrait.setTexture(`face_${npc.charId}_normal`);
+    this.portrait.setVisible(true);
     this.direction = 0;
-    this.world.setY(-70);
     this.speakerText.setText(t(npc.speakerKey));
     this.speakerText.setVisible(true);
     const first = npc.lines[0];
@@ -347,7 +355,7 @@ export class InvestigationScene extends Phaser.Scene {
 
   private closeDialogue(): void {
     this.dialogue = null;
-    this.world.setY(0);
+    this.portrait.setVisible(false);
     this.speakerText.setVisible(false);
     this.hideLog();
   }
