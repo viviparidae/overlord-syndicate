@@ -61,8 +61,12 @@ verified_by: []
 
 ### 04. サウンド・音声（今回は未実装・保留）
 
-- [[docs/03_production/04_audio/audio-specs]] — オーディオ仕様・再生トリガー
+- [[docs/03_production/04_audio/audio-specs]] — オーディオ仕様・再生トリガー（保留）
 - [[docs/03_production/04_audio/audio-list]] — BGM/SE選定リスト
+
+### 05. テスト
+
+- [[docs/03_production/05_qa/test-strategy]] — テスト戦略
 
 ## 4. 世界観・シナリオ
 
