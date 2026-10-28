@@ -20,7 +20,13 @@ verified_by: []
 
 | アセット | モデル | 生成日 | 商用利用 | 備考 |
 | --- | --- | --- | --- | --- |
-| （未使用） | - | - | - | - |
+| `assets-src/generated/characters/*.jpeg`（8人×通常/伏せ） | Nano Banana（Gemini） | 2026-10-28 | 未確認 | スプライト・立ち絵の原画。プロンプトは [[docs/03_production/03_art-animation/ai-prompt-book]] |
+| `assets-src/generated/backgrounds/*.jpeg`（5枚） | Nano Banana（Gemini） | 2026-10-28 | 未確認 | 背景4エリアの中景3・遠景1＋事務所 |
+| `assets-src/generated/ui/UI枠.jpeg` | Nano Banana（Gemini） | 2026-10-28 | 未確認 | 9スライス用ダイアログ枠 |
+| `assets-src/generated/evidence/*.jpeg`（9枚） | Nano Banana（Gemini） | 2026-10-28 | 未確認 | 証拠アイコン原画 |
+
+- 加工版（`public/assets/` の縮小・減色済みPNG）は上記原画の派生物。
+- **商用利用は未確認**。Gemini利用規約で商用利用・生成物の権利関係を確認し、確認後にこの表を更新する。
 
 記録項目: ファイル名 / 使用モデルとバージョン / 生成日 / モデル規約の商用利用可否 / プロンプトの要約。
 

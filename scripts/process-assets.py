@@ -170,8 +170,11 @@ def main() -> None:
     ev_dir = SRC / "evidence"
     if ev_dir.exists():
         for jp, eid in EV_IDS.items():
-            path = ev_dir / f"{jp}.jpg"
-            if not path.exists():
+            for ext in (".jpg", ".jpeg", ".png"):
+                path = ev_dir / f"{jp}{ext}"
+                if path.exists():
+                    break
+            else:
                 continue
             img = remove_bg(Image.open(path))
             box = img.getbbox()
