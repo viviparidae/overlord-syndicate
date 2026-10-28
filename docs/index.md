@@ -30,6 +30,7 @@ verified_by: []
 
 - [[docs/02_game-spec/02_system-rules/game-loop]] — ゲームループ・進行
 - [[docs/02_game-spec/02_system-rules/save-data-specs]] — セーブ・データ構造
+- [[docs/02_game-spec/02_system-rules/chapter1-data]] — 第1章データ設計（証拠・証言・キー）
 
 ### 03. レベルデザイン
 
