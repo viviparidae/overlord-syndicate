@@ -29,7 +29,8 @@ export class InvestigationScene extends Phaser.Scene {
   private speakerText!: Phaser.GameObjects.BitmapText;
   private npcSprites: { npc: Npc; sprite: Phaser.GameObjects.Image }[] = [];
   private dialogue: { npc: Npc; index: number } | null = null;
-  private portrait!: Phaser.GameObjects.Image;
+  private portraitRyo!: Phaser.GameObjects.Image;
+  private portraitNpc!: Phaser.GameObjects.Image;
   private moveButtons: Phaser.GameObjects.Container[] = [];
   private insightButton!: Phaser.GameObjects.Container;
   private counterText!: Phaser.GameObjects.BitmapText;
@@ -92,11 +93,17 @@ export class InvestigationScene extends Phaser.Scene {
     this.logFrame.setInteractive({ useHandCursor: true });
     this.logFrame.on("pointerdown", () => this.advanceDialogue());
 
-    this.portrait = this.add
-      .image(760, 196, "face_kenta_normal")
-      .setDisplaySize(250, 312)
+    this.portraitRyo = this.add
+      .image(195, 238, "face_ryo_normal")
+      .setDisplaySize(210, 240)
+      .setFlipX(true)
       .setVisible(false);
-    ui.add(this.portrait);
+    this.portraitNpc = this.add
+      .image(765, 238, "face_kenta_normal")
+      .setDisplaySize(210, 240)
+      .setVisible(false);
+    ui.add(this.portraitRyo);
+    ui.add(this.portraitNpc);
 
     const counterPanel = this.add.rectangle(676, 14, 92, 44, 0x0b0b10, 0.82).setOrigin(0, 0);
     ui.add(counterPanel);
@@ -333,7 +340,7 @@ export class InvestigationScene extends Phaser.Scene {
     this.dialogue = { npc, index: 0 };
     this.direction = 0;
     this.speakerText.setVisible(true);
-    this.portrait.setVisible(true);
+    this.portraitNpc.setTexture(`face_${npc.charId}_normal`);
     this.showEntry(0);
     this.prompt.setVisible(false);
     this.setControlsVisible(false);
@@ -351,9 +358,8 @@ export class InvestigationScene extends Phaser.Scene {
     this.speakerText.setText(t(entry.speaker));
     this.showLog(t(entry.text));
     const isRyo = entry.speaker === "speaker.ryo";
-    const faceId = isRyo ? "ryo" : this.dialogue.npc.charId;
-    this.portrait.setTexture(`face_${faceId}_normal`);
-    this.portrait.setFlipX(!isRyo);
+    this.portraitRyo.setVisible(isRyo);
+    this.portraitNpc.setVisible(!isRyo);
   }
 
   private advanceDialogue(): void {
@@ -380,7 +386,8 @@ export class InvestigationScene extends Phaser.Scene {
 
   private closeDialogue(): void {
     this.dialogue = null;
-    this.portrait.setVisible(false);
+    this.portraitRyo.setVisible(false);
+    this.portraitNpc.setVisible(false);
     this.setControlsVisible(true);
     this.speakerText.setVisible(false);
     this.hideLog();
