@@ -36,6 +36,10 @@ export class ChapterState {
     return this.missCounter;
   }
 
+  get missLimit(): number {
+    return this.init.missLimit;
+  }
+
   get investigation(): InvestigationState {
     return this.investigationState;
   }

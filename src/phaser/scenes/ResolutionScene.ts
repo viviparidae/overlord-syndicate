@@ -1,0 +1,145 @@
+import Phaser from "phaser";
+import { createStage } from "../stage";
+import { addButton, addText } from "../ui/components";
+import { currentChapter, saveNow } from "../state";
+import { chapter } from "../../data/chapters/ch01";
+import { t } from "../../localization";
+
+export class ResolutionScene extends Phaser.Scene {
+  private text!: Phaser.GameObjects.BitmapText;
+  private resultText!: Phaser.GameObjects.BitmapText;
+  private speakerText!: Phaser.GameObjects.BitmapText;
+  private progressText!: Phaser.GameObjects.BitmapText;
+  private missText!: Phaser.GameObjects.BitmapText;
+  private portrait!: Phaser.GameObjects.Image;
+  private askBackButton?: Phaser.GameObjects.Container;
+  private askBackShown = "";
+
+  constructor() {
+    super("Resolution");
+  }
+
+  create(): void {
+    const { world, ui } = createStage(this);
+    this.cameras.main.setBackgroundColor("#0b0b10");
+
+    const bg = this.add.image(160, 90, "bg_shotengai_office").setDisplaySize(320, 180);
+    bg.setTint(0x555570);
+    world.add(bg);
+
+    const frame = this.add.rectangle(30, 400, 900, 116, 0x12121a, 0.95).setOrigin(0, 0);
+    frame.setStrokeStyle(2, 0xe8d9a0, 0.8);
+    frame.setInteractive({ useHandCursor: true });
+    frame.on("pointerdown", () => {
+      const engine = currentChapter().resolution;
+      const block = engine?.current;
+      if (block && !block.gap) {
+        engine?.advance();
+        this.afterStep();
+      }
+    });
+    ui.add(frame);
+
+    this.portrait = this.add.image(620, 250, "face_goda_normal").setDisplaySize(384, 480);
+    ui.add(this.portrait);
+
+    this.speakerText = addText(this, ui, 60, 372, "");
+    this.progressText = addText(this, ui, 330, 372, "");
+    this.missText = addText(this, ui, 760, 372, "").setTint(0xd9525b);
+    this.text = addText(this, ui, 60, 412, "");
+    this.text.setMaxWidth(860);
+    this.resultText = addText(this, ui, 60, 478, "").setTint(0xe8d9a0);
+    this.resultText.setMaxWidth(860);
+
+    this.askBackButton = addButton(this, ui, 40, 486, "ui.resolution.askBack", {
+      width: 140,
+      height: 44,
+      onClick: () => this.doAskBack(),
+    });
+    addButton(this, ui, 200, 486, "ui.resolution.offer", {
+      width: 140,
+      height: 44,
+      onClick: () => this.scene.launch("Evidence", { mode: "offer" }),
+    });
+    this.game.events.on("evidence-offer", (evidenceId: string) => {
+      this.handleOffer(evidenceId);
+    });
+
+    this.refresh();
+    saveNow();
+  }
+
+  private speakerId(): string {
+    return currentChapter().resolution?.currentSpeaker ?? "";
+  }
+
+  private refresh(): void {
+    const state = currentChapter();
+    const engine = state.resolution;
+    const block = engine?.current ?? null;
+    if (!engine || engine.isFinished || !block) return;
+    const speaker = engine?.currentSpeaker ?? "";
+    const progress = engine?.progress ?? { index: 0, total: 0 };
+
+    this.speakerText.setText(t(`speaker.${speaker}` as never));
+    this.progressText.setText(`証言 ${progress.index}/${progress.total}`);
+    this.missText.setText(t("log.miss", { count: state.misses.count, limit: state.missLimit }));
+
+    this.text.setText(block ? t(block.textKey) : "");
+
+    const id = this.speakerId();
+    if (id) this.portrait.setTexture(`face_${id}_normal`);
+    this.askBackButton?.setVisible(block?.askBackKey !== undefined);
+    this.askBackShown = "";
+    this.resultText.setText("");
+  }
+
+  private doAskBack(): void {
+    const engine = currentChapter().resolution;
+    const key = engine?.askBack();
+    if (!key || key === this.askBackShown) return;
+    this.askBackShown = key;
+    this.resultText.setText(`——${t(key)}`);
+  }
+
+  private handleOffer(evidenceId: string): void {
+    const state = currentChapter();
+    const engine = state.resolution;
+    if (!engine) return;
+
+    const successKey = engine.current?.gap?.successKey;
+    const result = engine.offer(evidenceId);
+
+    if (result.outcome === "correct") {
+      this.resultText.setText(successKey ? t(successKey) : "");
+      this.afterStep();
+      return;
+    }
+    if (result.outcome === "gameover") {
+      if (result.failureKey) this.resultText.setText(t(result.failureKey));
+      this.scene.launch("GameOver");
+      return;
+    }
+    if (result.failureKey) this.resultText.setText(t(result.failureKey));
+    this.missText.setText(t("log.miss", { count: state.misses.count, limit: state.missLimit }));
+  }
+
+  private afterStep(): void {
+    const state = currentChapter();
+    const engine = state.resolution;
+    if (!engine) return;
+    if (engine.isFinished) {
+      const error = state.finishResolution();
+      if (!error) {
+        saveNow();
+        this.scene.start("Story", { phase: "epilogue" });
+        return;
+      }
+    }
+    this.refresh();
+  }
+}
+
+export function evidenceCountText(): string {
+  return t("ui.evidence.count", { have: 0, total: chapter.evidence.length });
+}

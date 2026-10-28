@@ -58,7 +58,7 @@ verified_by: []
 | `arcade_west` | `hs_shop_counter` | 120–200 | レジカウンター |
 | `arcade_west` | `hs_shop_window` | 240–300 | ガラス戸の貼り紙 |
 | `arcade_center` | `hs_arcade_light` | 300–360 | 切れた蛍光灯 |
-| `arcade_west` | `hs_counter_slips` | 240–320 | レジ横の購入控え綴り |
+| `arcade_west` | `hs_counter_slips` | 420–480 | レジ横の購入控え綴り |
 | `arcade_center` | `hs_board` | 520–600 | 掲示板 |
 | `arcade_center` | `hs_payphone` | 680–740 | 公衆電話 |
 | `arcade_center` | `hs_office_door` | 860–940 | 組合事務所の引き戸 |

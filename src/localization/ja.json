@@ -2,7 +2,6 @@
   "chapter.ch01.title": "第一話 怒られたい少年",
   "venue.assembly": "臨時総会",
   "role.summarizer": "まとめ役",
-
   "ui.investigation.inspect": "調べる",
   "ui.investigation.talk": "話す",
   "ui.investigation.insight": "洞察",
@@ -22,12 +21,10 @@
   "ui.evidence.empty": "証拠品はまだない",
   "ui.evidence.count": "{have}/{total}",
   "ui.miss.label": "ミス",
-
   "log.evidence.obtained": "証拠品「{name}」を手に入れた",
   "log.evidence.already": "それはもう調べた",
   "log.miss": "ミス {count}/{limit}",
   "log.gameover": "ミスが上限に達した",
-
   "evidence.ledger_theft.name": "被害帳簿",
   "evidence.ledger_theft.desc": "5店14件の万引きの日時と品目。盗まれた物はすべて文房具・菓子・電池などで、換金できそうな物はない。",
   "evidence.vhs_tape.name": "防犯用VHS",
@@ -46,7 +43,6 @@
   "evidence.past_settlement.desc": "組合が過去に万引きを内輪で処理した記録が2件。どちらも届け出ていない。",
   "evidence.goda_memo.name": "郷田のメモ",
   "evidence.goda_memo.desc": "電話の脇に置かれたメモ。「新聞に出すな」とだけ書かれている。",
-
   "testimony.goda.01.text": "あの子は毎日塾に通っておる。夜は家で勉強だ。",
   "testimony.goda.01.askBack": "送り迎えは誰がしている。",
   "testimony.goda.02.text": "万引きの時間、あの子は塾におった。家の者が送り迎えしとる。",
@@ -59,23 +55,19 @@
   "testimony.goda.03.fail": "その品では換金できない。",
   "testimony.goda.04.text": "うちは孫に不自由させとらん。金にも物にも困っとらん。",
   "testimony.goda.04.askBack": "小遣いは月いくらだ。",
-
   "testimony.matsutani.01.text": "うちの店でもやられた。金目の物ばかり狙われとる。",
   "testimony.matsutani.01.askBack": "何を盗られた。",
   "testimony.matsutani.01.success": "棚の酒は残り、消えたのは菓子と乾電池だった。",
   "testimony.matsutani.01.fail": "金目の物は残っている。",
   "testimony.matsutani.02.text": "うちは会計だが、金庫は開けとらん。",
-
   "testimony.wataru.01.text": "……全部、俺がやった。",
   "testimony.wataru.01.askBack": "いつからだ。",
   "testimony.wataru.02.text": "金に困ってたから盗んだ。売って小遣いにした。",
   "testimony.wataru.02.askBack": "どこで売った。",
-
   "testimony.okada.01.text": "航は塾に行ってます。俺が送ってました。",
   "testimony.okada.01.askBack": "最後に送ったのはいつだ。",
   "testimony.okada.02.text": "あの子は家で居場所がない。それでも悪いことはしてない。",
   "testimony.okada.02.askBack": "居場所がないとは、どういう意味だ。",
-
   "talk.kenta.01.a": "あの後姿、航だと思う。制服も同じだし。",
   "talk.kenta.01.b": "でも時刻は自信ない。七時だったか、七時半だったか。",
   "talk.matsutani.01.a": "うちは菓子と電池。大した額じゃない。",
@@ -84,23 +76,23 @@
   "talk.chiaki.01.b": "映ってるのは後姿だけど、時間は正確よ。",
   "talk.goda.01.a": "内輪で済ませるのが礼儀だ。警察に出す話じゃない。",
   "talk.goda.01.b": "あんたも商売人なら、そのくらい分かるだろう。",
-
   "inspect.ledger": "レジ横の帳簿。日付と品目が、細かい字で並んでいる。",
   "inspect.notebook": "待合椅子の下に、見慣れないノートが挟まっている。",
   "inspect.slips": "購入控えの綴り。同じ品名が、何度も出てくる。",
   "inspect.settlement": "過去の処理記録。届け出ていない案件が2件ある。",
   "inspect.memo": "電話の脇のメモ。「新聞に出すな」——郷田の字だ。",
-
   "intro.01": "桜は散り、アーケードの電灯は半分が切れている。",
   "intro.02": "商店街の組合に、臨時総会の招集がかかった。議題は「万引き対策」。",
   "intro.03": "三ヶ月で五店、十四件。犯人の名は、まだ誰も口にしない。",
   "intro.04": "「うちの孫に限って」と、郷田権造は言った。",
   "intro.05": "総会の日、航はいつも通り店に来て、文房具を一冊買っていった。",
-
   "epilogue.01": "総会は、被害届を出さないという結論で終わった。",
   "epilogue.02": "郷田は黙って席を立った。机の上に、メモの写しが残っている。",
   "epilogue.03": "航は、店番を手伝うようになった。",
   "epilogue.04": "誰も、あの日のことを口にしない。",
-
-  "evidenceDetail.title": "証拠品"
+  "evidenceDetail.title": "証拠品",
+  "speaker.goda": "郷田 権造",
+  "speaker.matsutani": "松谷 静江",
+  "speaker.wataru": "郷田 航",
+  "speaker.okada": "岡田 修"
 }

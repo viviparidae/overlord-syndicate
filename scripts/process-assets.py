@@ -103,6 +103,24 @@ def to_portrait(img: Image.Image) -> Image.Image:
     crop = img.crop((cx, top, cx + cw, min(h, top + ch)))
     return quant16(crop.resize((128, 160), Image.NEAREST))
 
+def magenta_mask(rgb: Image.Image) -> Image.Image:
+    """マゼンタ背景のマスク（255=マゼンタ）を作る。"""
+    from PIL import ImageChops
+    r, g, b = rgb.split()
+    rg = ImageChops.subtract(r, g).point(lambda v: 255 if v > 30 else 0)
+    bg_ = ImageChops.subtract(b, g).point(lambda v: 255 if v > 20 else 0)
+    mask = ImageChops.multiply(rg, bg_)
+    return mask
+
+
+def clean_background(img: Image.Image) -> Image.Image:
+    """マゼンタの余白を暗色で塗りつぶす。"""
+    rgb = img.convert("RGB")
+    mask = magenta_mask(rgb)
+    dark = Image.new("RGB", rgb.size, (16, 16, 20))
+    return Image.composite(dark, rgb, mask)
+
+
 def content_bbox(img: Image.Image, tol: int = 40):
     """マゼンタ余白を除いた内容領域のbboxを返す。"""
     from PIL import ImageChops
@@ -163,6 +181,7 @@ def main() -> None:
         box = content_bbox(img)
         if box:
             img = img.crop(box)
+        img = clean_background(img)
         img = cover_resize(img, (320, 180))
         quant16(img).save(DST / "backgrounds" / f"{bid}.png")
         made.append(str(DST / "backgrounds" / f"{bid}.png"))

@@ -29,8 +29,20 @@ def collect_chars() -> list[str]:
         chars.add(chr(cp))
     for cp in range(0xFF01, 0xFF5F):
         chars.add(chr(cp))
-    for path in glob.glob("docs/**/*.md", recursive=True):
-        for ch in Path(path).read_text(encoding="utf-8"):
+    for ch in "◀▶◁▷○×≡▼●△":
+        chars.add(ch)
+    sources = glob.glob("docs/**/*.md", recursive=True)
+    sources += [
+        "src/localization/ja.json",
+        "src/localization/en.json",
+    ]
+    sources += glob.glob("src/data/**/*.ts", recursive=True)
+    for path in sources:
+        try:
+            text = Path(path).read_text(encoding="utf-8")
+        except OSError:
+            continue
+        for ch in text:
             if "\u3000" <= ch <= "\u9fff" or ch in "…—–‘’“”":
                 chars.add(ch)
     return sorted(chars)
@@ -106,8 +118,28 @@ def main() -> None:
     lines.append("kernings count=0")
     (out_dir / f"{args.name}.fnt").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
+    xml = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        "<font>",
+        f'  <info face="{args.name}" size="{args.size}" bold="0" italic="0" charset="" '
+        f'unicode="1" stretchH="100" smooth="0" aa="1" padding="0,0,0,0" spacing="1,1" outline="0"/>',
+        f'  <common lineHeight="{cell_h}" base="{ascent}" scaleW="{atlas_w}" scaleH="{atlas_h}" '
+        'pages="1" packed="0" alphaChnl="0" redChnl="0" greenChnl="0" blueChnl="0"/>',
+        "  <pages>",
+        f'    <page id="0" file="{args.name}.png"/>',
+        "  </pages>",
+        f'  <chars count="{len(placed)}">',
+    ]
+    for ch, advance, gx, gy, _ in placed:
+        xml.append(
+            f'    <char id="{ord(ch)}" x="{gx}" y="{gy}" width="{advance}" height="{cell_h}" '
+            f'xoffset="0" yoffset="0" xadvance="{advance}" page="0" chnl="15"/>'
+        )
+    xml += ['  </chars>', '  <kernings count="0"/>', "</font>"]
+    (out_dir / f"{args.name}.xml").write_text("\n".join(xml) + "\n", encoding="utf-8")
+
     print(f"glyphs={len(placed)} atlas={atlas_w}x{atlas_h}")
-    print(f"out={png_path} / {out_dir / (args.name + '.fnt')}")
+    print(f"out={png_path} / {out_dir / (args.name + '.fnt')} / {out_dir / (args.name + '.xml')}")
 
 
 if __name__ == "__main__":
