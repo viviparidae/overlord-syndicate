@@ -133,13 +133,13 @@ verified_by: []
       "id": "tg_01",
       "textKey": "testimony.goda.01",
       "pressKey": "testimony.goda.01.press",
-      "contradiction": null
+      "gap": null
     },
     {
       "id": "tg_02",
       "textKey": "testimony.goda.02",
       "pressKey": "testimony.goda.02.press",
-      "contradiction": {
+      "gap": {
         "evidenceId": "ev_vhs_tape",
         "acceptAnyOf": [],
         "successKey": "testimony.goda.02.success",
@@ -150,9 +150,9 @@ verified_by: []
 }
 ```
 
-- `contradiction` が `null` のブロックは追及のみ意味を持つ。
+- `gap` が `null` のブロックは追及のみ意味を持つ。
 - `acceptAnyOf` は複数正解を許す場合のみ使用（章1では未使用）。
-- 1ブロック最大1ムジュン。物語上の複合矛盾はブロックを分けて表現する。
+- 1ブロック最大1ほころび。複合した食い違いはブロックを分けて表現する。
 
 ## 7. 会話データ（導入・調査）
 
