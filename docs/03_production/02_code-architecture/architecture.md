@@ -70,7 +70,7 @@ IntroDone → Investigation(area, position) → Resolution(testimony, block) →
 | `ChapterSelectScene` | 章一覧 |
 | `IntroScene` | ADV描画 |
 | `InvestigationScene` | 横スクロール、ホットスポット、洞察視点 |
-| `ResolutionScene` | 仲裁廷、証言UI、差し出し演出 |
+| `ResolutionScene` | 弁論、証言UI、差し出し演出 |
 | `EpilogueScene` | ADV描画 |
 | `PauseOverlay` / `GameOverOverlay` | DOMオーバーレイ |
 
