@@ -15,6 +15,9 @@ export class ResolutionScene extends Phaser.Scene {
   private portrait!: Phaser.GameObjects.Image;
   private askBackButton?: Phaser.GameObjects.Container;
   private askBackShown = "";
+  private readonly onEvidenceOffer = (evidenceId: string): void => {
+    this.handleOffer(evidenceId);
+  };
 
   constructor() {
     super("Resolution");
@@ -61,8 +64,9 @@ export class ResolutionScene extends Phaser.Scene {
       height: 52,
       onClick: () => this.scene.launch("Evidence", { mode: "offer" }),
     });
-    this.game.events.on("evidence-offer", (evidenceId: string) => {
-      this.handleOffer(evidenceId);
+    this.game.events.on("evidence-offer", this.onEvidenceOffer);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.game.events.off("evidence-offer", this.onEvidenceOffer);
     });
 
     this.refresh();
@@ -120,6 +124,7 @@ export class ResolutionScene extends Phaser.Scene {
     }
     if (result.outcome === "gameover") {
       if (result.failureKey) this.resultText.setText(t(result.failureKey));
+      this.missText.setText(t("log.miss", { count: state.misses.count, limit: state.missLimit }));
       this.scene.launch("GameOver");
       return;
     }
