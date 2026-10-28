@@ -1,14 +1,20 @@
 import type { LocKey } from "../../../localization";
 
+export interface DialogueLine {
+  speaker: LocKey;
+  text: LocKey;
+}
+
 export interface Npc {
   id: string;
   hotspotId: string;
   charId: string;
   x: number;
-  speakerKey: LocKey;
-  lines: LocKey[];
+  script: DialogueLine[];
   evidenceId?: string;
 }
+
+const ryo = "speaker.ryo" as const;
 
 export const npcs: Npc[] = [
   {
@@ -16,8 +22,12 @@ export const npcs: Npc[] = [
     hotspotId: "hs_tofu_shop",
     charId: "kenta",
     x: 82,
-    speakerKey: "speaker.kenta",
-    lines: ["talk.kenta.01.a", "talk.kenta.01.b"],
+    script: [
+      { speaker: "speaker.kenta", text: "talk.kenta.01.a" },
+      { speaker: ryo, text: "talk.kenta.01.b" },
+      { speaker: "speaker.kenta", text: "talk.kenta.01.c" },
+      { speaker: ryo, text: "talk.kenta.01.d" },
+    ],
     evidenceId: "ev_kenta_sighting",
   },
   {
@@ -25,8 +35,12 @@ export const npcs: Npc[] = [
     hotspotId: "hs_liquor_shop",
     charId: "matsutani",
     x: 216,
-    speakerKey: "speaker.matsutani",
-    lines: ["talk.matsutani.01.a", "talk.matsutani.01.b"],
+    script: [
+      { speaker: "speaker.matsutani", text: "talk.matsutani.01.a" },
+      { speaker: ryo, text: "talk.matsutani.01.b" },
+      { speaker: "speaker.matsutani", text: "talk.matsutani.01.c" },
+      { speaker: ryo, text: "talk.matsutani.01.d" },
+    ],
     evidenceId: "ev_matsutani_report",
   },
   {
@@ -34,8 +48,12 @@ export const npcs: Npc[] = [
     hotspotId: "hs_photo_studio",
     charId: "chinatsu",
     x: 350,
-    speakerKey: "speaker.chinatsu",
-    lines: ["talk.chiaki.01.a", "talk.chiaki.01.b"],
+    script: [
+      { speaker: "speaker.chinatsu", text: "talk.chiaki.01.a" },
+      { speaker: ryo, text: "talk.chiaki.01.b" },
+      { speaker: "speaker.chinatsu", text: "talk.chiaki.01.c" },
+      { speaker: ryo, text: "talk.chiaki.01.d" },
+    ],
     evidenceId: "ev_vhs_tape",
   },
   {
@@ -43,8 +61,12 @@ export const npcs: Npc[] = [
     hotspotId: "hs_goda_office",
     charId: "goda",
     x: 524,
-    speakerKey: "speaker.goda",
-    lines: ["talk.goda.01.a", "talk.goda.01.b"],
+    script: [
+      { speaker: "speaker.goda", text: "talk.goda.01.a" },
+      { speaker: ryo, text: "talk.goda.01.b" },
+      { speaker: "speaker.goda", text: "talk.goda.01.c" },
+      { speaker: ryo, text: "talk.goda.01.d" },
+    ],
     evidenceId: "ev_goda_statement",
   },
 ];

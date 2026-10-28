@@ -30,6 +30,8 @@ export class InvestigationScene extends Phaser.Scene {
   private npcSprites: { npc: Npc; sprite: Phaser.GameObjects.Image }[] = [];
   private dialogue: { npc: Npc; index: number } | null = null;
   private portrait!: Phaser.GameObjects.Image;
+  private moveButtons: Phaser.GameObjects.Container[] = [];
+  private insightButton!: Phaser.GameObjects.Container;
   private counterText!: Phaser.GameObjects.BitmapText;
   private currentArea = "arcade_center";
   private areaLabel!: Phaser.GameObjects.BitmapText;
@@ -107,7 +109,7 @@ export class InvestigationScene extends Phaser.Scene {
     addText(this, ui, 24, 18, t("chapter.ch01.title")).setTint(0xe8d9a0);
     this.areaLabel = addText(this, ui, 24, 52, "商店街・中央通り");
 
-    addButton(this, ui, 276, 480, "ui.investigation.insight", {
+    this.insightButton = addButton(this, ui, 276, 480, "ui.investigation.insight", {
       width: 170,
       height: 56,
       onClick: () => {
@@ -123,8 +125,8 @@ export class InvestigationScene extends Phaser.Scene {
       onClick: () => this.scene.launch("Evidence", { mode: "view" }),
     });
 
-    this.createMoveButton(16, 480, "◀", -1);
-    this.createMoveButton(144, 480, "▶", 1);
+    this.moveButtons.push(this.createMoveButton(16, 480, "◀", -1));
+    this.moveButtons.push(this.createMoveButton(144, 480, "▶", 1));
 
     this.prompt = this.add.container(0, 0);
     const promptBg = this.add
@@ -186,19 +188,22 @@ export class InvestigationScene extends Phaser.Scene {
     this.applyScroll();
   }
 
-  private createMoveButton(x: number, y: number, label: string, dir: number): void {
+  private createMoveButton(x: number, y: number, label: string, dir: number): Phaser.GameObjects.Container {
+    const container = this.add.container(x, y);
     const bg = this.add
-      .rectangle(x, y, 112, 64, 0x12121a, 0.92)
+      .rectangle(0, 0, 112, 64, 0x12121a, 0.92)
       .setOrigin(0, 0)
       .setStrokeStyle(2, 0xe8d9a0, 0.7)
       .setInteractive({ useHandCursor: true });
-    const text = this.add.bitmapText(x + 56, y + 32, "pixelmplus24", label, 32).setOrigin(0.5, 0.5);
-    this.uiLayer.add([bg, text]);
+    const text = this.add.bitmapText(56, 32, "pixelmplus24", label, 32).setOrigin(0.5, 0.5);
+    container.add([bg, text]);
+    this.uiLayer.add(container);
     const start = () => (this.direction = dir);
     const stop = () => (this.direction = 0);
     bg.on("pointerdown", start);
     bg.on("pointerup", stop);
     bg.on("pointerout", stop);
+    return container;
   }
 
   private scrollX(): number {
@@ -321,23 +326,38 @@ export class InvestigationScene extends Phaser.Scene {
 
   private startDialogue(npc: Npc): void {
     this.dialogue = { npc, index: 0 };
-    this.portrait.setTexture(`face_${npc.charId}_normal`);
-    this.portrait.setVisible(true);
     this.direction = 0;
-    this.speakerText.setText(t(npc.speakerKey));
     this.speakerText.setVisible(true);
-    const first = npc.lines[0];
-    if (first) this.showLog(t(first));
+    this.portrait.setVisible(true);
+    this.showEntry(0);
     this.prompt.setVisible(false);
+    this.setControlsVisible(false);
+  }
+
+  private setControlsVisible(visible: boolean): void {
+    for (const button of this.moveButtons) button.setVisible(visible);
+    this.insightButton.setVisible(visible);
+  }
+
+  private showEntry(index: number): void {
+    if (!this.dialogue) return;
+    const entry = this.dialogue.npc.script[index];
+    if (!entry) return;
+    this.speakerText.setText(t(entry.speaker));
+    this.showLog(t(entry.text));
+    const isRyo = entry.speaker === "speaker.ryo";
+    const faceId = isRyo ? "ryo" : this.dialogue.npc.charId;
+    this.portrait.setTexture(`face_${faceId}_normal`);
+    this.portrait.setFlipX(!isRyo);
   }
 
   private advanceDialogue(): void {
     if (!this.dialogue) return;
     const { npc, index } = this.dialogue;
-    const next = npc.lines[index + 1];
+    const next = npc.script[index + 1];
     if (next) {
       this.dialogue.index = index + 1;
-      this.showLog(t(next));
+      this.showEntry(index + 1);
       return;
     }
     if (npc.evidenceId) {
@@ -356,6 +376,7 @@ export class InvestigationScene extends Phaser.Scene {
   private closeDialogue(): void {
     this.dialogue = null;
     this.portrait.setVisible(false);
+    this.setControlsVisible(true);
     this.speakerText.setVisible(false);
     this.hideLog();
   }

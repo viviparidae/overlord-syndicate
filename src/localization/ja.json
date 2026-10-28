@@ -102,5 +102,14 @@
   "inspect.board": "掲示板。「東口の中学生」と書き足された落書きがある。",
   "inspect.payphone": "公衆電話。受話器が少し浮いている。",
   "speaker.kenta": "丸福 健太",
-  "speaker.chinatsu": "榎本 千夏"
+  "speaker.chinatsu": "榎本 千夏",
+  "speaker.ryo": "篠宮 涼",
+  "talk.kenta.01.c": "七時だったか、七時半だったか。そこは自信ない。",
+  "talk.kenta.01.d": "結構です。……十分です。",
+  "talk.matsutani.01.c": "……酒は残ってる。金目の物は無事よ。",
+  "talk.matsutani.01.d": "ええ。それで十分です。",
+  "talk.chiaki.01.c": "映ってるのは後姿だけど、時間は正確よ。",
+  "talk.chiaki.01.d": "借ります。",
+  "talk.goda.01.c": "あんたも商売人なら、そのくらい分かるだろう。",
+  "talk.goda.01.d": "よく分かっています。"
 }

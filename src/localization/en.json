@@ -102,5 +102,14 @@
   "inspect.board": "The notice board. Someone scrawled 'the middle schooler from the east gate'.",
   "inspect.payphone": "A public phone. The receiver is slightly off the hook.",
   "speaker.kenta": "Kenta Marufuku",
-  "speaker.chinatsu": "Chinatsu Enomoto"
+  "speaker.chinatsu": "Chinatsu Enomoto",
+  "speaker.ryo": "Ryo Shinomiya",
+  "talk.kenta.01.c": "Seven? Seven-thirty? I'm not sure.",
+  "talk.kenta.01.d": "That's fine. That's enough.",
+  "talk.matsutani.01.c": "...The sake is still here. Nothing valuable was taken.",
+  "talk.matsutani.01.d": "Good. That's all I need.",
+  "talk.chiaki.01.c": "You only see his back, but the time is exact.",
+  "talk.chiaki.01.d": "I'll borrow it.",
+  "talk.goda.01.c": "A shopkeeper should understand that.",
+  "talk.goda.01.d": "I understand it very well."
 }
