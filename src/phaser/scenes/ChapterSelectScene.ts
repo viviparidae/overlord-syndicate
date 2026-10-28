@@ -13,10 +13,11 @@ export class ChapterSelectScene extends Phaser.Scene {
     const { ui } = createStage(this);
     this.cameras.main.setBackgroundColor("#0b0b10");
 
-    addText(this, ui, 60, 80, t("ui.title.chapterSelect"), 24).setTint(0xe8d9a0);
+    addText(this, ui, 60, 70, t("ui.title.chapterSelect"), 32).setTint(0xe8d9a0);
 
     addButton(this, ui, 60, 140, "chapter.ch01.title", {
-      width: 420,
+      width: 560,
+      height: 64,
       onClick: () => {
         newChapterState();
         this.scene.start("Story", { phase: "intro" });

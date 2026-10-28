@@ -13,11 +13,11 @@ export class GameOverScene extends Phaser.Scene {
     const { ui } = createStage(this);
     ui.add(this.add.rectangle(0, 0, 960, 540, 0x05050a, 0.9).setOrigin(0, 0).setInteractive());
 
-    addText(this, ui, 60, 140, t("ui.gameover.title"), 32).setTint(0xd9525b);
+    addText(this, ui, 60, 120, t("ui.gameover.title"), 40).setTint(0xd9525b);
 
     addButton(this, ui, 60, 220, "ui.gameover.retryPart", {
-      width: 260,
-      height: 56,
+      width: 340,
+      height: 64,
       onClick: () => {
         const state = currentChapter();
         state.retryResolution();
@@ -26,9 +26,9 @@ export class GameOverScene extends Phaser.Scene {
       },
     });
 
-    addButton(this, ui, 60, 300, "ui.gameover.retryChapter", {
-      width: 260,
-      height: 56,
+    addButton(this, ui, 60, 310, "ui.gameover.retryChapter", {
+      width: 340,
+      height: 64,
       onClick: () => {
         const state = currentChapter();
         state.retryResolution();

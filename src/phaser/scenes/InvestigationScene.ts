@@ -35,21 +35,21 @@ export class InvestigationScene extends Phaser.Scene {
     this.player = this.add.image(this.playerX, 150, "char_ryo").setOrigin(0.5, 1);
     world.add(this.player);
 
-    const frame = this.add.rectangle(24, 372, 600, 120, 0x12121a, 0.94).setOrigin(0, 0);
+    const frame = this.add.rectangle(24, 336, 610, 168, 0x12121a, 0.94).setOrigin(0, 0);
     frame.setStrokeStyle(2, 0xe8d9a0, 0.7);
     ui.add(frame);
-    this.logText = addText(this, ui, 40, 388, "");
-    this.logText.setMaxWidth(560);
+    this.logText = addText(this, ui, 40, 352, "");
+    this.logText.setMaxWidth(570);
 
-    this.counterText = addText(this, ui, 760, 20, "");
+    this.counterText = addText(this, ui, 700, 24, "");
     this.refreshCounter();
 
-    addText(this, ui, 24, 20, t("chapter.ch01.title")).setTint(0xe8d9a0);
-    this.areaLabel = addText(this, ui, 24, 44, "商店街・中央通り");
+    addText(this, ui, 24, 18, t("chapter.ch01.title")).setTint(0xe8d9a0);
+    this.areaLabel = addText(this, ui, 24, 52, "商店街・中央通り");
 
-    addButton(this, ui, 24, 492, "ui.investigation.insight", {
-      width: 120,
-      height: 40,
+    addButton(this, ui, 24, 478, "ui.investigation.insight", {
+      width: 170,
+      height: 52,
       onClick: () => {
         const on = currentChapter().investigation.toggleInsight();
         this.cameras.main.setBackgroundColor(on ? "#1a2433" : "#0b0b10");
@@ -57,23 +57,23 @@ export class InvestigationScene extends Phaser.Scene {
       },
     });
 
-    addButton(this, ui, 800, 20, "ui.investigation.evidence", {
-      width: 130,
-      height: 40,
+    addButton(this, ui, 776, 18, "ui.investigation.evidence", {
+      width: 170,
+      height: 52,
       onClick: () => this.scene.launch("Evidence", { mode: "view" }),
     });
 
-    this.createMoveButton(24, 430, "◀", -1);
-    this.createMoveButton(120, 430, "▶", 1);
+    this.createMoveButton(24, 408, "◀", -1);
+    this.createMoveButton(148, 408, "▶", 1);
 
     this.prompt = this.add.container(0, 0);
     const promptBg = this.add
-      .rectangle(0, 0, 120, 40, 0x2a2a38, 0.95)
+      .rectangle(0, 0, 170, 56, 0x2a2a38, 0.95)
       .setOrigin(0, 0)
       .setStrokeStyle(2, 0xe8d9a0, 0.9)
       .setInteractive({ useHandCursor: true });
     this.promptLabel = this.add
-      .bitmapText(8, 10, "pixelmplus16", t("ui.investigation.inspect"), 12)
+      .bitmapText(12, 14, "pixelmplus24", t("ui.investigation.inspect"), 24)
       .setOrigin(0, 0);
     promptBg.on("pointerdown", () => this.interactNearby());
     this.prompt.add([promptBg, this.promptLabel]);
@@ -121,11 +121,11 @@ export class InvestigationScene extends Phaser.Scene {
 
   private createMoveButton(x: number, y: number, label: string, dir: number): void {
     const bg = this.add
-      .rectangle(x, y, 88, 56, 0x12121a, 0.92)
+      .rectangle(x, y, 112, 64, 0x12121a, 0.92)
       .setOrigin(0, 0)
       .setStrokeStyle(2, 0xe8d9a0, 0.7)
       .setInteractive({ useHandCursor: true });
-    const text = this.add.bitmapText(x + 32, y + 16, "pixelmplus16", label, 24);
+    const text = this.add.bitmapText(x + 56, y + 32, "pixelmplus24", label, 32).setOrigin(0.5, 0.5);
     this.uiLayer.add([bg, text]);
     const start = () => (this.direction = dir);
     const stop = () => (this.direction = 0);
@@ -178,8 +178,8 @@ export class InvestigationScene extends Phaser.Scene {
   private showResolutionEntry(): void {
     if (this.resolutionEntryShown) return;
     this.resolutionEntryShown = true;
-    addButton(this, this.uiLayer, 700, 470, "venue.assembly", {
-      width: 220,
+    addButton(this, this.uiLayer, 660, 470, "venue.assembly", {
+      width: 270,
       height: 56,
       onClick: () => {
         const state = currentChapter();

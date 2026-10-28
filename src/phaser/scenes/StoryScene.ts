@@ -30,11 +30,11 @@ export class StoryScene extends Phaser.Scene {
 
     world.add(this.add.image(160, 90, "bg_arcade_center_mid").setDisplaySize(320, 180));
 
-    const frame = this.add.rectangle(40, 372, 880, 136, 0x12121a, 0.94).setOrigin(0, 0);
+    const frame = this.add.rectangle(40, 336, 880, 176, 0x12121a, 0.94).setOrigin(0, 0);
     frame.setStrokeStyle(2, 0xe8d9a0, 0.7);
     ui.add(frame);
 
-    this.text = addText(this, ui, 60, 396, "", 12);
+    this.text = addText(this, ui, 60, 356, "", 24);
     this.text.setMaxWidth(840);
 
     this.lines = [
@@ -50,9 +50,9 @@ export class StoryScene extends Phaser.Scene {
     this.input.keyboard?.on("keydown-SPACE", advance);
     this.input.keyboard?.on("keydown-ENTER", advance);
 
-    this.skipButton = addButton(this, ui, 790, 486, "ui.title.chapterSelect", {
-      width: 120,
-      height: 40,
+    this.skipButton = addButton(this, ui, 760, 472, "ui.skip", {
+      width: 150,
+      height: 48,
       onClick: () => this.finish(),
     });
     this.skipButton.setVisible(false);

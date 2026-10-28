@@ -1,5 +1,5 @@
 import type Phaser from "phaser";
-import { TAP_MIN_SIZE } from "../../balance/constants";
+import { TAP_MIN_SIZE, UI_FONT } from "../../balance/constants";
 import { type LocKey, t } from "../../localization";
 
 export interface ButtonOptions {
@@ -17,8 +17,8 @@ export function addButton(
   labelKey: LocKey,
   options: ButtonOptions,
 ): Phaser.GameObjects.Container {
-  const width = options.width ?? 132;
-  const height = Math.max(options.height ?? 44, TAP_MIN_SIZE);
+  const width = options.width ?? 160;
+  const height = Math.max(options.height ?? 56, TAP_MIN_SIZE);
   const button = scene.add.container(x, y);
 
   const background = scene.add
@@ -28,8 +28,8 @@ export function addButton(
     .setInteractive({ useHandCursor: true });
 
   const label = scene.add
-    .bitmapText(width / 2, height / 2 - 6, "pixelmplus16", t(labelKey), 12)
-    .setOrigin(0.5, 0);
+    .bitmapText(width / 2, height / 2, "pixelmplus24", t(labelKey), UI_FONT)
+    .setOrigin(0.5, 0.5);
 
   background.on("pointerdown", options.onClick);
   background.on("pointerover", () => background.setFillStyle(0x2a2a38, 0.95));
@@ -46,9 +46,9 @@ export function addText(
   x: number,
   y: number,
   value: string,
-  size = 12,
+  size = UI_FONT,
 ): Phaser.GameObjects.BitmapText {
-  const text = scene.add.bitmapText(x, y, "pixelmplus16", value, size);
+  const text = scene.add.bitmapText(x, y, "pixelmplus24", value, size);
   container.add(text);
   return text;
 }

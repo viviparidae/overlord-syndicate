@@ -94,5 +94,7 @@
   "speaker.goda": "Kenzo Goda",
   "speaker.matsutani": "Shizue Matsutani",
   "speaker.wataru": "Wataru Goda",
-  "speaker.okada": "Osamu Okada"
+  "speaker.okada": "Osamu Okada",
+  "ui.skip": "Skip",
+  "ui.rotate": "Please rotate your device"
 }

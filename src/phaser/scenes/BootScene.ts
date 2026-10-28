@@ -15,9 +15,9 @@ export class BootScene extends Phaser.Scene {
 
   preload(): void {
     this.load.bitmapFont(
-      "pixelmplus16",
-      "assets/fonts/pixelmplus16.png",
-      "assets/fonts/pixelmplus16.xml",
+      "pixelmplus24",
+      "assets/fonts/pixelmplus24.png",
+      "assets/fonts/pixelmplus24.xml",
     );
     for (const area of Object.values(AREA_BACKGROUNDS)) {
       this.load.image(area, `assets/backgrounds/${area}.png`);

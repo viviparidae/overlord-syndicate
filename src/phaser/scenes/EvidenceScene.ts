@@ -42,18 +42,18 @@ export class EvidenceScene extends Phaser.Scene {
     owned.forEach((item, index) => {
       const column = index % 5;
       const row = Math.floor(index / 5);
-      const x = 60 + column * 120;
-      const y = 96 + row * 132;
+      const x = 48 + column * 140;
+      const y = 92 + row * 176;
 
       const tile = this.add
-        .rectangle(x, y, 96, 96, 0x12121a, 0.95)
+        .rectangle(x, y, 124, 148, 0x12121a, 0.95)
         .setOrigin(0, 0)
         .setStrokeStyle(2, 0x4a4a55, 1)
         .setInteractive({ useHandCursor: true });
-      const icon = this.add.image(x + 48, y + 40, `icon_${item.id}`).setDisplaySize(48, 48);
+      const icon = this.add.image(x + 62, y + 56, `icon_${item.id}`).setDisplaySize(64, 64);
       const name = this.add
-        .bitmapText(x + 4, y + 72, "pixelmplus16", t(item.nameKey), 12)
-        .setMaxWidth(88);
+        .bitmapText(x + 8, y + 92, "pixelmplus24", t(item.nameKey), 24)
+        .setMaxWidth(108);
 
       tile.on("pointerdown", () => {
         if (this.mode === "offer") {
@@ -61,15 +61,15 @@ export class EvidenceScene extends Phaser.Scene {
           this.scene.stop();
           return;
         }
-        addText(this, ui, 60, 470, t(item.descKey)).setMaxWidth(840);
+        addText(this, ui, 48, 452, t(item.descKey)).setMaxWidth(700);
       });
 
       ui.add([tile, icon, name]);
     });
 
-    addButton(this, ui, 800, 470, "ui.resolution.close", {
-      width: 120,
-      height: 44,
+    addButton(this, ui, 784, 462, "ui.resolution.close", {
+      width: 150,
+      height: 56,
       onClick: () => this.scene.stop(),
     });
   }

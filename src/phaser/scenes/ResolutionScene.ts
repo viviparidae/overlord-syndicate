@@ -27,7 +27,7 @@ export class ResolutionScene extends Phaser.Scene {
     bg.setTint(0x555570);
     world.add(bg);
 
-    const frame = this.add.rectangle(30, 400, 900, 116, 0x12121a, 0.95).setOrigin(0, 0);
+    const frame = this.add.rectangle(30, 336, 900, 184, 0x12121a, 0.95).setOrigin(0, 0);
     frame.setStrokeStyle(2, 0xe8d9a0, 0.8);
     frame.setInteractive({ useHandCursor: true });
     frame.on("pointerdown", () => {
@@ -40,25 +40,25 @@ export class ResolutionScene extends Phaser.Scene {
     });
     ui.add(frame);
 
-    this.portrait = this.add.image(620, 250, "face_goda_normal").setDisplaySize(384, 480);
+    this.portrait = this.add.image(700, 210, "face_goda_normal").setDisplaySize(384, 480);
     ui.add(this.portrait);
 
-    this.speakerText = addText(this, ui, 60, 372, "");
-    this.progressText = addText(this, ui, 330, 372, "");
-    this.missText = addText(this, ui, 760, 372, "").setTint(0xd9525b);
-    this.text = addText(this, ui, 60, 412, "");
-    this.text.setMaxWidth(860);
-    this.resultText = addText(this, ui, 60, 478, "").setTint(0xe8d9a0);
-    this.resultText.setMaxWidth(860);
+    this.speakerText = addText(this, ui, 24, 300, "");
+    this.progressText = addText(this, ui, 330, 300, "");
+    this.missText = addText(this, ui, 750, 300, "").setTint(0xd9525b);
+    this.text = addText(this, ui, 56, 360, "");
+    this.text.setMaxWidth(850);
+    this.resultText = addText(this, ui, 56, 480, "").setTint(0xe8d9a0);
+    this.resultText.setMaxWidth(850);
 
-    this.askBackButton = addButton(this, ui, 40, 486, "ui.resolution.askBack", {
-      width: 140,
-      height: 44,
+    this.askBackButton = addButton(this, ui, 24, 474, "ui.resolution.askBack", {
+      width: 170,
+      height: 52,
       onClick: () => this.doAskBack(),
     });
-    addButton(this, ui, 200, 486, "ui.resolution.offer", {
-      width: 140,
-      height: 44,
+    addButton(this, ui, 210, 474, "ui.resolution.offer", {
+      width: 170,
+      height: 52,
       onClick: () => this.scene.launch("Evidence", { mode: "offer" }),
     });
     this.game.events.on("evidence-offer", (evidenceId: string) => {
