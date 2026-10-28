@@ -40,7 +40,7 @@ export class ResolutionScene extends Phaser.Scene {
     });
     ui.add(frame);
 
-    this.portrait = this.add.image(700, 210, "face_goda_normal").setDisplaySize(384, 480);
+    this.portrait = this.add.image(780, 160, "face_goda_normal").setDisplaySize(240, 300);
     ui.add(this.portrait);
 
     this.speakerText = addText(this, ui, 24, 300, "");

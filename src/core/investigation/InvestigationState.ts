@@ -28,8 +28,11 @@ export class InvestigationState {
     const candidates = this.visibleHotspots(areaId).filter(
       (h) => x >= h.x - 8 && x <= h.x + h.width + 8,
     );
-    if (candidates.length === 0) return null;
-    const nearest = candidates.reduce((a, b) => {
+    const actionable = candidates.filter(
+      (h) => h.evidenceId !== undefined || h.textKey !== undefined,
+    );
+    if (actionable.length === 0) return null;
+    const nearest = actionable.reduce((a, b) => {
       const da = Math.abs(a.x + a.width / 2 - x);
       const db = Math.abs(b.x + b.width / 2 - x);
       return da <= db ? a : b;

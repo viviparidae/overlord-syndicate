@@ -96,5 +96,9 @@
   "speaker.wataru": "郷田 航",
   "speaker.okada": "岡田 修",
   "ui.skip": "スキップ",
-  "ui.rotate": "端末を横向きにしてください"
+  "ui.rotate": "端末を横向きにしてください",
+  "inspect.window": "ガラス戸に貼り紙。「万引きには刑事罰を」とだけ書かれている。",
+  "inspect.light": "切れた蛍光灯。半分が交換されないまま、年を越している。",
+  "inspect.board": "掲示板。「東口の中学生」と書き足された落書きがある。",
+  "inspect.payphone": "公衆電話。受話器が少し浮いている。"
 }

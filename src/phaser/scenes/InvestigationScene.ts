@@ -32,14 +32,14 @@ export class InvestigationScene extends Phaser.Scene {
     this.background = this.add.image(160, 90, "bg_arcade_center_mid").setDisplaySize(320, 180);
     world.add(this.background);
 
-    this.player = this.add.image(this.playerX, 150, "char_ryo").setOrigin(0.5, 1);
+    this.player = this.add.image(this.playerX, 124, "char_ryo").setOrigin(0.5, 1);
     world.add(this.player);
 
-    const frame = this.add.rectangle(24, 336, 610, 168, 0x12121a, 0.94).setOrigin(0, 0);
+    const frame = this.add.rectangle(16, 364, 928, 112, 0x12121a, 0.94).setOrigin(0, 0);
     frame.setStrokeStyle(2, 0xe8d9a0, 0.7);
     ui.add(frame);
-    this.logText = addText(this, ui, 40, 352, "");
-    this.logText.setMaxWidth(570);
+    this.logText = addText(this, ui, 32, 380, "");
+    this.logText.setMaxWidth(890);
 
     this.counterText = addText(this, ui, 700, 24, "");
     this.refreshCounter();
@@ -47,9 +47,9 @@ export class InvestigationScene extends Phaser.Scene {
     addText(this, ui, 24, 18, t("chapter.ch01.title")).setTint(0xe8d9a0);
     this.areaLabel = addText(this, ui, 24, 52, "商店街・中央通り");
 
-    addButton(this, ui, 24, 478, "ui.investigation.insight", {
+    addButton(this, ui, 276, 480, "ui.investigation.insight", {
       width: 170,
-      height: 52,
+      height: 56,
       onClick: () => {
         const on = currentChapter().investigation.toggleInsight();
         this.cameras.main.setBackgroundColor(on ? "#1a2433" : "#0b0b10");
@@ -63,8 +63,8 @@ export class InvestigationScene extends Phaser.Scene {
       onClick: () => this.scene.launch("Evidence", { mode: "view" }),
     });
 
-    this.createMoveButton(24, 408, "◀", -1);
-    this.createMoveButton(148, 408, "▶", 1);
+    this.createMoveButton(16, 480, "◀", -1);
+    this.createMoveButton(144, 480, "▶", 1);
 
     this.prompt = this.add.container(0, 0);
     const promptBg = this.add
@@ -156,9 +156,7 @@ export class InvestigationScene extends Phaser.Scene {
     this.nearHotspotId = near?.id ?? null;
     if (near) {
       const hotspot = near;
-      const screenX = hotspot.x * 3;
-      const screenY = 120;
-      this.prompt.setPosition(screenX, screenY);
+      this.prompt.setPosition(this.playerX * 3 - 85, 150);
       this.promptLabel.setText(
         t(hotspot.kind === "talk" ? "ui.investigation.talk" : "ui.investigation.inspect"),
       );
