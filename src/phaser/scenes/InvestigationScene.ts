@@ -1,16 +1,25 @@
 import Phaser from "phaser";
-import { WALK_SPEED } from "../../balance/constants";
+import { WALK_SPEED, ZOOM } from "../../balance/constants";
 import { chapter } from "../../data/chapters/ch01";
 import { t } from "../../localization";
 import { createStage } from "../stage";
 import { currentChapter, saveNow } from "../state";
 import { addButton, addText } from "../ui/components";
 
+const AREA_WIDTH = 640;
+const SCREEN_WIDTH = 320;
+const EDGE_LEFT = 12;
+const EDGE_RIGHT = AREA_WIDTH - 12;
+const FEET_Y = 124;
+
 export class InvestigationScene extends Phaser.Scene {
   private direction = 0;
   private playerX = 160;
   private player!: Phaser.GameObjects.Image;
-  private background!: Phaser.GameObjects.Image;
+  private world!: Phaser.GameObjects.Container;
+  private farLayer!: Phaser.GameObjects.Container;
+  private midTiles: Phaser.GameObjects.Image[] = [];
+  private farTiles: Phaser.GameObjects.Image[] = [];
   private uiLayer!: Phaser.GameObjects.Container;
   private prompt!: Phaser.GameObjects.Container;
   private promptLabel!: Phaser.GameObjects.BitmapText;
@@ -19,6 +28,8 @@ export class InvestigationScene extends Phaser.Scene {
   private currentArea = "arcade_center";
   private areaLabel!: Phaser.GameObjects.BitmapText;
   private nearHotspotId: string | null = null;
+  private resolutionEntryShown = false;
+  private edgeLock = false;
 
   constructor() {
     super("Investigation");
@@ -26,13 +37,30 @@ export class InvestigationScene extends Phaser.Scene {
 
   create(): void {
     const { world, ui } = createStage(this);
+    this.world = world;
     this.uiLayer = ui;
     this.cameras.main.setBackgroundColor("#0b0b10");
 
-    this.background = this.add.image(160, 90, "bg_arcade_center_mid").setDisplaySize(320, 180);
-    world.add(this.background);
+    this.farLayer = this.add.container(0, 0);
+    for (let i = 0; i < 2; i += 1) {
+      const tile = this.add
+        .image(160 + i * SCREEN_WIDTH, 90, "bg_arcade_center_far")
+        .setDisplaySize(SCREEN_WIDTH, 180)
+        .setTint(0x8a8aa0);
+      this.farTiles.push(tile);
+      this.farLayer.add(tile);
+    }
+    world.add(this.farLayer);
 
-    this.player = this.add.image(this.playerX, 124, "char_ryo").setOrigin(0.5, 1);
+    for (let i = 0; i < 2; i += 1) {
+      const tile = this.add
+        .image(160 + i * SCREEN_WIDTH, 90, "bg_arcade_center_mid")
+        .setDisplaySize(SCREEN_WIDTH, 180);
+      this.midTiles.push(tile);
+      world.add(tile);
+    }
+
+    this.player = this.add.image(this.playerX, FEET_Y, "char_ryo").setOrigin(0.5, 1);
     world.add(this.player);
 
     const frame = this.add.rectangle(16, 364, 928, 112, 0x12121a, 0.94).setOrigin(0, 0);
@@ -41,7 +69,7 @@ export class InvestigationScene extends Phaser.Scene {
     this.logText = addText(this, ui, 32, 380, "");
     this.logText.setMaxWidth(890);
 
-    this.counterText = addText(this, ui, 700, 24, "");
+    this.counterText = addText(this, ui, 690, 24, "");
     this.refreshCounter();
 
     addText(this, ui, 24, 18, t("chapter.ch01.title")).setTint(0xe8d9a0);
@@ -52,7 +80,7 @@ export class InvestigationScene extends Phaser.Scene {
       height: 56,
       onClick: () => {
         const on = currentChapter().investigation.toggleInsight();
-        this.cameras.main.setBackgroundColor(on ? "#1a2433" : "#0b0b10");
+        this.cameras.main.setBackgroundColor(on ? "#141c2b" : "#0b0b10");
         this.logText.setText(on ? "洞察の視点" : "");
       },
     });
@@ -102,21 +130,28 @@ export class InvestigationScene extends Phaser.Scene {
     shotengai_office: "組合事務所",
   };
 
+  private textureFor(area: string, layer: "mid" | "far"): string {
+    const base = area === "shotengai_office" ? "bg_shotengai_office" : `bg_${area}_${layer}`;
+    return this.textures.exists(base) ? base : "bg_arcade_center_far";
+  }
+
+  private setAreaTextures(area: string): void {
+    const mid = this.textureFor(area, "mid");
+    const far = this.textureFor(area, "far");
+    for (const tile of this.midTiles) tile.setTexture(mid);
+    for (const tile of this.farTiles) tile.setTexture(far);
+  }
+
   private moveToArea(delta: number): void {
     const index = InvestigationScene.AREAS.indexOf(this.currentArea);
     const next = index + delta;
     if (next < 0 || next >= InvestigationScene.AREAS.length) return;
     this.currentArea = InvestigationScene.AREAS[next] ?? this.currentArea;
-    const texture =
-      this.currentArea === "shotengai_office"
-        ? "bg_shotengai_office"
-        : `bg_${this.currentArea}_mid`;
-    if (this.textures.exists(texture)) {
-      this.background.setTexture(texture);
-    }
+    this.setAreaTextures(this.currentArea);
     this.areaLabel.setText(InvestigationScene.AREA_LABELS[this.currentArea] ?? "");
-    this.playerX = delta > 0 ? 12 : 308;
+    this.playerX = delta > 0 ? EDGE_LEFT + 20 : EDGE_RIGHT - 20;
     this.edgeLock = true;
+    this.applyScroll();
   }
 
   private createMoveButton(x: number, y: number, label: string, dir: number): void {
@@ -134,20 +169,31 @@ export class InvestigationScene extends Phaser.Scene {
     bg.on("pointerout", stop);
   }
 
+  private scrollX(): number {
+    return Phaser.Math.Clamp(this.playerX - SCREEN_WIDTH / 2, 0, AREA_WIDTH - SCREEN_WIDTH);
+  }
+
+  private applyScroll(): void {
+    const scroll = this.scrollX();
+    this.world.setX(-scroll * ZOOM);
+    this.farLayer.setX((this.playerX - SCREEN_WIDTH / 2 - scroll) * ZOOM);
+  }
+
   override update(_time: number, delta: number): void {
     if (this.direction === 0) {
       this.edgeLock = false;
     }
     if (this.direction !== 0) {
       this.playerX = this.playerX + this.direction * WALK_SPEED * (delta / 1000);
-      if (!this.edgeLock && this.playerX <= 12 && this.direction < 0) {
+      if (!this.edgeLock && this.playerX <= EDGE_LEFT) {
         this.moveToArea(-1);
-      } else if (!this.edgeLock && this.playerX >= 308 && this.direction > 0) {
+      } else if (!this.edgeLock && this.playerX >= EDGE_RIGHT) {
         this.moveToArea(1);
       }
-      this.playerX = Phaser.Math.Clamp(this.playerX, 12, 308);
+      this.playerX = Phaser.Math.Clamp(this.playerX, EDGE_LEFT, EDGE_RIGHT);
       this.player.setX(this.playerX);
       this.player.setFlipX(this.direction < 0);
+      this.applyScroll();
     }
 
     const enabled = this.direction === 0;
@@ -155,10 +201,10 @@ export class InvestigationScene extends Phaser.Scene {
     const near = enabled ? state.investigation.hotspotNear(this.currentArea, this.playerX) : null;
     this.nearHotspotId = near?.id ?? null;
     if (near) {
-      const hotspot = near;
-      this.prompt.setPosition(this.playerX * 3 - 85, 150);
+      const screenX = (this.playerX - this.scrollX()) * ZOOM - 85;
+      this.prompt.setPosition(Phaser.Math.Clamp(screenX, 8, 782), 150);
       this.promptLabel.setText(
-        t(hotspot.kind === "talk" ? "ui.investigation.talk" : "ui.investigation.inspect"),
+        t(near.kind === "talk" ? "ui.investigation.talk" : "ui.investigation.inspect"),
       );
       this.prompt.setVisible(true);
     } else {
@@ -169,9 +215,6 @@ export class InvestigationScene extends Phaser.Scene {
       this.showResolutionEntry();
     }
   }
-
-  private resolutionEntryShown = false;
-  private edgeLock = false;
 
   private showResolutionEntry(): void {
     if (this.resolutionEntryShown) return;
@@ -213,11 +256,12 @@ export class InvestigationScene extends Phaser.Scene {
       return;
     }
     if (result.kind === "move") {
-      this.moveToArea(this.currentArea === "arcade_center" ? 1 : 0);
       this.currentArea = "shotengai_office";
-      this.background.setTexture("bg_shotengai_office");
+      this.setAreaTextures(this.currentArea);
       this.areaLabel.setText(InvestigationScene.AREA_LABELS.shotengai_office ?? "");
-      this.playerX = 24;
+      this.playerX = EDGE_LEFT + 20;
+      this.edgeLock = false;
+      this.applyScroll();
     }
   }
 

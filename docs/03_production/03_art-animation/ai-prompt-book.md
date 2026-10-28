@@ -254,7 +254,39 @@ background.
 保存先: `assets-src/generated/evidence/{名前}.jpg`（名前は `scripts/process-assets.py` の `EV_IDS` どおり）。
 保存後 `python3 scripts/process-assets.py` で `public/assets/evidence/icon_ev_*.png`（16×16）を生成する。
 
-## 9. 未決事項
+### 8.3 横スクロール用の背景（差し替え・必須）
+
+現在の背景は「正面から見た1枚絵」で、横スクロールに必要な**側面パノラマ**になっていない。
+調査パート用には次の条件を満たす画像に差し替える。
+
+- 真横からの視点（カメラは店先と平行）。**消失点のある奥行き表現を禁止**
+- 画面下25%は歩行できる地面。地面ラインは水平で固定
+- 店先が等間隔に並び、左右の端で絵がつながる（水平タイル可能）
+- 人物が立つ尺度: 店のシャッターの高さが画面の約3/4、人物は画面の約1/4
+- 中央に目立つモチーフを置かない（キャラと重なる）
+
+共通の接頭語:
+
+```
+side-scrolling 2D game background, strict side view, camera parallel to the
+storefronts, NO perspective vanishing point, flat horizontal ground line at
+75% of the height, walkable pavement along the bottom quarter, continuous row
+of evenly spaced shopfronts, seamless horizontally tileable (left edge matches
+right edge), no people, no readable signs, no centered hero object,
+, ps1 1998 low-poly scene, muted desaturated palette, coarse dithering,
+thick dark outline, low resolution pixelated texture, 16 colors
+```
+
+| 用途 | 本文 |
+| --- | --- |
+| 中央通り・中景 | `A 1990s Japanese covered shopping arcade seen from the side: shutters, a stationery shop, a notice board, a public phone booth, a wooden office door, all in a row at the same depth.` |
+| 中央通り・遠景 | `A flat distant row of low buildings behind the arcade, seen from the side, no depth lines, dark evening sky.` |
+| 西口・中景 | `The west end of the arcade seen from the side: a stationery shop with a glass front, a vending machine, closed shutters in a row.` |
+| 東口・中景 | `The east side of the arcade seen from the side: a tofu shop, a liquor shop with a noren curtain, a photo studio display case, a real-estate office, all in a row.` |
+| 組合事務所 | `A small office interior seen from the side wall: desk, telephone, filing cabinets, waiting chairs along one wall, flat side view.` |
+
+差し替え後: `assets-src/generated/backgrounds/` に置き、`python3 scripts/process-assets.py` を実行する。
+
 
 - 生成モデル（ローカル/API）と商用条件 → 決定後に上表へ反映
 - 一度に生成する枚数（モデルの料金・レート制限に応じて）
