@@ -46,7 +46,7 @@ verified_by: []
 | `ev_goda_memo` | `evidence.goda_memo` | `hs_phone_office`（office） | - | 郷田の「新聞に出すな」という言付けのメモ |
 
 - 必須4件が揃うと組合事務所前に「総会」マーカーが出る。
-- 任意証拠は、追及時の補強テキストと誤答時の反応差分に使う（正解判定には使わない）。
+- 任意証拠は、問い返し時の補強テキストと誤答時の反応差分に使う（正解判定には使わない）。
 - 洞察視点でのみ入手できるのは `ev_receipt_owned` の1件（4件中1件）。
 
 ## 3. 証言
@@ -55,7 +55,7 @@ verified_by: []
 
 ### 3.1 郷田 権造（4ブロック・ほころび2）
 
-| ID | 要旨 | 追及 | ほころび |
+| ID | 要旨 | 問い返し | ほころび |
 | --- | --- | --- | --- |
 | `tg_01` | 「あの子は毎日塾に通っておる。夜は家で勉強だ」 | 送り迎えの話 | - |
 | `tg_02` | 「万引きの時間、あの子は塾におった。家の者が送り迎えしとる」 | 迎えの時刻 | **`ev_vhs_tape`**（VHSの時刻と塾の時間帯が重なる） |
@@ -64,26 +64,26 @@ verified_by: []
 
 ### 3.2 松谷 静江（2ブロック・ほころび1）
 
-| ID | 要旨 | 追及 | ほころび |
+| ID | 要旨 | 問い返し | ほころび |
 | --- | --- | --- | --- |
 | `tm_01` | 「うちの店でもやられた。金目の物ばかり狙われとる」 | 何を盗られたか | **`ev_ledger_theft`**（酒は棚に残り、なくなったのは菓子と電池） |
 | `tm_02` | 「うちは会計だが、金庫は開けとらん」 | 鍵の保管 | - |
 
 ### 3.3 郷田 航（2ブロック・ほころび0）
 
-| ID | 要旨 | 追及 | ほころび |
+| ID | 要旨 | 問い返し | ほころび |
 | --- | --- | --- | --- |
 | `tw_01` | 「……全部、俺がやった」 | いつから | - |
-| `tw_02` | 「金に困ってたから盗んだ。売って小遣いにした」 | 売った先 | -（追及で「売っていない」が判明。`ev_receipt_owned` が動機を崩す） |
+| `tw_02` | 「金に困ってたから盗んだ。売って小遣いにした」 | 売った先 | -（問い返しで「売っていない」が判明。`ev_receipt_owned` が動機を崩す） |
 
 ### 3.4 岡田 修（2ブロック・ほころび0）
 
-| ID | 要旨 | 追及 | ほころび |
+| ID | 要旨 | 問い返し | ほころび |
 | --- | --- | --- | --- |
-| `to_01` | 「航は塾に行ってます。俺が送ってました」 | 最後に送った日 | -（追及で退塾が判明） |
+| `to_01` | 「航は塾に行ってます。俺が送ってました」 | 最後に送った日 | -（問い返しで退塾が判明） |
 | `to_02` | 「あの子は家で居場所がない。それでも悪いことはしてない」 | 「居場所」の意味 | - |
 
-- ほころびは3箇所（`tg_02`, `tg_03`, `tm_01`）。残り7ブロックは追及で情報を掘る。
+- ほころびは3箇所（`tg_02`, `tg_03`, `tm_01`）。残り7ブロックは問い返しで情報を掘る。
 - 同じ証拠を複数のブロックで使わない（`ev_ledger_theft` は `tg_03` と `tm_01` の2箇所で使う例外的な扱い。**許容**とするが、片方を別証拠に差し替える余地を残す）。
 
 ### 3.5 正解時の挙動
@@ -94,7 +94,7 @@ verified_by: []
 | `tg_03` | 松谷へ証言者が切り替わる |
 | `tm_01` | 航の証言が解禁される |
 
-- 全ほころび指摘後、航の `tw_02` 追及で動機が確定し、エピローグへ。
+- 全ほころび指摘後、航の `tw_02` 問い返しで動機が確定し、エピローグへ。
 - 誤答時は `testimony.{speaker}.{nn}.fail` を表示し、ミスを1加算して同じブロックに戻る。
 
 ## 4. 会話・テキスト
@@ -113,7 +113,7 @@ verified_by: []
 | `inspect_memo` | 調べ | 地の文 | 電話脇のメモ | `ev_goda_memo` |
 
 - 導入の選択肢は置かない（章1では分岐なし）。
-- 調査パートの会話に選択肢を置かない。追及とつきつけだけで意思決定させる。
+- 調査パートの会話に選択肢を置かない。問い返しと差し出しだけで意思決定させる。
 
 ## 5. フラグ
 
@@ -123,7 +123,7 @@ verified_by: []
 | `f_heard_kenta` | `talk_kenta_01` | 任意会話の既読表示 |
 | `f_heard_matsutani` | `talk_matsutani_01` | 同上 |
 | `f_saw_vhs` | `talk_chiaki_01` | 洞察視点のヒント表示 |
-| `f_read_notebook` | `inspect_notebook` | 郷田 `tg_04` の追及テキスト差分 |
+| `f_read_notebook` | `inspect_notebook` | 郷田 `tg_04` の問い返しテキスト差分 |
 | `f_goda_lied_time` | `tg_02` 正解 | 郷田の表情（姿勢）変化 |
 | `f_resolution_started` | 解決パート開始 | 自動保存のチェックポイント |
 
@@ -142,10 +142,10 @@ evidence.matsutani_report.{name,desc}
 evidence.goda_statement.{name,desc}
 evidence.past_settlement.{name,desc}
 evidence.goda_memo.{name,desc}
-testimony.goda.{01..04}.{text,press,success,fail}
-testimony.matsutani.{01..02}.{text,press,success,fail}
-testimony.wataru.{01..02}.{text,press}
-testimony.okada.{01..02}.{text,press}
+testimony.goda.{01..04}.{text,askBack,success,fail}
+testimony.matsutani.{01..02}.{text,askBack,success,fail}
+testimony.wataru.{01..02}.{text,askBack}
+testimony.okada.{01..02}.{text,askBack}
 talk.kenta.01.{a..}
 talk.matsutani.01.{a..}
 talk.chiaki.01.{a..}
@@ -155,7 +155,7 @@ inspect.notebook
 inspect.receipt
 inspect.settlement
 inspect.memo
-ui.resolution.{press,present,evidence}
+ui.resolution.{askBack,offer,evidence}
 ui.investigation.{inspect,talk,insight}
 ui.gameover.{title,retry_part,retry_chapter}
 log.evidence.{obtained,already}

@@ -55,9 +55,9 @@ verified_by: []
 | `se_insight_on` | 洞察視点 ON | 0.4s | 未選定 |
 | `se_insight_off` | 洞察視点 OFF | 0.3s | 未選定 |
 | `se_door` | 組合事務所の扉 | 0.5s | 未選定 |
-| `se_press` | 追及 | 0.2s | 未選定 |
-| `se_present_success` | つきつけ成功 | 1.0s | 未選定 |
-| `se_present_fail` | つきつけ失敗 | 0.6s | 未選定 |
+| `se_askback` | 問い返し | 0.2s | 未選定 |
+| `se_offer_success` | 差し出し成功 | 1.0s | 未選定 |
+| `se_offer_fail` | 差し出し失敗 | 0.6s | 未選定 |
 | `se_miss` | ミス印増加 | 0.4s | 未選定 |
 | `se_gameover` | ゲームオーバー | 1.5s | 未選定 |
 | `se_chapter_clear` | 章クリア | 1.2s | 未選定 |

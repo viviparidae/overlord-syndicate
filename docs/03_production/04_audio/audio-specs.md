@@ -58,9 +58,9 @@ verified_by: []
 | 証拠入手 | `se_evidence_get` | アイコン飛翔と同期 |
 | 会話送り | `se_text_advance` | 0.1秒、音量 -20dB |
 | 解決開始 | `bgm_resolution` | テンポ速め |
-| 追及 | `se_press` | 証言ウィンドウ明滅 |
-| つきつけ成功 | `se_present_success` + `bgm_break` | 白フラッシュ後に BGM 切替 |
-| つきつけ失敗 | `se_present_fail` | ミス印増加 |
+| 問い返し | `se_askback` | 証言ウィンドウ明滅 |
+| 差し出し成功 | `se_offer_success` + `bgm_break` | 白フラッシュ後に BGM 切替 |
+| 差し出し失敗 | `se_offer_fail` | ミス印増加 |
 | ミス上限到達 | `bgm_gameover` | BGM停止→低音の持続音 |
 | 章クリア | `bgm_epilogue` | 余韻 |
 

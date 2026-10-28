@@ -50,7 +50,7 @@ verified_by: []
 | `chapterSelect` | 章選択 | DOM | 左右、決定 | 進行度をセーブから読む |
 | `intro` | 導入ADV | Phaser | 決定、スキップ | 失敗なし。既読スキップ対応 |
 | `investigation` | 調査 | Phaser | 移動、調べる、話す、証拠品 | 遷移は「移動」のみ |
-| `resolution` | 仲裁廷 | Phaser + DOM | 決定、追及、つきつけ、証拠品 | ミスカウント表示 |
+| `resolution` | 仲裁廷 | Phaser + DOM | 決定、問い返し、差し出し、証拠品 | ミスカウント表示 |
 | `evidenceDetail` | 証拠品詳細 | DOMオーバーレイ | 決定、戻る | どの画面からも開ける |
 | `pause` | ポーズメニュー | DOM | 上下、決定 | セーブ、設定、章選択へ |
 | `gameOver` | ゲームオーバー | DOM | 上下、決定 | 再開地点を選ぶ |

@@ -25,7 +25,7 @@ verified_by: []
 | --- | --- | --- |
 | クラス | PascalCase、原則1ファイル1クラス | `ResolutionEngine.ts` |
 | 型・インターフェース | PascalCase、`I` 接頭辞なし | `TestimonyBlock` |
-| 関数・変数 | camelCase | `presentEvidence()` |
+| 関数・変数 | camelCase | `offerEvidence()` |
 | 定数 | UPPER_SNAKE | `MISS_LIMIT_DEFAULT` |
 | テスト | 対象ファイル名 + `.test.ts` | `ResolutionEngine.test.ts` |
 | E2E | 画面・機能名ケバブ + `.spec.ts` | `resolution-miss.spec.ts` |

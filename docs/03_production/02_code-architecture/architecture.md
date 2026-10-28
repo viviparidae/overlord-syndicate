@@ -42,7 +42,7 @@ verified_by: []
 | `story/StoryRunner` | テキスト送り、選択肢、既読管理 | `StoryScript`, `StoryCursor` |
 | `investigation/InvestigationState` | エリア、ホットスポット、証拠入手 | `Hotspot`, `AreaState` |
 | `investigation/InsightMode` | 洞察視点の切替と表示対象の決定 | `InsightFilter` |
-| `resolution/ResolutionEngine` | 証言ブロック進行、つきつけ判定、ミス | `Testimony`, `PresentResult` |
+| `resolution/ResolutionEngine` | 証言ブロック進行、差し出し判定、ミス | `Testimony`, `PresentResult` |
 | `resolution/MissCounter` | ミス加算と上限判定 | `MissState` |
 | `state/ChapterState` | 章全体の状態保持 | `ChapterState` |
 | `save/SaveRepository` | スナップショットの保存・読込 | `GameSnapshot` |
@@ -70,7 +70,7 @@ IntroDone → Investigation(area, position) → Resolution(testimony, block) →
 | `ChapterSelectScene` | 章一覧 |
 | `IntroScene` | ADV描画 |
 | `InvestigationScene` | 横スクロール、ホットスポット、洞察視点 |
-| `ResolutionScene` | 仲裁廷、証言UI、つきつけ演出 |
+| `ResolutionScene` | 仲裁廷、証言UI、差し出し演出 |
 | `EpilogueScene` | ADV描画 |
 | `PauseOverlay` / `GameOverOverlay` | DOMオーバーレイ |
 
@@ -80,7 +80,7 @@ IntroDone → Investigation(area, position) → Resolution(testimony, block) →
 ## 6. テスタビリティ
 
 - core は headless でテスト可能。`happy-dom` 上でも DOM に触れない。
-- つきつけ判定、ミス上限、遷移妥当性、セーブ往復は unit テストの必須対象。
+- 差し出し判定、ミス上限、遷移妥当性、セーブ往復は unit テストの必須対象。
 - E2E は build + preview に対して実行し、画面遷移とキー入力を検証する。
 
 ## 6.1 テスト対象の優先順位

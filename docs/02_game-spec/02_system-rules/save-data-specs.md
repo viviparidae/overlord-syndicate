@@ -132,13 +132,13 @@ verified_by: []
     {
       "id": "tg_01",
       "textKey": "testimony.goda.01",
-      "pressKey": "testimony.goda.01.press",
+      "askBackKey": "testimony.goda.01.askBack",
       "gap": null
     },
     {
       "id": "tg_02",
       "textKey": "testimony.goda.02",
-      "pressKey": "testimony.goda.02.press",
+      "askBackKey": "testimony.goda.02.askBack",
       "gap": {
         "evidenceId": "ev_vhs_tape",
         "acceptAnyOf": [],
@@ -150,7 +150,7 @@ verified_by: []
 }
 ```
 
-- `gap` が `null` のブロックは追及のみ意味を持つ。
+- `gap` が `null` のブロックは問い返しのみ意味を持つ。
 - `acceptAnyOf` は複数正解を許す場合のみ使用（章1では未使用）。
 - 1ブロック最大1ほころび。複合した食い違いはブロックを分けて表現する。
 
