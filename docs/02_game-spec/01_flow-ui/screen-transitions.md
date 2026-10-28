@@ -46,15 +46,15 @@ verified_by: []
 
 | ID | 画面 | 種別 | 入力 | 備考 |
 | --- | --- | --- | --- | --- |
-| `title` | タイトル | DOM/Phaser | 決定、上下 | BGMなし（無音） |
-| `chapterSelect` | 章選択 | DOM | 左右、決定 | 進行度をセーブから読む |
+| `title` | タイトル | Phaser | 決定、上下 | BGMなし（無音） |
+| `chapterSelect` | 章選択 | Phaser | 左右、決定 | 進行度をセーブから読む |
 | `intro` | 導入ADV | Phaser | 決定、スキップ | 失敗なし。既読スキップ対応 |
 | `investigation` | 調査 | Phaser | 移動、調べる、話す、証拠品 | 遷移は「移動」のみ |
-| `resolution` | 弁論 | Phaser + DOM | 決定、問い返し、差し出し、証拠品 | ミスカウント表示 |
-| `evidenceDetail` | 証拠品詳細 | DOMオーバーレイ | 決定、戻る | どの画面からも開ける |
-| `pause` | ポーズメニュー | DOM | 上下、決定 | セーブ、設定、章選択へ |
-| `gameOver` | ゲームオーバー | DOM | 上下、決定 | 再開地点を選ぶ |
-| `chapterResult` | 章結果 | DOM | 決定 | 正答数、所要時間、称号（演出のみ） |
+| `resolution` | 弁論 | Phaser | 決定、問い返し、差し出し、証拠品 | ミスカウント表示 |
+| `evidenceDetail` | 証拠品詳細 | Phaserオーバーレイ | 決定、戻る | UIカメラに重ねる |
+| `pause` | ポーズメニュー | Phaserオーバーレイ | 上下、決定 | セーブ、設定、章選択へ |
+| `gameOver` | ゲームオーバー | Phaserオーバーレイ | 上下、決定 | 再開地点を選ぶ |
+| `chapterResult` | 章結果 | Phaser | 決定 | 正答数、所要時間、称号（演出のみ） |
 | `epilogue` | エピローグADV | Phaser | 決定、スキップ | 結末は章ごとに固定 |
 
 ## 3. 遷移の原則

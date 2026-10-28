@@ -1,8 +1,8 @@
 ---
 title: 全体アーキテクチャ・設計思想
-description: レイヤ構成、解像度2層、状態管理（ポーリング）、シーン構成、型安全な章データ、テスタビリティの方針。
+description: 単一Canvas構成、世界とUIの2カメラ、状態管理（ポーリング）、シーン構成、型安全な章データの方針。
 status: draft
-version: "0.2"
+version: "0.3"
 category: architecture
 tags: [architecture, design, core, phaser, resolution]
 traces_to:
@@ -25,16 +25,25 @@ verified_by: []
 5. **決定性。** 乱数を使わない（本作に乱数要素はない）。同じ入力は同じ結果になる。
 6. **演出の進行はPhaser、判定はcore。** フラッシュやズームの「何秒目か」は描画層が持ち、正誤とミスはcoreだけが決める。
 
-## 2. 解像度の2層
+## 2. 単一Canvasと2カメラ
 
-| 層 | 解像度 | 内容 |
-| --- | --- | --- |
-| ゲーム世界 | **320 × 180**（内部） | Phaser。カメラ `zoom: 3` で 960×540 表示 |
-| テキスト・HUD | **960 × 540**（DOM） | 本文、証拠品詳細、ポーズ、ゲームオーバー |
+**すべてPhaserの1つのCanvasで描く。DOMオーバーレイは使わない。**
 
-- `Scale.FIT` + `pixelArt: true` + `roundPixels: true` + `zoom: 3`。整数倍以外の拡大をしない。
-- 世界座標（320×180）とDOM座標（960×540）は 3:1。ホットスポットの当たり判定は世界座標で行う。
-- 文字をPhaserで描かない（内部解像度では字が潰れる）。テキストはすべてDOM。
+| カメラ | 見る範囲 | 拡大 | 描くもの |
+| --- | --- | --- | --- |
+| `worldCamera` | 320 × 180 | `zoom: 3` | 背景、キャラ、ホットスポット、エフェクト |
+| `uiCamera` | 960 × 540 | `zoom: 1` | テキスト、HUD、メニュー、証拠品一覧、ボタン |
+
+- ゲームサイズは 960 × 540（`Scale.FIT` + `pixelArt: true` + `roundPixels: true`）。
+- 世界レイヤのオブジェクトを `uiCamera.ignore()`、UIレイヤを `worldCamera.ignore()` に登録して分離する。
+- 世界座標（320×180）とUI座標（960×540）の比率は 3:1。ホットスポットの当たり判定は世界座標で持つ。
+- 文字はUIカメラ側で描くため、**ビットマップフォント**（`.fnt`/`.xml` + PNG）を使う。Phaserの `Text`（Canvas描画）は最終手段とし、ピクセル感が崩れる場合は使わない。
+- 文字サイズ設定（100/125/150%）はUIレイヤのスケールで実現する。
+
+### 2.1 なぜ2カメラか
+
+1つのカメラで世界も文字も拡大すると、文字が3倍に引き伸ばされて読めない。
+世界だけ3倍・UIは等倍にすることで、**ドットの粗さと可読性を両立**し、かつDOMを排除できる。
 
 ## 3. レイヤ
 
@@ -45,7 +54,6 @@ verified_by: []
 | `src/balance` | 定数表（ミス上限、速度、時間） | なし | 条件分岐 |
 | `src/core` | 状態遷移、判定、保存 | data / balance / localization | Phaser / DOM / ブラウザAPI |
 | `src/phaser` | 描画、入力、演出タイマー | core / data / balance | ゲームロジック、状態の直接変更 |
-| `src/ui` | DOMオーバーレイ（HUD、メニュー） | core（読み取り） | 状態の書き換え |
 
 アセットパイプライン: `scripts/process-assets.py` が `assets-src/generated/` の原画を
 `public/assets/` の確定アセットへ変換する。**`public/assets` は生成物**であり、
@@ -91,7 +99,7 @@ IntroDone → Investigation(area, position) → Resolution(testimony, block) →
 | `StoryScene` | 導入とエピローグのADV描画（**共通**。`phase` で挙動を分ける） |
 | `InvestigationScene` | 横スクロール、ホットスポット、洞察視点 |
 | `ResolutionScene` | 弁論、立ち絵、証言UI、差し出し演出 |
-| `PauseOverlay` / `GameOverOverlay` | DOMオーバーレイ |
+| `PauseScene` / `GameOverScene` / `EvidenceDetailScene` | UIカメラ上のオーバーレイ（Phaserシーン、`launch` で重ねる） |
 
 - `IntroScene` / `EpilogueScene` は **`StoryScene` に統合**（確定）。背景・立ち絵・テキスト送りのみを使うので共通化できる。
 - シーンは core のインスタンスを受け取り、`update()` では**状態の読み取りと描画のみ**を行う。
@@ -113,7 +121,7 @@ export type LocKey = keyof typeof ja;
 
 ## 8. テスタビリティ
 
-- core は headless でテスト可能。`happy-dom` 上でも DOM に触れない。
+- core は headless でテスト可能（PhaserもDOMも触らない）。
 - 差し出し判定、ミス上限、遷移妥当性、セーブ往復は unit テストの必須対象。
 - E2E は `pnpm build` 後の `vite preview`（ポート 4173）に対して実行する。
 
@@ -129,8 +137,9 @@ export type LocKey = keyof typeof ja;
 | 項目 | 決定 |
 | --- | --- |
 | テキスト送りの駆動 | core がカーソルを持ち、Phaser が時間で進める |
-| 証拠品詳細 | DOM オーバーレイ（文字サイズ設定を反映） |
+| 証拠品詳細 | Phaserのオーバーレイシーン（UIカメラ） |
 | 章データの形式 | 型付き TS。ローカライズキーは `LocKey` で型安全化 |
 | 状態の通知 | 毎フレーム参照（イベント機関なし） |
-| 解像度 | 世界 320×180（zoom 3）＋ DOM 960×540 の2層 |
+| 解像度 | 単一Canvas。世界カメラ 320×180（zoom 3）＋ UIカメラ 960×540（zoom 1） |
+| UIの実装 | すべてPhaser（DOMなし）。オーバーレイはシーンとして重ねる |
 | シーン統合 | `Intro` / `Epilogue` を `StoryScene` に統合 |

@@ -59,7 +59,7 @@ verified_by: []
 
 | 禁止 | 理由 |
 | --- | --- |
-| `src/core/` での Phaser / DOM import | レイヤ違反。headless テストが壊れる |
+| `src/core/` での Phaser / DOM import | レイヤ違反。headless テストが壊れる（DOM自体を使わない方針） |
 | `window.localStorage` を core から直接触る | 保存は Repository 経由 |
 | データに日本語文を直書き | ローカライズ不能になる |
 | 乱数（`Math.random()`）の使用 | 決定性を壊す |

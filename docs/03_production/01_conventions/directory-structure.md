@@ -87,10 +87,10 @@ src/
 │   ├── resolution/  # 証言ブロック、差し出し判定、ミスカウント
 │   ├── save/        # スナップショット、マイグレーション
 │   └── state/       # 章進行状態（フラグ、所持証拠）
-├── phaser/          # 描画・入力・シーン
-│   └── scenes/
-├── ui/              # DOMオーバーレイ（HUD、ポーズ、ゲームオーバー）
-├── data/            # 章・証言・会話・アセット定義（TS/JSON）
+├── phaser/          # 描画・入力・シーン（単一Canvas）
+│   ├── scenes/      # Boot / Title / ChapterSelect / Story / Investigation / Resolution
+│   └── ui/          # UIカメラ用のHUD・オーバーレイ・ボタン
+├── data/            # 章・証言・会話・アセット定義（TS）
 ├── balance/         # ミス上限、難易度パラメータ表
 └── localization/    # ja.json / en.json
 ```
@@ -100,13 +100,14 @@ src/
 ```
 src/data ─┐
 src/balance ─┤
-             ├──▶ src/core ──▶ src/phaser ──▶ src/ui
+             ├──▶ src/core ──▶ src/phaser（世界カメラ / UIカメラ）
 src/localization ─┘
 ```
 
 - 一方向のみ。逆流（phaser → core への状態書き戻し等）は禁止。
 - `src/core/` は Phaser / DOM / Canvas / `window` を import しない。
-- `src/ui/` は core の状態を**読み取り専用**で表示する。直接書き換えない。
+- `src/phaser/` は core の状態を**読み取り専用**で表示する。直接書き換えない。
+- DOMは使わない。UIもPhaserのUIカメラ上に描く。
 - `src/data/` に条件分岐ロジックを書かない。`src/balance/` に分岐を書かない。
 
 ## 5. tests/
