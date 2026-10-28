@@ -244,7 +244,7 @@ background.
 | 被害帳簿 | `An open handwritten shop ledger with columns of dates and item names, slightly worn.` |
 | 防犯用VHS | `A black VHS video cassette tape with a white label.` |
 | 航のノート | `A small closed school notebook with a pen, slightly crumpled.` |
-| 自販機のレシート | `A small store receipt slip with a printed date, lying flat.` |
+| 篠宮文具店の購入控え | `A small stack of handwritten purchase slips with dates and item names, bound with a clip.` |
 | 健太の目撃 | `A witness testimony card with a hand-drawn silhouette of a person.` |
 | 松谷の報告 | `A folded expense report sheet with numbers.` |
 | 郷田の発言 | `A speech note card with a firm handwritten mark.` |

@@ -37,7 +37,7 @@ EV_IDS = {
     "被害帳簿": "ev_ledger_theft",
     "防犯用VHS": "ev_vhs_tape",
     "航のノート": "ev_notebook_page",
-    "自販機のレシート": "ev_receipt_owned",
+    "篠宮文具店の購入控え": "ev_shop_receipt",
     "健太の目撃": "ev_kenta_sighting",
     "松谷の報告": "ev_matsutani_report",
     "郷田の発言": "ev_goda_statement",

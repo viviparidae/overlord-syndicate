@@ -56,7 +56,7 @@ verified_by: []
 | `hs_board` | center | inspect | 掲示板。「東口の中学生」だと書き足された落書き。学年の記載はない | - |
 | `hs_payphone` | center | inspect | 公衆電話。航が姉の家へかけた記録が通話メモに残る | - |
 | `hs_office_door` | center | move | 組合事務所へ | - |
-| `hs_asphalt` | center | insight | 自販機の下に挟まったレシート。航が同じ文房具を自腹で買っている | `ev_receipt_owned` |
+| `hs_counter_slips` | west | insight | レジ横の購入控え綴り。同じ品を繰り返し買っている客がいる | `ev_shop_receipt` |
 | `hs_tofu_shop` | east | talk | 丸福商店の健太。犯人の後姿を目撃した話と噂の出所 | `ev_kenta_sighting` |
 | `hs_liquor_shop` | east | talk | 松谷静江。自分の店の被害を語る。被害額が大きくなる | `ev_matsutani_report` |
 | `hs_photo_studio` | east | talk | 写真館の娘・千夏。店頭に貸し出した防犯用ビデオカメラのVHS | `ev_vhs_tape` |
@@ -65,8 +65,8 @@ verified_by: []
 | `hs_phone_office` | office | inspect | 電話の脇のメモ。郷田からの「新聞に出すな」の言付け | `ev_goda_memo` |
 | `hs_waiting_chair` | office | insight | 待合椅子の下に落ちたノート。航が総会の呼び出しで待たされた際の落書き | `ev_notebook_page` |
 
-必須証拠は `ev_ledger_theft` / `ev_vhs_tape` / `ev_notebook_page` / `ev_receipt_owned` の4件。
-うち `ev_receipt_owned` は洞察視点でのみ入手可能（千夏の会話後に `hs_asphalt` を調べる導線）。
+必須証拠は `ev_ledger_theft` / `ev_vhs_tape` / `ev_notebook_page` / `ev_shop_receipt` の4件。
+うち `ev_shop_receipt` は洞察視点でのみ入手可能（`hs_counter_slips` を調べる導線）。
 
 ### 2.3 ギミックの原則
 

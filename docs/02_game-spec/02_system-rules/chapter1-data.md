@@ -41,7 +41,7 @@ verified_by: []
 | `ev_ledger_theft` | `evidence.ledger_theft` | `hs_shop_counter`（west） | ○ | 被害帳簿。5店14件の日時・品目。**全て日常品で換金価値がない** |
 | `ev_vhs_tape` | `evidence.vhs_tape` | `talk_chiaki_01`（east） | ○ | 写真館が貸した防犯用VHS。犯行時刻に航らしき人物が映る |
 | `ev_notebook_page` | `evidence.notebook_page` | `hs_waiting_chair`（office） | ○ | 航が待合椅子に落としたノート。走り書きに「もう終わりにしたい」 |
-| `ev_receipt_owned` | `evidence.receipt_owned` | `hs_asphalt`（center・洞察） | ○ | 自販機の下のレシート。航が同じ文房具を自腹で買った記録 |
+| `ev_shop_receipt` | `evidence.shop_receipt` | `hs_counter_slips`（west・洞察） | ○ | 篠宮文具店の購入控え。航が同じ文房具を自腹で繰り返し買っていた記録 |
 | `ev_kenta_sighting` | `evidence.kenta_sighting` | `talk_kenta_01`（east） | - | 健太の目撃証言。後姿と時刻の記憶 |
 | `ev_matsutani_report` | `evidence.matsutani_report` | `talk_matsutani_01`（east） | - | 松谷の被害報告。金額が実際より大きい |
 | `ev_goda_statement` | `evidence.goda_statement` | `talk_goda_01`（east） | - | 郷田の「内輪で済ませろ」という発言の要旨 |
@@ -50,7 +50,7 @@ verified_by: []
 
 - 必須4件が揃うと組合事務所前に「総会」マーカーが出る。
 - 任意証拠は、問い返し時の補強テキストと誤答時の反応差分に使う（正解判定には使わない）。
-- 洞察視点でのみ入手できるのは `ev_receipt_owned` の1件（4件中1件）。
+- 洞察視点でのみ入手できるのは `ev_shop_receipt` の1件（4件中1件）。
 
 ## 3. 証言
 
@@ -77,7 +77,7 @@ verified_by: []
 | ID | 要旨 | 問い返し | ほころび |
 | --- | --- | --- | --- |
 | `tw_01` | 「……全部、俺がやった」 | いつから | - |
-| `tw_02` | 「金に困ってたから盗んだ。売って小遣いにした」 | 売った先 | -（問い返しで「売っていない」が判明。`ev_receipt_owned` が動機を崩す） |
+| `tw_02` | 「金に困ってたから盗んだ。売って小遣いにした」 | 売った先 | -（問い返しで「売っていない」が判明。`ev_shop_receipt` が動機を崩す） |
 
 ### 3.4 岡田 修（2ブロック・ほころび0）
 
@@ -111,7 +111,7 @@ verified_by: []
 | `talk_goda_01` | 会話 | 郷田 | 「内輪で済ませろ」 | `ev_goda_statement` |
 | `inspect_ledger` | 調べ | 地の文 | 帳簿の内容 | `ev_ledger_theft` |
 | `inspect_notebook` | 調べ | 地の文 | ノートの走り書き | `ev_notebook_page` |
-| `inspect_receipt` | 調べ | 地の文 | レシートの日付と品目 | `ev_receipt_owned` |
+| `inspect_slips` | 調べ | 地の文 | 購入控えの日付と品目 | `ev_shop_receipt` |
 | `inspect_settlement` | 調べ | 地の文 | 過去の内輪処理 | `ev_past_settlement` |
 | `inspect_memo` | 調べ | 地の文 | 電話脇のメモ | `ev_goda_memo` |
 
@@ -139,7 +139,7 @@ chapter.ch01.title
 evidence.ledger_theft.{name,desc}
 evidence.vhs_tape.{name,desc}
 evidence.notebook_page.{name,desc}
-evidence.receipt_owned.{name,desc}
+evidence.shop_receipt.{name,desc}
 evidence.kenta_sighting.{name,desc}
 evidence.matsutani_report.{name,desc}
 evidence.goda_statement.{name,desc}
@@ -155,7 +155,7 @@ talk.chiaki.01.{a..}
 talk.goda.01.{a..}
 inspect.ledger
 inspect.notebook
-inspect.receipt
+inspect.slips
 inspect.settlement
 inspect.memo
 ui.resolution.{askBack,offer,evidence}
