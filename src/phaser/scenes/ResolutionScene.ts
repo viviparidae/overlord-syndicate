@@ -30,7 +30,7 @@ export class ResolutionScene extends Phaser.Scene {
     const bg = this.add.image(160, 90, "bg_shotengai_office").setDisplaySize(320, 180);
     world.add(bg);
 
-    const frame = this.add.rectangle(30, 336, 900, 184, 0x12121a, 0.95).setOrigin(0, 0);
+    const frame = this.add.rectangle(30, 336, 900, 136, 0x12121a, 0.95).setOrigin(0, 0);
     frame.setStrokeStyle(2, 0xe8d9a0, 0.8);
     frame.setInteractive({ useHandCursor: true });
     frame.on("pointerdown", () => {
@@ -43,23 +43,23 @@ export class ResolutionScene extends Phaser.Scene {
     });
     ui.add(frame);
 
-    this.portrait = this.add.image(780, 160, "face_goda_normal").setDisplaySize(240, 300);
+    this.portrait = this.add.image(800, 150, "face_goda_normal").setDisplaySize(220, 276);
     ui.add(this.portrait);
 
     this.speakerText = addText(this, ui, 24, 300, "");
     this.progressText = addText(this, ui, 330, 300, "");
     this.missText = addText(this, ui, 750, 300, "").setTint(0xd9525b);
-    this.text = addText(this, ui, 56, 360, "");
+    this.text = addText(this, ui, 56, 356, "");
     this.text.setMaxWidth(850);
-    this.resultText = addText(this, ui, 56, 480, "").setTint(0xe8d9a0);
+    this.resultText = addText(this, ui, 56, 438, "").setTint(0xe8d9a0);
     this.resultText.setMaxWidth(850);
 
-    this.askBackButton = addButton(this, ui, 24, 474, "ui.resolution.askBack", {
+    this.askBackButton = addButton(this, ui, 24, 480, "ui.resolution.askBack", {
       width: 170,
       height: 52,
       onClick: () => this.doAskBack(),
     });
-    addButton(this, ui, 210, 474, "ui.resolution.offer", {
+    addButton(this, ui, 210, 480, "ui.resolution.offer", {
       width: 170,
       height: 52,
       onClick: () => this.scene.launch("Evidence", { mode: "offer" }),

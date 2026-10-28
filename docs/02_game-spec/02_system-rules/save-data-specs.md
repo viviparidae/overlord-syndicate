@@ -101,7 +101,7 @@ verified_by: []
   "missLimit": 3,
   "areas": ["arcade_center", "arcade_east", "shotengai_office"],
   "requiredEvidence": ["ev_ledger_theft", "ev_vhs_tape", "ev_notebook_page", "ev_shop_receipt"],
-  "testimonies": ["t_goda", "t_matsutani", "t_wataru", "t_okada"],
+  "testimonies": ["t_goda", "t_wataru"],
 }
 ```
 

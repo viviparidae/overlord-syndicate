@@ -86,9 +86,9 @@
   "intro.04": "'Not my grandson,' Goda said.",
   "intro.05": "On the day of the assembly, the boy came to the shop as always and bought a notebook.",
   "epilogue.01": "The assembly ended with no report to the police.",
-  "epilogue.02": "Goda left without a word. A copy of the memo remained on the desk.",
-  "epilogue.03": "The boy began helping at the shop.",
-  "epilogue.04": "No one spoke of that day again.",
+  "epilogue.02": "What the boy stole was packed into a cardboard box in the back of the shop.",
+  "epilogue.03": "One page of the ledger was replaced. The VHS tape was returned unplayable.",
+  "epilogue.04": "Goda bowed without a word, leaving the debt with Ryo.",
   "evidenceDetail.title": "Evidence",
   "speaker.goda": "Kenzo Goda",
   "speaker.matsutani": "Shizue Matsutani",
@@ -110,5 +110,8 @@
   "talk.chiaki.01.c": "You only see his back, but the time is exact.",
   "talk.chiaki.01.d": "I'll borrow it.",
   "talk.goda.01.c": "A shopkeeper should understand that.",
-  "talk.goda.01.d": "I understand it very well."
+  "talk.goda.01.d": "I understand it very well.",
+  "testimony.wataru.02.success": "The purchase slips show him buying the same stationery with his own money. That is not how someone short of cash behaves.",
+  "testimony.wataru.02.fail": "That evidence has nothing to do with money.",
+  "epilogue.05": "No one spoke of that day again."
 }

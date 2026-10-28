@@ -37,7 +37,6 @@ export class InvestigationScene extends Phaser.Scene {
   private currentArea = "arcade_center";
   private areaLabel!: Phaser.GameObjects.BitmapText;
   private nearHotspotId: string | null = null;
-  private resolutionEntryShown = false;
   private edgeLock = false;
 
   constructor() {
@@ -257,28 +256,6 @@ export class InvestigationScene extends Phaser.Scene {
       this.prompt.setVisible(false);
     }
 
-    if (state.canStartResolution) {
-      this.showResolutionEntry();
-    }
-  }
-
-  private showResolutionEntry(): void {
-    if (this.resolutionEntryShown) return;
-    this.resolutionEntryShown = true;
-    addButton(this, this.uiLayer, 660, 470, "venue.assembly", {
-      width: 270,
-      height: 56,
-      onClick: () => {
-        const state = currentChapter();
-        const error = state.startResolution();
-        if (error) {
-          this.showLog("まだ材料が足りない");
-          return;
-        }
-        saveNow();
-        this.scene.start("Resolution");
-      },
-    });
   }
 
   private interactNearby(): void {
@@ -367,11 +344,28 @@ export class InvestigationScene extends Phaser.Scene {
       if (gained && item) {
         this.refreshCounter();
         this.showLog(t("log.evidence.obtained", { name: t(item.nameKey) }));
-        this.time.delayedCall(900, () => this.closeDialogue());
+        this.time.delayedCall(900, () => this.finishTalk(npc));
         return;
       }
     }
-    this.closeDialogue();
+    this.finishTalk(npc);
+  }
+
+  private finishTalk(npc: Npc): void {
+    if (npc.id !== "goda") {
+      this.closeDialogue();
+      return;
+    }
+    const state = currentChapter();
+    const error = state.startResolution();
+    if (error) {
+      this.showLog("まだ材料が足りない");
+      this.speakerText.setVisible(false);
+      this.time.delayedCall(1200, () => this.closeDialogue());
+      return;
+    }
+    saveNow();
+    this.scene.start("Resolution");
   }
 
   private closeDialogue(): void {

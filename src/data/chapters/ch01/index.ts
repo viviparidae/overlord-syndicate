@@ -241,24 +241,6 @@ export const testimonies: Testimony[] = [
     ],
   },
   {
-    id: "t_matsutani",
-    speaker: "matsutani",
-    blocks: [
-      {
-        id: "tm_01",
-        textKey: "testimony.matsutani.01.text",
-        askBackKey: "testimony.matsutani.01.askBack",
-        gap: {
-          evidenceId: "ev_ledger_theft",
-          acceptAnyOf: [],
-          successKey: "testimony.matsutani.01.success",
-          failKey: "testimony.matsutani.01.fail",
-        },
-      },
-      { id: "tm_02", textKey: "testimony.matsutani.02.text" },
-    ],
-  },
-  {
     id: "t_wataru",
     speaker: "wataru",
     blocks: [
@@ -271,22 +253,26 @@ export const testimonies: Testimony[] = [
         id: "tw_02",
         textKey: "testimony.wataru.02.text",
         askBackKey: "testimony.wataru.02.askBack",
+        gap: {
+          evidenceId: "ev_shop_receipt",
+          acceptAnyOf: [],
+          successKey: "testimony.wataru.02.success",
+          failKey: "testimony.wataru.02.fail",
+        },
       },
-    ],
-  },
-  {
-    id: "t_okada",
-    speaker: "okada",
-    blocks: [
-      { id: "to_01", textKey: "testimony.okada.01.text", askBackKey: "testimony.okada.01.askBack" },
-      { id: "to_02", textKey: "testimony.okada.02.text", askBackKey: "testimony.okada.02.askBack" },
     ],
   },
 ];
 
 export const introLines: LocKey[] = ["intro.01", "intro.02", "intro.03", "intro.04", "intro.05"];
 
-export const epilogueLines: LocKey[] = ["epilogue.01", "epilogue.02", "epilogue.03", "epilogue.04"];
+export const epilogueLines: LocKey[] = [
+  "epilogue.01",
+  "epilogue.02",
+  "epilogue.03",
+  "epilogue.04",
+  "epilogue.05",
+];
 
 export const chapter = {
   id: chapterId,
