@@ -30,7 +30,7 @@ export class InvestigationScene extends Phaser.Scene {
   private speakerText!: Phaser.GameObjects.BitmapText;
   private npcSprites: { npc: Npc; sprite: Phaser.GameObjects.Image }[] = [];
   private dialogue: { npc: Npc; index: number } | null = null;
-  private portraitRyo!: Phaser.GameObjects.Image;
+  private portraitKenichi!: Phaser.GameObjects.Image;
   private portraitNpc!: Phaser.GameObjects.Image;
   private moveButtons: Phaser.GameObjects.Container[] = [];
   private counterText!: Phaser.GameObjects.BitmapText;
@@ -92,7 +92,7 @@ export class InvestigationScene extends Phaser.Scene {
     this.logFrame.setInteractive({ useHandCursor: true });
     this.logFrame.on("pointerdown", () => this.advanceDialogue());
 
-    this.portraitRyo = this.add
+    this.portraitKenichi = this.add
       .image(195, 238, "face_ryo_normal")
       .setDisplaySize(210, 240)
       .setFlipX(flipFor("ryo", "right"))
@@ -101,7 +101,7 @@ export class InvestigationScene extends Phaser.Scene {
       .image(765, 238, "face_kenta_normal")
       .setDisplaySize(210, 240)
       .setVisible(false);
-    ui.add(this.portraitRyo);
+    ui.add(this.portraitKenichi);
     ui.add(this.portraitNpc);
 
     const counterPanel = this.add.rectangle(676, 14, 92, 44, 0x0b0b10, 0.82).setOrigin(0, 0);
@@ -322,9 +322,9 @@ export class InvestigationScene extends Phaser.Scene {
     if (!entry) return;
     this.speakerText.setText(t(entry.speaker));
     this.showLog(t(entry.text));
-    const isRyo = entry.speaker === "speaker.ryo";
-    this.portraitRyo.setVisible(isRyo);
-    this.portraitNpc.setVisible(!isRyo);
+    const isKenichi = entry.speaker === "speaker.ryo";
+    this.portraitKenichi.setVisible(isKenichi);
+    this.portraitNpc.setVisible(!isKenichi);
     this.portraitNpc.setFlipX(flipFor(this.dialogue.npc.charId, "left"));
   }
 
@@ -369,7 +369,7 @@ export class InvestigationScene extends Phaser.Scene {
 
   private closeDialogue(): void {
     this.dialogue = null;
-    this.portraitRyo.setVisible(false);
+    this.portraitKenichi.setVisible(false);
     this.portraitNpc.setVisible(false);
     this.setControlsVisible(true);
     this.speakerText.setVisible(false);

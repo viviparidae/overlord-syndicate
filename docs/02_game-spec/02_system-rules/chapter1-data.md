@@ -30,7 +30,7 @@ verified_by: []
 | フェーズ | 1 |
 | ミス上限 | 3 |
 | 必須証拠 | 4件（下記 §2 の「必須」） |
-| 証言者 | **2人（郷田・航）** |
+| 証言者 | **2人（郷田清・郷田大輔）** |
 | 証言ブロック | 6 |
 | ほころび | 3（`tg_02`, `tg_03`, `tw_02`） |
 | 開始トリガー | **郷田に話しかけ、仲裁を持ちかける**（総会マーカーは廃止） |
@@ -40,10 +40,10 @@ verified_by: []
 | ID | 名称キー | 入手 | 必須 | 内容 |
 | --- | --- | --- | --- | --- |
 | `ev_ledger_theft` | `evidence.ledger_theft` | `hs_shop_counter`（west） | ○ | 被害帳簿。5店14件の日時・品目。**全て日常品で換金価値がない** |
-| `ev_vhs_tape` | `evidence.vhs_tape` | `talk_chiaki_01`（east） | ○ | 写真館が貸した防犯用VHS。犯行時刻に航らしき人物が映る |
-| `ev_notebook_page` | `evidence.notebook_page` | `hs_waiting_chair`（office） | ○ | 航が待合椅子に落としたノート。走り書きに「もう終わりにしたい」 |
-| `ev_shop_receipt` | `evidence.shop_receipt` | `hs_counter_slips`（west） | ○ | 篠宮文具店の購入控え。航が同じ文房具を自腹で繰り返し買っていた記録 |
-| `ev_kenta_sighting` | `evidence.kenta_sighting` | `talk_kenta_01`（east） | - | 健太の目撃証言。後姿と時刻の記憶 |
+| `ev_vhs_tape` | `evidence.vhs_tape` | `talk_chiaki_01`（east） | ○ | 写真館が貸した防犯用VHS。犯行時刻に大輔らしき人物が映る |
+| `ev_notebook_page` | `evidence.notebook_page` | `hs_waiting_chair`（office） | ○ | 大輔が待合椅子に落としたノート。走り書きに「もう終わりにしたい」 |
+| `ev_shop_receipt` | `evidence.shop_receipt` | `hs_counter_slips`（west） | ○ | 篠宮文具店の購入控え。大輔が同じ文房具を自腹で繰り返し買っていた記録 |
+| `ev_kenta_sighting` | `evidence.kenta_sighting` | `talk_kenta_01`（east） | - | 学の目撃証言。後姿と時刻の記憶 |
 | `ev_matsutani_report` | `evidence.matsutani_report` | `talk_matsutani_01`（east） | - | 松谷の被害報告。金額が実際より大きい |
 | `ev_goda_statement` | `evidence.goda_statement` | `talk_goda_01`（east） | - | 郷田の「内輪で済ませろ」という発言の要旨 |
 | `ev_past_settlement` | `evidence.past_settlement` | `hs_desk`（office） | - | 過去に内輪で処理した万引き2件の記録 |
@@ -54,10 +54,10 @@ verified_by: []
 
 ## 3. 証言
 
-提示順は 郷田 → 航。松谷は調査で会話するだけ、岡田は章1には登場しない（弁論にも出ない）。
+提示順は 郷田清 → 郷田大輔。松谷は調査で会話するだけ、岡田は章1には登場しない（弁論にも出ない）。
 各ブロックの `textKey` は `testimony.{speaker}.{nn}`。
 
-### 3.1 郷田 権造（4ブロック・ほころび2）
+### 3.1 郷田 清（4ブロック・ほころび2）
 
 | ID | 要旨 | 問い返し | ほころび |
 | --- | --- | --- | --- |
@@ -66,7 +66,7 @@ verified_by: []
 | `tg_03` | 「盗まれた物は換金して小遣いにしたんじゃろ。子どもは金が欲しいものだ」 | 「金目」の定義 | **`ev_ledger_theft`**（被害品は全て換金価値のない日常品） |
 | `tg_04` | 「うちは孫に不自由させとらん。金にも物にも困っとらん」 | 小遣いの額 | -（`ev_notebook_page` で動機が立つ） |
 
-### 3.2 郷田 航（2ブロック・ほころび1）
+### 3.2 郷田 大輔（2ブロック・ほころび1）
 
 | ID | 要旨 | 問い返し | ほころび |
 | --- | --- | --- | --- |
@@ -78,10 +78,10 @@ verified_by: []
 | ブロック | 正解後の進行 |
 | --- | --- |
 | `tg_02` | 郷田が言葉を濁す。フラグ `f_goda_lied_time` |
-| `tg_03` | 郷田の証言が終わり、航の証言へ切り替わる |
+| `tg_03` | 郷田清の証言が終わり、郷田大輔の証言へ切り替わる |
 | `tw_02` | 動機が崩れ、弁論が終了する |
 
-- 全ほころび指摘後、航の `tw_02` 問い返しで動機が確定し、エピローグへ。
+- 全ほころび指摘後、郷田大輔の `tw_02` 問い返しで動機が確定し、エピローグへ。
 - 誤答時は `testimony.{speaker}.{nn}.fail` を表示し、ミスを1加算して同じブロックに戻る。
 
 ## 3.6 NPCの配置
@@ -90,10 +90,10 @@ verified_by: []
 
 | NPC | ホットスポット | 立ち位置（世界座標） | 話者キー |
 | --- | --- | --- | --- |
-| 丸福 健太 | `hs_tofu_shop` | x=82（東口） | `speaker.kenta` |
+| 丸福 学 | `hs_tofu_shop` | x=82（東口） | `speaker.kenta` |
 | 松谷 静江 | `hs_liquor_shop` | x=216（東口） | `speaker.matsutani` |
 | 榎本 千夏 | `hs_photo_studio` | x=350（東口） | `speaker.chinatsu` |
-| 郷田 権造 | `hs_goda_office` | x=524（東口） | `speaker.goda` |
+| 郷田 清 | `hs_goda_office` | x=524（東口） | `speaker.goda` |
 
 - 台詞は2行（`talk.{name}.01.a/b`）。会話中は移動を止め、テキストウィンドウのタップで送る。
 - 会話の最後に証拠を入手する（`evidenceId`）。
@@ -103,8 +103,8 @@ verified_by: []
 
 | ID | 種類 | 話者 | 内容 | 効果 |
 | --- | --- | --- | --- | --- |
-| `intro_01`〜`intro_05` | ADV | 地の文/住人 | 総会の招集、噂、航の来店 | フラグ `f_intro_done` |
-| `talk_kenta_01` | 会話 | 健太 | 目撃と噂の出所 | `ev_kenta_sighting` |
+| `intro_01`〜`intro_05` | ADV | 地の文/住人 | 総会の招集、噂、郷田大輔の来店 | フラグ `f_intro_done` |
+| `talk_kenta_01` | 会話 | 学 | 目撃と噂の出所 | `ev_kenta_sighting` |
 | `talk_matsutani_01` | 会話 | 松谷 | 被害報告（金額が大きい） | `ev_matsutani_report` |
 | `talk_chiaki_01` | 会話 | 千夏 | VHSを貸した経緯 | `ev_vhs_tape` |
 | `talk_goda_01` | 会話 | 郷田 | 「内輪で済ませろ」 | `ev_goda_statement` |
@@ -171,7 +171,7 @@ log.evidence.{obtained,already}
 src/data/chapters/ch01/
 ├── index.ts          # 章メタ（id, missLimit, areas, requiredEvidence）
 ├── evidence.ts       # 証拠9件
-├── testimonies.ts    # 証言6ブロック（郷田4・航2）
+├── testimonies.ts    # 証言6ブロック（郷田清4・郷田大輔2）
 └── dialogues/
     ├── intro.ts
     ├── talks.ts

@@ -46,16 +46,16 @@ verified_by: []
 | `hs_shop_window` | west | inspect | 商店街の貼り紙。「万引きには刑事罰を」の署名運動と総会の日時 | - |
 | `hs_arcade_light` | center | inspect | 切れた電灯。犯行時刻に誰かが影に隠れていた位置関係 | `ev_vhs_tape` |
 | `hs_board` | center | inspect | 掲示板。「東口の中学生」だと書き足された落書き。学年の記載はない | - |
-| `hs_payphone` | center | inspect | 公衆電話。航が姉の家へかけた記録が通話メモに残る | - |
+| `hs_payphone` | center | inspect | 公衆電話。大輔が姉の家へかけた記録が通話メモに残る | - |
 | `hs_office_door` | center | move | 組合事務所へ | - |
 | `hs_counter_slips` | west | inspect | レジ横の購入控え綴り。同じ品を繰り返し買っている客がいる | `ev_shop_receipt` |
-| `hs_tofu_shop` | east | talk | 丸福商店の健太。犯人の後姿を目撃した話と噂の出所 | `ev_kenta_sighting` |
+| `hs_tofu_shop` | east | talk | 丸福商店の学。犯人の後姿を目撃した話と噂の出所 | `ev_kenta_sighting` |
 | `hs_liquor_shop` | east | talk | 松谷静江。自分の店の被害を語る。被害額が大きくなる | `ev_matsutani_report` |
 | `hs_photo_studio` | east | talk | 写真館の娘・千夏。店頭に貸し出した防犯用ビデオカメラのVHS | `ev_vhs_tape` |
-| `hs_goda_office` | east | talk | 地主・郷田権造。「内輪で済ませろ」と主張する | `ev_goda_statement` |
+| `hs_goda_office` | east | talk | 地主・郷田清。「内輪で済ませろ」と主張する | `ev_goda_statement` |
 | `hs_desk` | office | inspect | 過去の万引き対応記録。内輪で済ませた前例が2件 | `ev_past_settlement` |
 | `hs_phone_office` | office | inspect | 電話の脇のメモ。郷田からの「新聞に出すな」の言付け | `ev_goda_memo` |
-| `hs_waiting_chair` | office | inspect | 待合椅子の下に落ちたノート。航が総会の呼び出しで待たされた際の落書き | `ev_notebook_page` |
+| `hs_waiting_chair` | office | inspect | 待合椅子の下に落ちたノート。大輔が総会の呼び出しで待たされた際の落書き | `ev_notebook_page` |
 
 必須証拠は `ev_ledger_theft` / `ev_vhs_tape` / `ev_notebook_page` / `ev_shop_receipt` の4件。
 `ev_shop_receipt` は西口のレジ横（`hs_counter_slips`）で入手する。
@@ -73,10 +73,10 @@ verified_by: []
 
 | 証言者 | 立ち位置 | 証言ブロック数 | ほころび |
 | --- | --- | --- | --- |
-| 郷田 権造 | 中央・机の奥 | 4 | 2（塾の時間帯、換金目的） |
-| 郷田 航 | 右 | 2 | 1（金に困っていない） |
+| 郷田清 | 中央・机の奥 | 4 | 2（塾の時間帯、換金目的） |
+| 郷田大輔 | 右 | 2 | 1（金に困っていない） |
 
-- 弁論に参加するのは**郷田・航・主人公の3人だけ**。松谷と岡田は調査で会話するのみ。
+- 弁論に参加するのは**郷田清・郷田大輔・主人公の3人だけ**。松谷と岡田は調査で会話するのみ。
 - 開始トリガーは**郷田に話しかけること**（総会マーカーは置かない）。必須証拠が揃っていない場合は「まだ材料が足りない」と返す。
 
 ## 4. 没にした案

@@ -52,23 +52,23 @@ extra limbs, extra fingers
 
 | 人物 | 指示 |
 | --- | --- |
-| 篠宮 涼（27） | `slender young japanese man, short black hair, navy blue work jacket, collared shirt, calm posture, small-town shopkeeper` |
-| 郷田 権造（61） | `large old japanese man, short grey hair, tan jacket, cap, broad shoulders, landlord` |
-| 郷田 航（14） | `small skinny japanese schoolboy, grey uniform blazer, short dark hair, looking down slightly, middle-school student` |
+| 篠宮健一（27） | `slender young japanese man, short black hair, navy blue work jacket, collared shirt, calm posture, small-town shopkeeper` |
+| 郷田清（61） | `large old japanese man, short grey hair, tan jacket, cap, broad shoulders, landlord` |
+| 郷田大輔（14） | `small skinny japanese schoolboy, grey uniform blazer, short dark hair, looking down slightly, middle-school student` |
 | 松谷 静江（58） | `middle-aged japanese woman, grey bun, purple apron over white blouse, sleeves rolled up` |
 | 榎本 千夏（24） | `young slim japanese woman, short bob black hair, orange jacket, white shirt, shoulder bag` |
-| 岡田 修（19） | `young japanese man, blue work overalls, towel around neck, practical` |
-| 辰巳 徳造（68） | `large elderly japanese man, dark blue kimono-style workwear (samue), cap, vegetable store owner` |
-| 丸福 健太（22） | `cheerful young japanese man, white apron, light blue shirt, rubber boots, tofu shop` |
+| 岡田誠（19） | `young japanese man, blue work overalls, towel around neck, practical` |
+| 辰巳茂（68） | `large elderly japanese man, dark blue kimono-style workwear (samue), cap, vegetable store owner` |
+| 丸福学（22） | `cheerful young japanese man, white apron, light blue shirt, rubber boots, tofu shop` |
 
 - 体格差は体型ワード（`slender` / `large` / `small skinny`）で指定し、拡大率（0.85〜1.05）と併用する。
-- 少年（航）の `looking down` は下を向く姿勢。泣きではない（表情差分を使わないため姿勢で示す）。
+- 少年（大輔）の `looking down` は下を向く姿勢。泣きではない（表情差分を使わないため姿勢で示す）。
 
 ## 3. 立ち絵（128×160・8人）
 
 スプライトと同じ人物指示に、次を置換: `full body, side view` → `bust portrait, front view`。
 
-- 例（涼）:
+- 例（健一）:
   `bust portrait of a slender young japanese man, short black hair, navy work jacket` + スタイル句。
 - 顔伏せカット: `bust portrait, head lowered, face fully in shadow, looking at the ground`。
   この1枚を全員で使い回す（下向きの差分を作らない）。
@@ -119,7 +119,7 @@ no people, no animals, no readable text, no signs with letters, no logo
 
 | 日付 | 種類 | 人物/エリア | モデル | 採用案 | 備考 |
 | --- | --- | --- | --- | --- | --- |
-| （未使用） | スプライト | 涼 | - | 0/3 | - |
+| （未使用） | スプライト | 健一 | - | 0/3 | - |
 
 ## 7. Nano Banana（Gemini アプリ）用プロンプト
 
@@ -148,14 +148,14 @@ hands hidden, plain flat magenta background for easy cutout.
 
 | 人物 | プロンプト本文 |
 | --- | --- |
-| 篠宮 涼 | `A slim 27-year-old Japanese man, short black hair, navy blue work jacket over a white collared shirt, calm neutral expression, face half in shadow, small-town stationery shopkeeper.` |
-| 郷田 権造 | `A large heavy-set 61-year-old Japanese man, short grey hair, tan zip-up jacket, flat cap, broad shoulders, confident angry expression, local landlord.` |
-| 郷田 航 | `A small skinny 14-year-old Japanese boy, short dark hair, grey school blazer, white shirt, head slightly lowered, hands in pockets, sullen middle-school student.` |
+| 篠宮健一 | `A slim 27-year-old Japanese man, short black hair, navy blue work jacket over a white collared shirt, calm neutral expression, face half in shadow, small-town stationery shopkeeper.` |
+| 郷田清 | `A large heavy-set 61-year-old Japanese man, short grey hair, tan zip-up jacket, flat cap, broad shoulders, confident angry expression, local landlord.` |
+| 郷田大輔 | `A small skinny 14-year-old Japanese boy, short dark hair, grey school blazer, white shirt, head slightly lowered, hands in pockets, sullen middle-school student.` |
 | 松谷 静江 | `A 58-year-old Japanese woman, grey hair in a bun, purple apron over a white blouse, thin frame, tired calm expression, liquor store owner.` |
 | 榎本 千夏 | `A 24-year-old slim Japanese woman, short black bob, orange jacket, white shirt, camera strap on her shoulder, curious expression, local newsletter editor.` |
-| 岡田 修 | `A 19-year-old Japanese man, blue work overalls, white towel around his neck, short hair, awkward posture, shop helper.` |
-| 辰巳 徳造 | `A 68-year-old large Japanese man, indigo samue workwear, flat cap, wrinkled calm face, neighborhood association chairman.` |
-| 丸福 健太 | `A 22-year-old Japanese man, white apron over a light blue shirt, short hair, rubber boots, friendly open expression, tofu shop son.` |
+| 岡田誠 | `A 19-year-old Japanese man, blue work overalls, white towel around his neck, short hair, awkward posture, shop helper.` |
+| 辰巳茂 | `A 68-year-old large Japanese man, indigo samue workwear, flat cap, wrinkled calm face, neighborhood association chairman.` |
+| 丸福学 | `A 22-year-old Japanese man, white apron over a light blue shirt, short hair, rubber boots, friendly open expression, tofu shop son.` |
 
 ### 7.3 立ち絵（128×160の元画像）
 
@@ -200,7 +200,7 @@ window frame suitable for 9-slice scaling, flat front view.
 | ドットが細かすぎる／滑らかになる | `coarse dithering, visible square pixels, low resolution` を強調。`smooth shading` を禁止語に |
 | 目や指が崩れる | 目はそのまま採用可。指は `hands hidden` で回避 |
 | 文字が入る | `no text, no letters, no signage` を必ず付ける |
-| 8人の画風がバラける | 涼の採用画像を毎回添付し、`same style as the reference image` と指示 |
+| 8人の画風がバラける | 健一の採用画像を毎回添付し、`same style as the reference image` と指示 |
 | 背景が人物と合わない | 背景も同じ `Style:` 文で生成し、後で16色へ減色 |
 | 比率が違う | アプリ側で 1:1 / 16:9 を指定。指定できない場合はプロンプト冒頭に `square image` / `wide 16:9 image` |
 
@@ -243,9 +243,9 @@ background.
 | --- | --- |
 | 被害帳簿 | `An open handwritten shop ledger with columns of dates and item names, slightly worn.` |
 | 防犯用VHS | `A black VHS video cassette tape with a white label.` |
-| 航のノート | `A small closed school notebook with a pen, slightly crumpled.` |
+| 大輔のノート | `A small closed school notebook with a pen, slightly crumpled.` |
 | 篠宮文具店の購入控え | `A small stack of handwritten purchase slips with dates and item names, bound with a clip.` |
-| 健太の目撃 | `A witness testimony card with a hand-drawn silhouette of a person.` |
+| 学の目撃 | `A witness testimony card with a hand-drawn silhouette of a person.` |
 | 松谷の報告 | `A folded expense report sheet with numbers.` |
 | 郷田の発言 | `A speech note card with a firm handwritten mark.` |
 | 過去の処理記録 | `A stack of old filed documents tied with a string.` |

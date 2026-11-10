@@ -10,7 +10,7 @@ export default defineConfig({
     viewport: { width: 960, height: 540 },
   },
   webServer: {
-    command: "pnpm build && pnpm preview",
+    command: "npm run build && npm run preview",
     url: "http://localhost:4173",
     reuseExistingServer: true,
     timeout: 120_000,

@@ -14,7 +14,7 @@ export interface Npc {
   evidenceId?: string;
 }
 
-const ryo = "speaker.ryo" as const;
+const kenichi = "speaker.ryo" as const;
 
 export const npcs: Npc[] = [
   {
@@ -24,9 +24,9 @@ export const npcs: Npc[] = [
     x: 82,
     script: [
       { speaker: "speaker.kenta", text: "talk.kenta.01.a" },
-      { speaker: ryo, text: "talk.kenta.01.b" },
+      { speaker: kenichi, text: "talk.kenta.01.b" },
       { speaker: "speaker.kenta", text: "talk.kenta.01.c" },
-      { speaker: ryo, text: "talk.kenta.01.d" },
+      { speaker: kenichi, text: "talk.kenta.01.d" },
     ],
     evidenceId: "ev_kenta_sighting",
   },
@@ -37,9 +37,9 @@ export const npcs: Npc[] = [
     x: 216,
     script: [
       { speaker: "speaker.matsutani", text: "talk.matsutani.01.a" },
-      { speaker: ryo, text: "talk.matsutani.01.b" },
+      { speaker: kenichi, text: "talk.matsutani.01.b" },
       { speaker: "speaker.matsutani", text: "talk.matsutani.01.c" },
-      { speaker: ryo, text: "talk.matsutani.01.d" },
+      { speaker: kenichi, text: "talk.matsutani.01.d" },
     ],
     evidenceId: "ev_matsutani_report",
   },
@@ -50,9 +50,9 @@ export const npcs: Npc[] = [
     x: 350,
     script: [
       { speaker: "speaker.chinatsu", text: "talk.chiaki.01.a" },
-      { speaker: ryo, text: "talk.chiaki.01.b" },
+      { speaker: kenichi, text: "talk.chiaki.01.b" },
       { speaker: "speaker.chinatsu", text: "talk.chiaki.01.c" },
-      { speaker: ryo, text: "talk.chiaki.01.d" },
+      { speaker: kenichi, text: "talk.chiaki.01.d" },
     ],
     evidenceId: "ev_vhs_tape",
   },
@@ -63,9 +63,9 @@ export const npcs: Npc[] = [
     x: 524,
     script: [
       { speaker: "speaker.goda", text: "talk.goda.01.a" },
-      { speaker: ryo, text: "talk.goda.01.b" },
+      { speaker: kenichi, text: "talk.goda.01.b" },
       { speaker: "speaker.goda", text: "talk.goda.01.c" },
-      { speaker: ryo, text: "talk.goda.01.d" },
+      { speaker: kenichi, text: "talk.goda.01.d" },
     ],
     evidenceId: "ev_goda_statement",
   },

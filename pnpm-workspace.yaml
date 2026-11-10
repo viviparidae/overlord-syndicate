@@ -1,2 +1,3 @@
-onlyBuiltDependencies:
-  - esbuild
+permissions:
+  phaser:
+    skills: true

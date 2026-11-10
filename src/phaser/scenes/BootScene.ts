@@ -8,6 +8,19 @@ const AREA_BACKGROUNDS: Record<string, string> = {
   shotengai_office: "bg_shotengai_office",
 };
 
+const MID_BACKGROUNDS = [
+  "bg_arcade_west_mid",
+  "bg_arcade_center_mid",
+  "bg_arcade_east_mid",
+  "bg_shotengai_office",
+];
+const FAR_BACKGROUNDS = [
+  "bg_arcade_west_far",
+  "bg_arcade_center_far",
+  "bg_arcade_east_far",
+  "bg_shotengai_office_far",
+];
+
 export class BootScene extends Phaser.Scene {
   constructor() {
     super("Boot");
@@ -19,10 +32,9 @@ export class BootScene extends Phaser.Scene {
       "assets/fonts/pixelmplus24.png",
       "assets/fonts/pixelmplus24.xml",
     );
-    for (const area of Object.values(AREA_BACKGROUNDS)) {
-      this.load.image(area, `assets/backgrounds/${area}.png`);
+    for (const bg of [...MID_BACKGROUNDS, ...FAR_BACKGROUNDS]) {
+      this.load.image(bg, `assets/backgrounds/${bg}.png`);
     }
-    this.load.image("bg_arcade_center_far", "assets/backgrounds/bg_arcade_center_far.png");
     this.load.image(
       "bg_story_arcade_center_mid",
       "assets/backgrounds/story_bg_arcade_center_mid.png",

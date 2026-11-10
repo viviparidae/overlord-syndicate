@@ -13,17 +13,17 @@ from PIL import Image
 SRC = Path("assets-src/generated")
 DST = Path("public/assets")
 # 横スクロール用のAI背景が用意できたら True にして調査パートの背景も差し替える
-WRITE_INVESTIGATION_BG = False
+WRITE_INVESTIGATION_BG = True
 
 CHAR_IDS = {
-    "篠宮 涼": "ryo",
-    "郷田 権造": "goda",
-    "郷田 航": "wataru",
+    "篠宮健一": "kenichi",
+    "郷田清": "goda",
+    "郷田大輔": "wataru",
     "松谷 静江": "matsutani",
     "榎本 千夏": "chinatsu",
-    "岡田 修": "okada",
-    "辰巳 徳造": "tatsumi",
-    "丸福 健太": "kenta",
+    "岡田誠": "okada",
+    "辰巳茂": "tatsumi",
+    "丸福学": "kenta",
 }
 BG_IDS = {
     "中央通り・中景": "bg_arcade_center_mid",
@@ -38,9 +38,9 @@ BG_IDS = {
 EV_IDS = {
     "被害帳簿": "ev_ledger_theft",
     "防犯用VHS": "ev_vhs_tape",
-    "航のノート": "ev_notebook_page",
+    "大輔のノート": "ev_notebook_page",
     "篠宮文具店の購入控え": "ev_shop_receipt",
-    "健太の目撃": "ev_kenta_sighting",
+    "学の目撃": "ev_kenta_sighting",
     "松谷の報告": "ev_matsutani_report",
     "郷田の発言": "ev_goda_statement",
     "過去の処理記録": "ev_past_settlement",
@@ -176,8 +176,13 @@ def main() -> None:
                 made.append(str(pout))
     # 背景
     for jp, bid in BG_IDS.items():
-        path = SRC / "backgrounds" / f"{jp}.jpg"
-        if not path.exists():
+        path = None
+        for ext in (".jpg", ".jpeg", ".png"):
+            p = SRC / "backgrounds" / f"{jp}{ext}"
+            if p.exists():
+                path = p
+                break
+        if not path:
             continue
         img = Image.open(path).convert("RGB")
         box = content_bbox(img)
@@ -188,7 +193,24 @@ def main() -> None:
         if WRITE_INVESTIGATION_BG:
             quant16(img).save(DST / "backgrounds" / f"{bid}.png")
             made.append(str(DST / "backgrounds" / f"{bid}.png"))
-        quant16(img).save(DST / "backgrounds" / f"story_{bid}.png")
+
+        # ADV会話用背景（story_original に正面絵があればそちらを優先）
+        story_path = None
+        for ext in (".jpg", ".jpeg", ".png"):
+            sp = SRC / "backgrounds" / "story_original" / f"{jp}{ext}"
+            if sp.exists():
+                story_path = sp
+                break
+        if story_path:
+            s_img = Image.open(story_path).convert("RGB")
+            s_box = content_bbox(s_img)
+            if s_box:
+                s_img = s_img.crop(s_box)
+            s_img = clean_background(s_img)
+            s_img = cover_resize(s_img, (320, 180))
+            quant16(s_img).save(DST / "backgrounds" / f"story_{bid}.png")
+        else:
+            quant16(img).save(DST / "backgrounds" / f"story_{bid}.png")
         made.append(str(DST / "backgrounds" / f"story_{bid}.png"))
     # 証拠アイコン（16×16）
     ev_dir = SRC / "evidence"
