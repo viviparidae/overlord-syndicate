@@ -1,0 +1,30 @@
+{
+  "id": "ch01",
+  "titleKey": "chapter.ch01.title",
+  "background": "res://assets/backgrounds/bg_shotengai_office.png",
+  "missLimit": 3,
+  "scale": 1,
+  "venueKey": "venue.assembly",
+  "roleKey": "role.summarizer",
+  "requiredEvidence": [
+    "ev_ledger_theft",
+    "ev_vhs_tape",
+    "ev_notebook_page",
+    "ev_shop_receipt"
+  ],
+  "initialFlags": {},
+  "introLines": [
+    "intro.01",
+    "intro.02",
+    "intro.03",
+    "intro.04",
+    "intro.05"
+  ],
+  "epilogueLines": [
+    "epilogue.01",
+    "epilogue.02",
+    "epilogue.03",
+    "epilogue.04",
+    "epilogue.05"
+  ]
+}

@@ -1,0 +1,56 @@
+[
+  {
+    "id": "ev_ledger_theft",
+    "nameKey": "evidence.ledger_theft.name",
+    "descKey": "evidence.ledger_theft.desc",
+    "icon": "ledger_theft"
+  },
+  {
+    "id": "ev_vhs_tape",
+    "nameKey": "evidence.vhs_tape.name",
+    "descKey": "evidence.vhs_tape.desc",
+    "icon": "vhs_tape"
+  },
+  {
+    "id": "ev_notebook_page",
+    "nameKey": "evidence.notebook_page.name",
+    "descKey": "evidence.notebook_page.desc",
+    "icon": "notebook_page"
+  },
+  {
+    "id": "ev_shop_receipt",
+    "nameKey": "evidence.shop_receipt.name",
+    "descKey": "evidence.shop_receipt.desc",
+    "icon": "shop_receipt"
+  },
+  {
+    "id": "ev_kenta_sighting",
+    "nameKey": "evidence.kenta_sighting.name",
+    "descKey": "evidence.kenta_sighting.desc",
+    "icon": "kenta_sighting"
+  },
+  {
+    "id": "ev_matsutani_report",
+    "nameKey": "evidence.matsutani_report.name",
+    "descKey": "evidence.matsutani_report.desc",
+    "icon": "matsutani_report"
+  },
+  {
+    "id": "ev_goda_statement",
+    "nameKey": "evidence.goda_statement.name",
+    "descKey": "evidence.goda_statement.desc",
+    "icon": "goda_statement"
+  },
+  {
+    "id": "ev_past_settlement",
+    "nameKey": "evidence.past_settlement.name",
+    "descKey": "evidence.past_settlement.desc",
+    "icon": "past_settlement"
+  },
+  {
+    "id": "ev_goda_memo",
+    "nameKey": "evidence.goda_memo.name",
+    "descKey": "evidence.goda_memo.desc",
+    "icon": "goda_memo"
+  }
+]

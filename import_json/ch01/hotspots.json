@@ -1,0 +1,132 @@
+[
+  {
+    "id": "hs_shop_counter",
+    "areaId": "arcade_west",
+    "kind": "inspect",
+    "labelKey": "ui.investigation.inspect",
+    "textKey": "inspect.ledger",
+    "evidenceId": "ev_ledger_theft",
+    "x": 80,
+    "width": 28
+  },
+  {
+    "id": "hs_shop_window",
+    "areaId": "arcade_west",
+    "kind": "inspect",
+    "labelKey": "ui.investigation.inspect",
+    "textKey": "inspect.window",
+    "x": 160,
+    "width": 28
+  },
+  {
+    "id": "hs_counter_slips",
+    "areaId": "arcade_west",
+    "kind": "inspect",
+    "labelKey": "ui.investigation.inspect",
+    "textKey": "inspect.slips",
+    "evidenceId": "ev_shop_receipt",
+    "x": 280,
+    "width": 28
+  },
+  {
+    "id": "hs_arcade_light",
+    "areaId": "arcade_center",
+    "kind": "inspect",
+    "labelKey": "ui.investigation.inspect",
+    "textKey": "inspect.light",
+    "x": 200,
+    "width": 28
+  },
+  {
+    "id": "hs_board",
+    "areaId": "arcade_center",
+    "kind": "inspect",
+    "labelKey": "ui.investigation.inspect",
+    "textKey": "inspect.board",
+    "x": 346,
+    "width": 32
+  },
+  {
+    "id": "hs_payphone",
+    "areaId": "arcade_center",
+    "kind": "inspect",
+    "labelKey": "ui.investigation.inspect",
+    "textKey": "inspect.payphone",
+    "x": 454,
+    "width": 22
+  },
+  {
+    "id": "hs_office_door",
+    "areaId": "arcade_center",
+    "kind": "move",
+    "labelKey": "ui.investigation.inspect",
+    "x": 574,
+    "width": 32
+  },
+  {
+    "id": "hs_tofu_shop",
+    "areaId": "arcade_east",
+    "kind": "talk",
+    "labelKey": "ui.investigation.talk",
+    "evidenceId": "ev_kenta_sighting",
+    "x": 66,
+    "width": 32
+  },
+  {
+    "id": "hs_liquor_shop",
+    "areaId": "arcade_east",
+    "kind": "talk",
+    "labelKey": "ui.investigation.talk",
+    "evidenceId": "ev_matsutani_report",
+    "x": 200,
+    "width": 32
+  },
+  {
+    "id": "hs_photo_studio",
+    "areaId": "arcade_east",
+    "kind": "talk",
+    "labelKey": "ui.investigation.talk",
+    "evidenceId": "ev_vhs_tape",
+    "x": 334,
+    "width": 32
+  },
+  {
+    "id": "hs_goda_office",
+    "areaId": "arcade_east",
+    "kind": "talk",
+    "labelKey": "ui.investigation.talk",
+    "evidenceId": "ev_goda_statement",
+    "x": 506,
+    "width": 40
+  },
+  {
+    "id": "hs_desk",
+    "areaId": "shotengai_office",
+    "kind": "inspect",
+    "labelKey": "ui.investigation.inspect",
+    "textKey": "inspect.settlement",
+    "evidenceId": "ev_past_settlement",
+    "x": 146,
+    "width": 32
+  },
+  {
+    "id": "hs_phone_office",
+    "areaId": "shotengai_office",
+    "kind": "inspect",
+    "labelKey": "ui.investigation.inspect",
+    "textKey": "inspect.memo",
+    "evidenceId": "ev_goda_memo",
+    "x": 254,
+    "width": 28
+  },
+  {
+    "id": "hs_waiting_chair",
+    "areaId": "shotengai_office",
+    "kind": "inspect",
+    "labelKey": "ui.investigation.inspect",
+    "textKey": "inspect.notebook",
+    "evidenceId": "ev_notebook_page",
+    "x": 426,
+    "width": 32
+  }
+]

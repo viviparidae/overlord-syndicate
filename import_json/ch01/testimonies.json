@@ -1,0 +1,62 @@
+[
+  {
+    "id": "t_goda",
+    "speaker": "goda",
+    "blocks": [
+      {
+        "id": "tg_01",
+        "textKey": "testimony.goda.01.text",
+        "askBackKey": "testimony.goda.01.askBack"
+      },
+      {
+        "id": "tg_02",
+        "textKey": "testimony.goda.02.text",
+        "askBackKey": "testimony.goda.02.askBack",
+        "gap": {
+          "evidenceId": "ev_vhs_tape",
+          "acceptAnyOf": [],
+          "successKey": "testimony.goda.02.success",
+          "failKey": "testimony.goda.02.fail"
+        }
+      },
+      {
+        "id": "tg_03",
+        "textKey": "testimony.goda.03.text",
+        "askBackKey": "testimony.goda.03.askBack",
+        "gap": {
+          "evidenceId": "ev_ledger_theft",
+          "acceptAnyOf": [],
+          "successKey": "testimony.goda.03.success",
+          "failKey": "testimony.goda.03.fail"
+        }
+      },
+      {
+        "id": "tg_04",
+        "textKey": "testimony.goda.04.text",
+        "askBackKey": "testimony.goda.04.askBack"
+      }
+    ]
+  },
+  {
+    "id": "t_wataru",
+    "speaker": "wataru",
+    "blocks": [
+      {
+        "id": "tw_01",
+        "textKey": "testimony.wataru.01.text",
+        "askBackKey": "testimony.wataru.01.askBack"
+      },
+      {
+        "id": "tw_02",
+        "textKey": "testimony.wataru.02.text",
+        "askBackKey": "testimony.wataru.02.askBack",
+        "gap": {
+          "evidenceId": "ev_shop_receipt",
+          "acceptAnyOf": [],
+          "successKey": "testimony.wataru.02.success",
+          "failKey": "testimony.wataru.02.fail"
+        }
+      }
+    ]
+  }
+]
